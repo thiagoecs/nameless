@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt");
+
+* {
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  background: rgba(60, 151, 42, 0.816);
+}
+.title_header {
+  padding: 8.5vh 0 15px 65px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #f0f0f0;
+  color: #3c972ad0;
+  width: 33%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title_header h1 {
+  font-size: 4.8vw;
+  font-style: italic;
+  width: 60%;
+  margin-bottom: 100px;
+  text-transform: uppercase;
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+}
+.title_header h1 a {
+  color: #3c972ad0;
+  text-decoration: none;
+}
+.title_header h3,
+.title_header p {
+  line-height: 1.2;
+  width: 65%;
+}
+.title_header h3 {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+.title_header p {
+  text-align: justify;
+  font-size: 0.93rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.title_header nav {
+  width: 90%;
+}
+.title_header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+.title_header nav ul li {
+  cursor: pointer;
+  color: #000;
+  opacity: 0.56;
+  padding-bottom: 5px;
+  border-bottom: 1px #000 solid;
+  margin-right: 16px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+.title_header nav ul li:hover {
+  opacity: 1;
+}
+.search_login_header {
+  width: 67%;
+  height: 9vh;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(200%) blur(10px);
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  left: 33%;
+  top: 0;
+  box-shadow: 0 1px 6px 0 rgb(0 0 0 / 18%), 0 1px 2px 0 rgb(0 0 0 / 11%);
+}
+
+main {
+  color: #f0f0f0;
+  margin-left: 33%;
+}
+main section:first-child {
+  margin-top: 9vh;
+}
+main .movie,
+main .movie .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .movie {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 5%,
+    transparent,
+    transparent,
+    transparent,
+    transparent
+  );
+  height: 91vh;
+}
+main .movie .wrapper {
+  width: 75%;
+  flex-direction: column;
+}
+main .movie .wrapper .movie_header {
+  width: -webkit-fill-available;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+main .movie .wrapper .movie_header h4 {
+  font-size: 2vw;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+main .movie .wrapper .movie_header h5 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+img {
+  width: 100%;
+  box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
