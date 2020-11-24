@@ -1,8 +1,9 @@
 const path = require("path");
+const routes = require("../routes");
 
 const home = (req, res) =>
     // render html file with required source files
-  res.sendFile(path.join(__dirname, "../src", "./html/index.html"));
+  res.sendFile(path.resolve(__dirname, "../public/html","index.html"));
 const search = (req, res) => res.send("Search");
 const postHome = (req, res) => res.send("post home");
 const postDetail = (req, res) => res.send("post detail");

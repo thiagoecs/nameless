@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <title>Join | Food Advisor</title>
+</head>
+<body>
+  <header class="title_header">
+    <h1><a href="http://localhost:4000">Food advisor</a></h1>
+    <div class="bottom">
+      <h3>
+        Do you still have restaurants you haven't visited?
+      </h3>
+      <p>
+        some explanation...
+      </p>
+      <nav>
+        <ul>
+          <li>About us</li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <header class="search_login_header">
+    <form action="" method="get">
+      <input type="text" placeholder="Search by ..." name="term">
+    </form>
+    <ul>
+      <li>
+        <a href="#">Join</a>
+      </li>
+      <li>
+        <a href="#">Log In</a>
+      </li>
+    </ul>
+  </header>
+  <main>
+    <section class="form-container">
+      <form action="http://localhost:4000/login" method="POST">
+        <input type="text" name="nickname" placeholder="Nickname" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Verify Password" required>
+        <input type="submit" value="Join Now">
+      </form>
+    </section>
+  </main>
+  <footer>
+    <span class="footer__text"></span>
+  </footer>
+</body>
+</html>
