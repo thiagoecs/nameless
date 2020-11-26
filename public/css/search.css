@@ -1,0 +1,7 @@
+.search__header{
+    position: absolute;
+}
+
+main section:nth-child(2) {
+  margin-top: 9vh;
+}

@@ -1,0 +1,16 @@
+<% postBlock = function(post){
+<section class="movie">
+    <div class="wrapper">
+        <div class="movie_header">
+            <h4><%=post.title%></h4>
+            
+        </div>
+        <figure>
+            <img src="<%=post.imgUrl%>" alt="">
+        </figure>
+        <h5>views: <%=post.views%></h5>
+        <h5>comments: <%=post.comments%></h5>
+        <h5>Vote: <%=post.votes%></h5>
+    </div>
+</section>
+}%>

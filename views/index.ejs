@@ -1,0 +1,17 @@
+<% for (post of posts) { %>
+<section class="movie">
+  <div class="wrapper">
+    <div class="movie_header">
+      <h4><a href='<%=routes.postDetail(post.id)%>'><%=post.title%></a></h4>
+      <h5><%=post.creator.name%></h5>
+    </div>
+    <figure>
+      <a href='<%=routes.postDetail(post.id)%>'>
+      <img src="<%=post.imgUrl%>" alt=""></a>
+    </figure>
+    <h5>views: <%=post.views%></h5>
+    <h5>comments: <%=post.comments%></h5>
+    <h5>Vote: <%=post.votes%></h5>
+  </div>
+</section>
+<% }%>
