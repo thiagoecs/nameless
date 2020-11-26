@@ -2,6 +2,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const path = require("path");
+const localsMiddleware = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");
 const postRouter = require("./routers/postRouter");
 const userRouter = require("./routers/userRouter");
@@ -11,7 +13,16 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// load directory that has source files
+app.use(localsMiddleware);
+
+//set view engine as ejs
+app
+  .set("views", path.join(__dirname, "views"))
+  .set("view engine", "ejs")
+  .use(require("express-ejs-layouts"))
+  .set("layout", "layouts/layout");
+
+// load directory that has source files (css files...)
 app.use(express.static("./public"));
 
 app.use(routes.home, globalRouter);

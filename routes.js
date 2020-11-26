@@ -36,7 +36,11 @@ const routes = {
   changePassword: CHANGE_PASSWORD,
   posts: POSTS,
   upload: UPLOAD,
-  postDetail: POST_DETAIL,
+  postDetail: (id)=>{
+    if (id) return `/posts/${id}`
+    else return POST_DETAIL;
+  }
+  ,
   editPost: EDIT_POST,
   deletePost: DELETE_POST,
 };

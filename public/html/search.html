@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/search.css" />
   <title>Food Advisor</title>
 </head>
 <body>
@@ -25,19 +26,22 @@
     </div>
   </header>
   <header class="search_login_header">
-    <form action="" method="get">
-      <input type="text" placeholder="Search by ..." name="term">
+    <form action="http://localhost:4000/search" method="get">
+      <input id="search-bar" type="text" placeholder="Search by ..." name="term">
     </form>
     <ul>
       <li>
-        <a href="#">Join</a>
+        <a class="join" href="http://localhost:4000/join">Join</a>
       </li>
       <li>
-        <a href="#">Log In</a>
+        <a class="login" href="http://localhost:4000/login">Log In</a>
       </li>
     </ul>
   </header>
   <main>
+    <div class="search__header">
+      <h3>Searching for: </h3>
+    </div>
     <section class="movie">
       <div class="wrapper">
         <div class="movie_header">
@@ -47,6 +51,9 @@
         <figure>
           <img src="../img/subway.jpg" alt="">
         </figure>
+        <h5>views</h5>
+        <h5>comments</h5>
+        <h5>Vote: </h5>
       </div>
     </section>
     <section class="movie">
@@ -86,5 +93,6 @@
   <footer>
     <span class="footer__text"></span>
   </footer>
+  <script src="../js/search.js"></script>
 </body>
 </html>

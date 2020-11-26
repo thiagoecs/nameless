@@ -86,7 +86,7 @@ main {
   color: #f0f0f0;
   margin-left: 33%;
 }
-main section:first-child {
+main section:first-child, .form-container {
   margin-top: 9vh;
 }
 main .movie,
@@ -111,23 +111,27 @@ main .movie .wrapper {
   flex-direction: column;
 }
 main .movie .wrapper .movie_header {
-  width: -webkit-fill-available;
+  width: 500px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 20px;
 }
 main .movie .wrapper .movie_header h4 {
-  font-size: 2vw;
-  text-transform: uppercase;
+  font-size: 36px;
   font-weight: 600;
 }
+main .movie .wrapper .movie_header h4 a{
+ color:#f0f0f0;
+ text-decoration: none;
+}
 main .movie .wrapper .movie_header h5 {
-  font-size: 0.9rem;
+  font-size: 18px;
   font-weight: 600;
 }
 img {
   width: 100%;
+  height: 400px;
   box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
     inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
