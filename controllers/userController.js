@@ -1,19 +1,31 @@
+'use strict'
 const path = require("path");
 const routes = require("../routes");
+const bcrypt = require("bcryptjs");
+const passport = require("../utils/passport");
+const userModel = require("../models/userModel");
 
 // send join request
-const postJoin = (req, res) => {
+const postJoin = async (req, res, next) => {
   const {
-    body: { nickname, email, password, password2 },
-  } = req; // same as const nickname = req.body.nickname ...
-  // TODO : When two passwords are not same, it'll redirect to join page
-  // If there's no error, redirects to main page.
+    body: { nickname, email, password2 },
+  } = req;
+  let password = req.body.password // same as const nickname = req.body.nickname ...
   if (password !== password2) {
-    res.status(400);
-    console.log("Passwords are not same");
+    //console.log("Passwords are not same");
     res.render("join", { pageTitle: "Join" });
   } else {
-    res.redirect(routes.home);
+    try {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+      password = hash;
+      if (await userModel.insertUser(nickname,email,password)) {
+        next();
+      }
+    } catch (e) {
+      res.status(400).json({ error: "register error" });
+      console.log(e)
+    }
   }
 };
 
@@ -24,14 +36,14 @@ const getJoin = (req, res) => {
 };
 
 // send login request
-const postLogin = (req, res) => {
-  //ToDo: compare email and password with ones from DB
-  res.redirect(routes.home);
-};
+const postLogin = passport.authenticate("local", {
+  failureRedirect: routes.login,
+  successRedirect: routes.home,
+});
 
 // access to login page
 const getLogin = (req, res) => {
-  res.render("login",{pageTitle:"Log In"})
+  res.render("login", { pageTitle: "Log In" });
 };
 
 const logout = (req, res) => {

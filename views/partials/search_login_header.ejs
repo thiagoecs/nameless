@@ -2,10 +2,22 @@
       <input id="search-bar" type="text" placeholder="Search by ..." name="term">
     </form>
     <ul>
+      <% if (!user) {%>
       <li>
         <a class="join" href="/join">Join</a>
       </li>
       <li>
         <a class="login" href="/login">Log In</a>
       </li>
+      <%} else {%>
+        <li>
+          <a class="join" href="/upload">Upload</a>
+        </li>
+        <li>
+          <a class="login" href="/upload">Profile</a>
+        </li>
+        <li>
+          <a class="login" href="/logout">Log Out</a>
+        </li>
+        <%}%>
     </ul>
