@@ -3,7 +3,8 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
-const passport = require('./utils/passport')
+const passport = require('passport')
+const passportConfig = require('./utils/passport')
 const localsMiddleware = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");
 const postRouter = require("./routers/postRouter");
@@ -24,20 +25,21 @@ app
   .use(require("express-ejs-layouts"))
   .set("layout", "layouts/layout");
 
-app.use(
-  session({
-    secret: process.env.COOKIE_SECRET,
-    resave: true,
-    saveUninitialized: false,
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.COOKIE_SECRET,
+//     resave: true,
+//     saveUninitialized: false,
+//   })
+// );
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
+
 
 // load directory that has source files (css files...)
 app.use(express.static("./public"));
 
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
-app.use(routes.users, userRouter);
+app.use(routes.users,passport.authenticate('jwt',{session:false}), userRouter);
 app.listen(4000, () => console.log("ok"));

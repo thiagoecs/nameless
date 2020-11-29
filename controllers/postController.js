@@ -2,7 +2,7 @@ const path = require("path");
 const routes = require("../routes");
 const posts = require("../db");
 
-// render html file with required source files
+// render index.ejs file with required source files
 // send variable pageTitle to layout file
 const home = (req, res) => {
   res.render("index", { pageTitle: "main", posts });
