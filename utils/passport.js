@@ -2,6 +2,9 @@
 // This file manages passport strategies.
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const passportJWT = require("passport-jwt");
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 const LocalStrategy = require("passport-local").Strategy;
 const userModel = require("../models/userModel");
 
@@ -35,4 +38,27 @@ passport.use(
   )
 );
 
+//JWT strategy
+passport.use(
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: "test",
+    },
+    async (jwtPayload, done) => {
+      try {
+        console.log("jwtPayload: ", jwtPayload);
+        const user = await userModel.getUser(jwtPayload.user_id);
+        if (user === undefined) {
+          return done(null, false, { message: "incorrect ID" });
+        }
+        req.user = user;
+        return done(null, user);
+      } catch (e) {
+        console.log(e);
+        return done(e);
+      }
+    }
+  )
+);
 module.exports = passport;
