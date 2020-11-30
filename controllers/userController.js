@@ -16,16 +16,21 @@ const postJoin = async (req, res, next) => {
   if (password !== password2) {
     res.render("join", { pageTitle: "Join" });
   } else {
-    try {
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(password, salt);
-      password = hash;
-      if (await userModel.insertUser(nickname, email, password)) {
-        next();
+    const user = userModel.getUserLogin(email);
+    if (user) {
+      res.status(400).json({ error: "This email is already registered." });
+    } else {
+      try {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        password = hash;
+        if (await userModel.insertUser(nickname, email, password)) {
+          next();
+        }
+      } catch (e) {
+        res.status(400).json({ error: "register error" });
+        console.log(e);
       }
-    } catch (e) {
-      res.status(400).json({ error: "register error" });
-      console.log(e);
     }
   }
 };
@@ -35,28 +40,27 @@ const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
 
-// send login request using local authentication and make token. 
-const postLogin = (req, res) => {
-  passport.authenticate(
-    "local",
-    { session: false, failureRedirect: routes.login, successRedirect: routes.home },
-    (err, user, info) => {
-      if (err || !user) {
-        return res.status(400).json({
-          message: "Something is not right",
-          user: user,
-        });
-      }
-      req.login(user, { session: false }, (err) => {
-        if (err) {
-          res.send(err);
-        }
-        const token = jwt.sign(Object.assign({}, user), "test");
-        console.log("token: ", token);
-        return res.json({ user, token });
-      });
+// send login request using local authentication and make token.
+const postLogin = (req, res, next) => {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    if (err) {
+      return next(err);
     }
-  )(req, res);
+    if (!user) {
+      console.log("not right user");
+      res.redirect(routes.login);
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        //res.send(err);
+        return next(err);
+      }
+      const token = jwt.sign({ user_id: user.email }, "test");
+      console.log("token: ", token);
+      res.cookie("user", token);
+      return res.redirect(routes.home);
+    });
+  })(req, res,next);
 };
 
 // access to login page
@@ -66,6 +70,8 @@ const getLogin = (req, res) => {
 
 const logout = (req, res) => {
   // TODO: Make users logged out
+  req.logout();
+  res.clearCookie('user')
   res.redirect(routes.home);
 };
 

@@ -3,8 +3,10 @@ const routes = require("../routes");
 const posts = require("../db");
 
 // render index.ejs file with required source files
-// send variable pageTitle to layout file
+// Each functions send variable pageTitle to the layout file
+
 const home = (req, res) => {
+  console.log(req.user)
   res.render("index", { pageTitle: "main", posts });
 };
 
