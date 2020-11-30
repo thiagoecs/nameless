@@ -1,0 +1,53 @@
+CREATE TABLE `users` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `nickname` varchar(255),
+  `password` varchar(255),
+  `email` varchar(255),
+  `userType` int
+);
+
+CREATE TABLE `posts` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `restaurant` varchar(255),
+  `description` varchar(255),
+  `views` int,
+  `fileUrl` int,
+  `comments` int,
+  `votes` int,
+  `creator` int,
+  `createdAt` date,
+  `foodType` int
+);
+
+CREATE TABLE `files` (
+  `postId` int,
+  `sourceFile` varchar(255)
+);
+
+CREATE TABLE `comments` (
+  `text` varchar(255),
+  `createdAt` date,
+  `post` int,
+  `creator` int
+);
+
+CREATE TABLE `foodTypes` (
+  `foodTypeId` int,
+  `foodType` varchar(255)
+);
+
+
+ALTER TABLE foodTypes CHANGE foodTypeId foodTypeId INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (foodTypeId);
+
+
+ALTER TABLE `posts` ADD FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+
+ALTER TABLE `comments` ADD FOREIGN KEY (`post`) REFERENCES `posts` (`id`);
+
+ALTER TABLE `comments` ADD FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+
+ALTER TABLE `posts` ADD FOREIGN KEY (`foodType`) REFERENCES `foodTypes` (`foodTypeId`);
+
+ALTER TABLE `files` ADD FOREIGN KEY (`postId`) REFERENCES `posts` (`id`);
+
+
