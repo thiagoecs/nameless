@@ -18,7 +18,6 @@ const postJoin = async (req, res, next) => {
     // check if email that users put is already registered
     const user = await userModel.getUserLogin(email);
     if (!user) {
-      console.log(1)
       try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
@@ -31,7 +30,6 @@ const postJoin = async (req, res, next) => {
         res.status(400).json({ error: "register error" });
       }
     } else {
-      console.log(2)
       res.status(400).json({ error: "This email is already registered." });
     }
   }
