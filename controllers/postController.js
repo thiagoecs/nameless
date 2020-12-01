@@ -1,11 +1,31 @@
 const path = require("path");
+const routes = require("../routes");
+const posts = require("../db");
 
-const home = (req, res) =>
-    // render html file with required source files
-  res.sendFile(path.join(__dirname, "../src", "./html/index.html"));
-const search = (req, res) => res.send("Search");
+// render html file with required source files
+// send variable pageTitle to layout file
+const home = (req, res) => {
+  res.render("index", { pageTitle: "main", posts });
+};
+
+const search = (req, res) => {
+  const searchingBy = req.query.term;
+  console.log(searchingBy);
+  res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy });
+  //res.sendFile(path.resolve(__dirname, "../public/html", "search.html"));
+};
 const postHome = (req, res) => res.send("post home");
-const postDetail = (req, res) => res.send("post detail");
+const postDetail = (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  try {
+    //TODO: connect to database
+    res.render("postDetail", { pageTitle: "main", posts });
+  } catch (err) {
+    console.log(err);
+    res.redirect(routes.home);
+  }
+};
 const upload = (req, res) => res.send("upload");
 const editPost = (req, res) => res.send("edit post");
 const deletePost = (req, res) => res.send("delete post");

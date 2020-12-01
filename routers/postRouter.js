@@ -11,7 +11,7 @@ const {
 
 postRouter.get(routes.home, postHome);
 postRouter.get(routes.upload, upload);
-postRouter.get(routes.postDetail, postDetail);
+postRouter.get(routes.postDetail(), postDetail);
 postRouter.get(routes.editPost, editPost);
 postRouter.get(routes.deletePost, deletePost);
 

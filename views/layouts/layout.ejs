@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="../css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+  <% if(pageTitle == 'main') { %>
+  <title><%= siteName %></title>
+  <% } else {%>
+  <title><%= pageTitle %> | <%= siteName %></title>
+  <%}%>
+</head>
+<body>
+  <header class="title_header">
+    <%- include('../partials/title_header') %>
+  </header>
+  <header class="search_login_header">
+    <%- include('../partials/search_login_header') %>
+  </header>
+  <main>
+    <%- body %>
+  </main>
+  <footer>
+    <span class="footer__text"></span>
+  </footer>
+  </body>
+</html>

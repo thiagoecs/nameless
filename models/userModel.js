@@ -1,76 +1,70 @@
-'use strict';
-const pool = require('../database/db');
+"use strict";
+const pool = require("../database/db");
 const promisePool = pool.promise();
 
 const getAllUsers = async () => {
   try {
-    // TODO: do the LEFT (or INNER) JOIN to get owner name too.
-    const [rows] = await promisePool.query('SELECT * FROM wop_user');
+    const [rows] = await promisePool.execute("SELECT * FROM Users");
     return rows;
   } catch (e) {
-    console.error('userModel: ', e.message);
-  }   
+    console.error("UserModel getAllUsers error: ", e.message);
+  }
 };
 
 const getUser = async (id) => {
   try {
-    console.log('userModel getUser', id);
-    const [rows] = await promisePool.query('SELECT * FROM wop_user WHERE user_id = ?', [id]);
+    const [rows] = await promisePool.execute("SELECT * FROM Users where id = ?", [
+      id,
+    ]);
     return rows[0];
   } catch (e) {
-    console.error('userModel: ', e.message);
-  }   
+    console.log("UserModel getUser error: ", e.message);
+  }
+};
+
+const insertUser = async (nickname, email, password) => {
+  try {
+    const [
+      rows,
+    ] = await promisePool.execute(
+      "INSERT INTO Users (nickname, email, password) VALUES(?, ?, ?)",
+      [nickname, email, password]
+    );
+    return rows.insertId;
+  } catch (e) {
+    console.error("userModel insertUser:", e);
+  }
 };
 
 const getUserLogin = async (params) => {
   try {
     console.log(params);
     const [rows] = await promisePool.execute(
-        'SELECT * FROM wop_user WHERE email = ?;',
-        params);
-    return rows;
+      "SELECT * FROM Users WHERE email = ?;",
+      [params]
+    );
+    return rows[0];
   } catch (e) {
-    console.log('error', e.message);
+    console.log("error", e.message);
   }
 };
 
-const insertUser = async(req) =>{
-  try{
-  const [rows] = await promisePool.query('INSERT INTO wop_user (name, email, password) VALUES (?, ?, ?);',
-  [req.body.name, req.body.email, req.body.password]);
-  console.log('userModel insertUser:', rows);
-  return rows.insertId;
-  } catch (e) {
-    console.error('userModel insertUser:', e);
-  }
-};
-
-const updateUser = async (id,req) =>{
-  try{
-    const [rows] = await promisePool.query('UPDATE wop_user SET name = ?, email = ?, password = ? WHERE user_id = ?;',
-    [req.body.name, req.body.email, req.body.password, id]);
-    console.log('userModel updateUser:', rows);
+const deleteUser = async (id) => {
+  try {
+    const [rows] = await promisePool.execute(
+      "DELETE FROM wop_user WHERE user_id=?",
+      [id]
+    );
     return rows.affectedRows === 1;
-  }
-  catch(e){
+  } catch (e) {
+    console.error("userModel deleteUser:", e);
     return false;
   }
 };
-
-const deleteUser = async (id,req) => {
-  try {
-    const [rows] = await promisePool.query('DELETE * FROM wop_user WHERE user_id = ?', [id]); 
-  }
-  catch(e){
-    console.error('userModel deleteUser:', e);
-  }
-};
-
 module.exports = {
   getAllUsers,
   getUser,
   insertUser,
-  updateUser,
+  getUserLogin,
   deleteUser,
-  getUserLogin
 };
