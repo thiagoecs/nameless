@@ -1,3 +1,4 @@
+"use strict";
 const express = require("express");
 const routes = require("../routes");
 const postRouter = express.Router();
@@ -8,11 +9,18 @@ const {
   editPost,
   deletePost,
 } = require("../controllers/postController");
+const { verifyToken } = require("../middlewares");
 
 postRouter.get(routes.home, postHome);
-postRouter.get(routes.upload, upload);
+
+// upload a post
+postRouter.get(routes.upload, verifyToken, upload);
+
+// post detail page
 postRouter.get(routes.postDetail(), postDetail);
-postRouter.get(routes.editPost, editPost);
-postRouter.get(routes.deletePost, deletePost);
+
+// edit a post
+postRouter.get(routes.editPost, verifyToken, editPost);
+postRouter.get(routes.deletePost, verifyToken, deletePost);
 
 module.exports = postRouter;

@@ -45,14 +45,13 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: "test",
     },
-    async (jwtPayload, done) => {
+    async (token, done) => {
       try {
-        console.log("jwtPayload: ", jwtPayload);
-        const user = await userModel.getUser(jwtPayload.user_id);
+        console.log("jwtPayload: ", token);
+        const user = await userModel.getUser(token.user_id);
         if (user === undefined) {
           return done(null, false, { message: "incorrect ID" });
         }
-        req.user = user;
         return done(null, user);
       } catch (e) {
         console.log(e);

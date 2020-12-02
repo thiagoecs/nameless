@@ -1,4 +1,4 @@
-const path = require("path");
+"use strict";
 const routes = require("../routes");
 const posts = require("../db");
 
@@ -6,7 +6,6 @@ const posts = require("../db");
 // Each functions send variable pageTitle to the layout file
 
 const home = (req, res) => {
-  console.log(req.isAuthenticated())
   res.render("index", { pageTitle: "main", posts });
 };
 

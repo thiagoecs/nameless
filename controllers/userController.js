@@ -41,27 +41,33 @@ const getJoin = (req, res) => {
 };
 
 // send login request using local authentication and make token.
-const postLogin = (req, res, next) => {
+const postLogin = (req, res) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
-    if (err) {
-      console.log(err);
-      return next(err);
-    }
-    if (!user) {
-      console.log("not right user");
-      res.redirect(routes.login);
-    }
-    req.login(user, { session: false }, (err) => {
+    try {
       if (err) {
-        console.log(err);
-        return next(err);
+        return res.status(400).json({
+          error: err,
+        });
       }
-      const token = jwt.sign({ user_id: user.email }, "test");
-      console.log("token: ", token);
-      res.cookie("user", token);
-      return res.redirect(routes.home);
-    });
-  })(req, res, next);
+      if (!user) {
+        console.log("not right user");
+        res.redirect(routes.login);
+      }
+      req.login(user, { session: false }, (err) => {
+        if (err) {
+          console.log(err);
+          return res.status(400).json({ err });
+        }
+        const token = jwt.sign({ user_id: user.email }, "test", {
+          expiresIn: "24h",
+        });
+        res.cookie("userToken", token);
+        res.redirect(routes.home);
+      });
+    } catch (err) {
+      return res.status(400).json({ err });
+    }
+  })(req, res);
 };
 
 // access to login page
@@ -71,8 +77,7 @@ const getLogin = (req, res) => {
 
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
-  req.logout();
-  res.clearCookie("user");
+  res.clearCookie("userToken");
   res.redirect(routes.home);
 };
 
