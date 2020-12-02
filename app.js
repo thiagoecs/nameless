@@ -3,7 +3,6 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
-//const passport = require("passport");
 const passport = require("./utils/passport");
 const { localsMiddleware, verifyToken } = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");

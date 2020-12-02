@@ -46,7 +46,7 @@ const postLogin = (req, res) => {
     try {
       if (err) {
         return res.status(400).json({
-          error: err,
+          err,
         });
       }
       if (!user) {
@@ -58,7 +58,7 @@ const postLogin = (req, res) => {
           console.log(err);
           return res.status(400).json({ err });
         }
-        const token = jwt.sign({ user_id: user.email }, "test", {
+        const token = jwt.sign({ id: user.id, nickname: user.nickname, email:user.email }, "test", {
           expiresIn: "24h",
         });
         res.cookie("userToken", token);
@@ -68,6 +68,7 @@ const postLogin = (req, res) => {
       return res.status(400).json({ err });
     }
   })(req, res);
+//return req.user;
 };
 
 // access to login page

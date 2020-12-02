@@ -5,17 +5,21 @@ const posts = require("../db");
 // render index.ejs file with required source files
 // Each functions send variable pageTitle to the layout file
 
+// main page
 const home = (req, res) => {
   res.render("index", { pageTitle: "main", posts });
 };
 
+// show search results and query word
 const search = (req, res) => {
   const searchingBy = req.query.term;
   console.log(searchingBy);
   res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy });
-  //res.sendFile(path.resolve(__dirname, "../public/html", "search.html"));
 };
+
 const postHome = (req, res) => res.send("post home");
+
+// post detail
 const postDetail = (req, res) => {
   const id = req.params.id;
   console.log(id);
@@ -27,7 +31,14 @@ const postDetail = (req, res) => {
     res.redirect(routes.home);
   }
 };
-const upload = (req, res) => res.send("upload");
+
+// upload page
+const getUpload = (req, res) => res.render("upload", { pageTitle: "Upload post" });
+
+// send upload request
+const postUpload = async (req, res) => {};
+
+// edit post
 const editPost = (req, res) => res.send("edit post");
 const deletePost = (req, res) => res.send("delete post");
 
@@ -36,7 +47,8 @@ module.exports = {
   search,
   postHome,
   postDetail,
-  upload,
+  getUpload,
+  postUpload,
   editPost,
   deletePost,
 };

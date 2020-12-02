@@ -5,16 +5,19 @@ const postRouter = express.Router();
 const {
   postHome,
   postDetail,
-  upload,
+  getUpload,
+  postUpload,
   editPost,
   deletePost,
 } = require("../controllers/postController");
 const { verifyToken } = require("../middlewares");
+const passport = require('../utils/passport')
 
-postRouter.get(routes.home, postHome);
+postRouter.get(routes.home, passport.authenticate('jwt', {session: false}), postHome);
 
 // upload a post
-postRouter.get(routes.upload, verifyToken, upload);
+postRouter.get(routes.upload, verifyToken, getUpload);
+postRouter.post(routes.upload, verifyToken, postUpload)
 
 // post detail page
 postRouter.get(routes.postDetail(), postDetail);

@@ -18,6 +18,6 @@ userRouter.get(routes.editProfile, editProfile);
 userRouter.get(routes.changePassword, changePassword);
 
 // user profile
-userRouter.get(routes.userDetail, userDetail);
+userRouter.get(routes.userDetail(), userDetail);
 
 module.exports = userRouter;

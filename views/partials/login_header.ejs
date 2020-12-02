@@ -1,20 +1,20 @@
 <ul>
   <% if (user===undefined) {%>
   <li>
-    <a class="join" href="/join">Join</a>
+    <a class="join" href="<%=routes.join%>">Join</a>
   </li>
   <li>
-    <a class="login" href="/login">Log In</a>
+    <a class="login" href="<%=routes.login%>">Log In</a>
   </li>
   <%} else {%>
   <li>
-    <a class="join" href="/upload">Upload</a>
+    <a class="join" href="/posts<%=routes.upload%>">Upload</a>
   </li>
   <li>
-    <a class="login" href="/upload">Profile</a>
+    <a class="login" href="<%=routes.userDetail(user.id)%>">Profile</a>
   </li>
   <li>
-    <a class="login" href="/logout">Log Out</a>
+    <a class="login" href="<%=routes.logout%>">Log Out</a>
   </li>
   <%}%>
     </ul>
