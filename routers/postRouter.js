@@ -13,7 +13,7 @@ const {
 const { verifyToken } = require("../middlewares");
 const passport = require('../utils/passport')
 
-postRouter.get(routes.home, passport.authenticate('jwt', {session: false}), postHome);
+postRouter.get(routes.home, verifyToken, postHome);
 
 // upload a post
 postRouter.get(routes.upload, verifyToken, getUpload);

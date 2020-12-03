@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
-const maxAge = 24 * 60 * 60; // maximum storage period
+const maxAge = 60 * 60 *1000; // maximum storage period in millisecond
 
 // error handler
 // This is for sending error information to frontend side
@@ -118,11 +118,20 @@ const userHome = (req, res) => res.send("user home");
 
 // get my profile
 const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: `User` });
+  res.render("userDetail", { pageTitle: `User`, user: res.locals.loggedUser });
 };
 
 // show users' info
-const userDetail = (req, res) => res.send("user detail");
+const userDetail = async (req, res) => {
+  const{params:{id}}=req
+  const user = await userModel.getUser(id);
+  if (user){   
+    res.render("userDetail", { pageTitle: "User detail", user });
+    console.log("user query", user)
+  }else{
+    res.redirect(routes.home)
+  }
+}
 
 // edit profile
 const editProfile = (req, res) => res.send("edit profile");

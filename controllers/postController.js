@@ -26,7 +26,7 @@ const postDetail = (req, res) => {
   console.log(id);
   try {
     //TODO: connect to database
-    res.render("postDetail", { pageTitle: "main", posts });
+    res.render("postDetail", { pageTitle: "main", post });
   } catch (err) {
     console.log(err);
     res.redirect(routes.home);

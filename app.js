@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
 const passport = require("./utils/passport");
-const { localsMiddleware, verifyToken } = require("./middlewares");
+const { localsMiddleware, verifyToken, loggedUser } = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");
 const postRouter = require("./routers/postRouter");
 const userRouter = require("./routers/userRouter");
@@ -27,7 +27,7 @@ app.use(passport.initialize());
 
 // load directory that has source files (css files...)
 app.use(express.static("./public"));
-
+app.get('*',loggedUser)
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
 app.use(routes.users, verifyToken, userRouter);

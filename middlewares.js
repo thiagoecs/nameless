@@ -3,40 +3,52 @@
 
 const routes = require("./routes");
 const jwt = require("jsonwebtoken");
+const userModel = require("./models/userModel");
 
 const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Food Advisor";
   res.locals.routes = routes;
-  res.locals.user = extractUserInfo(req);
+  //res.locals.loggedUser = req.cookies.userToken || undefined
   next();
 };
 
-const extractUserInfo = (req) => {
-  try {
-    const clientToken = req.cookies.userToken;
-    const decodedToken = jwt.verify(clientToken, "test");
-    return { id: decodedToken.id, nickanme: decodedToken.nickname, email: decodedToken.email };
-  } catch (e) {
-    return undefined;
-  }
-};
-
+// finds user cookie and verifies token
 const verifyToken = (req, res, next) => {
-  // finds user cookie and verifies token
   const clientToken = req.cookies.userToken;
   try {
     const decodedToken = jwt.verify(clientToken, "test");
     // when the token is expired
     if (!decodedToken) {
       res.clearCookie("userToken");
-      res.redirect(routes.login)
+      res.redirect(routes.login);
     } else {
       // handles when a token is valid
       next();
     }
   } catch (err) {
     // when the token is not verified
-    res.redirect(routes.login)
+    res.redirect(routes.login);
+  }
+};
+
+// check current user
+const loggedUser = (req, res,next) => {
+  const clientToken = req.cookies.userToken;
+  if (clientToken) {
+    jwt.verify(clientToken, "test", async(err,decodedToken)=>{
+      if(err){
+        res.locals.loggedUser = undefined
+       next()
+      } else{
+        let user = await userModel.getUser(decodedToken.user)
+        console.log('tokenuser',user)
+        res.locals.loggedUser = user
+        next();
+      }
+    });
+  } else {
+    res.locals.loggedUser = undefined
+    next()
   }
 };
 
@@ -50,4 +62,4 @@ const onlyPublic = (req, res, next) => {
   }
 };
 
-module.exports = { localsMiddleware, verifyToken, onlyPublic };
+module.exports = { localsMiddleware, verifyToken, onlyPublic,loggedUser };
