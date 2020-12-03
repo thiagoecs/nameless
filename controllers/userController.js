@@ -4,24 +4,62 @@ const jwt = require("jsonwebtoken");
 const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
+const maxAge = 24 * 60 * 60; // maximum storage period
 
-// send join request
+// error handler
+// This is for sending error information to frontend side
+const errorHandler = (err) => {
+  // object init (about email and password)
+  let errors = { email: "", password: "" };
+  // join error
+  // when two passwords are not same
+  if (err === "pwerr") {
+    errors.password = "This is not same as the first password";
+  }
+  // when an email is already registered
+  if (err === "email registered") {
+    errors.email = "This email is already registered";
+  }
+  // login error
+  // when an email is not registered
+  if (err.message === "email error") {
+    errors.email = "This email is not registered";
+  }
+  // when a password is not correct
+  if (err.message === "password error") {
+    errors.password = "This password is incorrect";
+  }
+  return errors;
+};
+
+// access join page
+const getJoin = (req, res) => {
+  res.render("join", { pageTitle: "Join" });
+};
+
+// sending join request
 const postJoin = async (req, res, next) => {
   // same as const nickname = req.body.nickname ...
-  const {
-    body: { nickname, email, password2 },
-  } = req;
+  const { nickname, email, password2 } = req.body;
   let password = req.body.password;
+
+  // checking if two passowrds users typed are same
+  // If they are not same, redirects to join page
   if (password !== password2) {
-    res.render("join", { pageTitle: "Join" });
+    const pwErrorMsg = "pwerr";
+    const errors = errorHandler(pwErrorMsg);
+    return res.status(400).json({ errors });
   } else {
-    // check if email that users put is already registered
+    // checking if email that users typed is already registered
     const user = await userModel.getUserLogin(email);
+    // If the email is not yet registered, encrypt password and save all data to database
     if (!user) {
       try {
+        // encrypting password
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
         password = hash;
+        // saving data that user filled to the form and move to the next middleware
         if (await userModel.insertUser(nickname, email, password)) {
           next();
         }
@@ -30,45 +68,38 @@ const postJoin = async (req, res, next) => {
         res.status(400).json({ error: "register error" });
       }
     } else {
-      res.status(400).json({ error: "This email is already registered." });
+      // sending error if the email is already registered
+      const emailErrMsg = "email registered";
+      const errors = errorHandler(emailErrMsg);
+      res.status(400).json({ errors });
     }
   }
 };
 
-// access join page
-const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "Join" });
-};
-
-// send login request using local authentication and make token.
+// sending login request using local authentication and make token.
 const postLogin = (req, res) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     try {
-      if (err) {
-        return res.status(400).json({
-          err,
-        });
-      }
-      if (!user) {
-        console.log("not right user");
-        res.redirect(routes.login);
+      // showing error message when there's no registered user or incorrect password
+      if (err || !user) {
+        const errors = errorHandler(err);
+        return res.status(400).json({ errors });
       }
       req.login(user, { session: false }, (err) => {
         if (err) {
-          console.log(err);
           return res.status(400).json({ err });
         }
-        const token = jwt.sign({ id: user.id, nickname: user.nickname, email:user.email }, "test", {
-          expiresIn: "24h",
-        });
-        res.cookie("userToken", token);
-        res.redirect(routes.home);
+        // if user succeeds login, jwt token is made
+        const accessToken = jwt.sign({ user: user.id }, "test", { expiresIn: maxAge });
+        // saving accessToken to cookie
+        res.cookie("userToken", accessToken, { maxAge: maxAge * 2 });
+        // and sending json data with user id to frontend
+        return res.status(201).json({ user: user.id });
       });
     } catch (err) {
       return res.status(400).json({ err });
     }
   })(req, res);
-//return req.user;
 };
 
 // access to login page
@@ -84,8 +115,19 @@ const logout = (req, res) => {
 
 // ******** TODO: make profile pages ********
 const userHome = (req, res) => res.send("user home");
+
+// get my profile
+const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: `User` });
+};
+
+// show users' info
 const userDetail = (req, res) => res.send("user detail");
+
+// edit profile
 const editProfile = (req, res) => res.send("edit profile");
+
+// change password
 const changePassword = (req, res) => res.send("change password");
 
 module.exports = {
@@ -98,5 +140,6 @@ module.exports = {
   userDetail,
   editProfile,
   changePassword,
+  getMe,
 };
 //save functions

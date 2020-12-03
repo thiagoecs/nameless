@@ -18,21 +18,19 @@ passport.use(
       try {
         // find user with email from user database
         const user = await userModel.getUserLogin(email);
-        // send message when there's no registered email
+        // sending message when there's no registered email
         if (!user) {
-          return done(null, false, {
-            message: "No such email",
-          });
+          throw Error("email error");
         }
-        // send message when password
+        // sending error when password is not correct
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(null, false, { message: "no same password" });
+          throw Error("password error");
         }
         // return user when succeeded to login
         return done(null, user, { message: "Logged In Successfully" });
-      } catch (error) {
-        console.log(error);
-        return done(error);
+      } catch (err) {
+        console.log(err);
+        return done(err);
       }
     }
   )
@@ -44,18 +42,21 @@ passport.use(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: "test",
+      passReqToCallback: true,
     },
-    async (token, done) => {
+    async (req, token, done) => {
       try {
         console.log("jwtPayload: ", token);
         const user = await userModel.getUser(token.user_id);
-        if (user === undefined) {
-          return done(null, false, { message: "incorrect ID" });
+        if (user) {
+          req.user = user;
+          return done(null, user);
+        } else {
+          return done(null, false);
         }
-        return done(null, user);
       } catch (e) {
         console.log(e);
-        return done(e);
+        return done(e, false);
       }
     }
   )

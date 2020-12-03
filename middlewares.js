@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Food Advisor";
   res.locals.routes = routes;
-  res.locals.user = extractUserInfo(req)
+  res.locals.user = extractUserInfo(req);
   next();
 };
 
@@ -22,26 +22,25 @@ const extractUserInfo = (req) => {
 };
 
 const verifyToken = (req, res, next) => {
+  // finds user cookie and verifies token
+  const clientToken = req.cookies.userToken;
   try {
-    // finds user cookie and verifies token
-    const clientToken = req.cookies.userToken;
     const decodedToken = jwt.verify(clientToken, "test");
-    // handles when a token is not in cookie
+    // when the token is expired
     if (!decodedToken) {
-      res.clearCookie('userToken')
-      res.status(401).json({ error: "token expired" });
+      res.clearCookie("userToken");
+      res.redirect(routes.login)
     } else {
       // handles when a token is valid
       next();
     }
   } catch (err) {
-    // handles when unauthorized
-    res.clearCookie("userToken");
-    res.status(401).json({ error: "Unauthorized" });
+    // when the token is not verified
+    res.redirect(routes.login)
   }
 };
 
-// manage routes
+// managing routes that is only for not logged in users
 const onlyPublic = (req, res, next) => {
   const clientToken = req.cookies.userToken;
   if (clientToken) {

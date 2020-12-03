@@ -9,6 +9,7 @@ const JOIN = "/join";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const SEARCH = "/search";
+const ME = "/me";
 
 // users
 const USERS = "/users";
@@ -30,7 +31,9 @@ const routes = {
   login: LOGIN,
   logout: LOGOUT,
   search: SEARCH,
+  me:ME,
   users: USERS,
+  // if there is id parameter, redirects to that id
   userDetail: (id) => {
     if (id) {
       return `/users/${id}`;
@@ -40,6 +43,7 @@ const routes = {
   changePassword: CHANGE_PASSWORD,
   posts: POSTS,
   upload: UPLOAD,
+  // if there is id parameter, redirects to that id
   postDetail: (id) => {
     if (id) return `/posts/${id}`;
     else return POST_DETAIL;

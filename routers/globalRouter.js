@@ -10,7 +10,9 @@ const {
   getLogin,
   postLogin,
   logout,
+  getMe
 } = require("../controllers/userController");
+const passport = require('passport')
 
 // main page
 globalRouter.get(routes.home, home);
@@ -28,5 +30,8 @@ globalRouter.get(routes.logout,verifyToken, logout);
 
 // search
 globalRouter.get(routes.search, search);
+
+// my profile
+globalRouter.get(routes.me, verifyToken, getMe);
 
 module.exports = globalRouter;

@@ -7,6 +7,7 @@ const posts = require("../db");
 
 // main page
 const home = (req, res) => {
+  console.log(req.user)
   res.render("index", { pageTitle: "main", posts });
 };
 

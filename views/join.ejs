@@ -2,19 +2,22 @@
     <h2>Join Food Advisor!</h2>
     <div class="form-container">
         <!-- TODO: add validators-->
-        <form action="<%=routes.join%>" method="POST">
+        <form class="register-form" action="<%=routes.join%>" method="POST">
             <label for="nickname">Nickname</label>
             <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname" pattern=".{3,}"
                 required>
             <label for="email">Email</label>
             <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
+            <span class="email-error"></span>
             <label for="password">Password</label>
             <input class="input-field" type="password" name="password" id="password" placeholder="Password" required>
             <label for="password2">Verify password</label>
             <input class="input-field" type="password" name="password2" id="password2" placeholder="Verify Password"
                 required>
+            <span class="password-error"></span>
             <input class="submit" type="submit" value="🍹 Create account">
         </form>
     </div>
 </div>
 <link rel="stylesheet" href="../css/form.css" />
+<script src="../js/join.js"></script>
