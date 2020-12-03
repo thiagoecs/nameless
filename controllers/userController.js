@@ -56,6 +56,38 @@ const userDetail = (req, res) => res.send("user detail");
 const editProfile = (req, res) => res.send("edit profile");
 const changePassword = (req, res) => res.send("change password");
 
+//functions using the model
+const user_update = async (req, res) => {
+  const updateOk = await userModel.updateUser(req.params.id, req);
+  res.send(`updated... ${updateOk}`);
+}
+
+const user_delete = async (req, res) => {
+  const deleteOk = await userModel.deleteUser(req.params.id, req);
+  res.send(`deleted... ${deleteOk}`);
+}
+
+const user_list_get = async (req, res) => {
+  const users = await userModel.getAllUsers();
+  res.json(users);
+};
+
+const user_get_by_id = async (req, res) => {
+    const user = await userModel.getUser(req.params.id);
+    res.json(user);
+};
+
+const user_create = async (req,res) => {
+  console.log('userController user_create', req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+    }
+  const id = await userModel.insertUser(req);
+  const user = await userModel.getUser(id);
+  res.send(user);
+};
+
 module.exports = {
   postJoin,
   getJoin,
@@ -66,5 +98,10 @@ module.exports = {
   userDetail,
   editProfile,
   changePassword,
+  user_update,
+  user_delete,
+  user_list_get,
+  user_get_by_id,
+  user_create
 };
 //save functions

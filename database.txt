@@ -39,6 +39,8 @@ CREATE TABLE `foodTypes` (
 
 ALTER TABLE foodTypes CHANGE foodTypeId foodTypeId INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (foodTypeId);
 
+ALTER TABLE users ADD avatarUrl TEXT NULL DEFAULT NULL ; 
+
 
 ALTER TABLE `posts` ADD FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
 

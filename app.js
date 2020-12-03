@@ -12,7 +12,9 @@ const userRouter = require("./routers/userRouter");
 const routes = require("./routes");
 const app = express();
 
-app.use(cookieParser());
+
+//app.use(cookieParser());
+app.use(cookieParser('secret'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(localsMiddleware);

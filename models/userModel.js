@@ -49,6 +49,18 @@ const getUserLogin = async (params) => {
   }
 };
 
+const updateUser = async (id,req) =>{
+  try{
+    const [rows] = await promisePool.query('UPDATE user SET nickname = ?, email = ?, password = ? WHERE user_id = ?;',
+    [req.body.nickname, req.body.email, req.body.password, id]);
+    console.log('userModel updateUser:', rows);
+    return rows.affectedRows === 1;
+  }
+  catch(e){
+    return false;
+  }
+};
+
 const deleteUser = async (id) => {
   try {
     const [rows] = await promisePool.execute(
@@ -66,5 +78,6 @@ module.exports = {
   getUser,
   insertUser,
   getUserLogin,
+  updateUser,
   deleteUser,
 };
