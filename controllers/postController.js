@@ -24,6 +24,11 @@ const search = (req, res) => {
 
 const postHome = (req, res) => res.send("post home");
 
+const post_list_get = async (req, res) => {
+  const posts = await postModel.getAllPosts();
+  res.json(posts);
+};
+
 const postDetail = async (req, res) => {
   const id = req.params.id;
   console.log(id);
@@ -45,7 +50,11 @@ const postDetail = async (req, res) => {
 };
 */
 const upload = (req, res) => res.send("upload");
+
 const editPost = (req, res) => res.send("edit post");
+
+
+
 const deletePost = (req, res) => res.send("delete post");
 
 
