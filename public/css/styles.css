@@ -8,7 +8,7 @@ body {
   background: rgba(60, 151, 42, 0.816);
 }
 .title_header {
-  padding: 8.5vh 0 15px 65px;
+  padding: 8.5vh 0 15px 60px;
   position: fixed;
   top: 0;
   left: 0;
@@ -18,12 +18,13 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .title_header h1 {
   font-size: 4.8vw;
   font-style: italic;
   width: 60%;
+  margin-top: -30px;
   margin-bottom: 100px;
   text-transform: uppercase;
   font-family: "Prompt", sans-serif;
@@ -69,7 +70,7 @@ body {
 .title_header nav ul li:hover {
   opacity: 1;
 }
-.search_login_header {
+.login_header {
   width: 67%;
   height: 9vh;
   background: rgba(255, 255, 255, 0.8);
@@ -77,16 +78,63 @@ body {
   position: fixed;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   left: 33%;
   top: 0;
   box-shadow: 0 1px 6px 0 rgb(0 0 0 / 18%), 0 1px 2px 0 rgb(0 0 0 / 11%);
 }
-
+#search-bar {
+  background: transparent;
+  padding: 0.3em;
+  padding-left: 0;
+  font-size: 1.8vw;
+  font-weight: 700;
+  border: none;
+  border-bottom: 1.5px solid #3c972ad0;
+  width: 80%;
+}
+#search-bar:focus {
+  outline: none;
+  color: rgba(26, 63, 18, 0.863);
+}
+.search-button {
+  margin-left: -30px;
+  cursor: pointer;
+  border: none;
+}
+.search-button svg {
+  fill: #3c972ad0;
+  width: 25px;
+}
+.login_header ul {
+  display: flex;
+}
+.login_header ul li {
+  margin-right: 30px;
+}
+.login_header ul li:first-child a {
+  padding: 10px 30px;
+  color: white;
+  background: #fd8664;
+  border-radius: 10px;
+}
+.login_header ul li:first-child a:hover {
+  opacity: 0.8;
+}
+.login_header a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #464545;
+}
+.login_header a:hover {
+  color: black;
+}
 main {
   color: #f0f0f0;
   margin-left: 33%;
 }
-main section:first-child, .form-container {
+main section:first-child,
+.form-container {
   margin-top: 9vh;
 }
 main .movie,
@@ -111,7 +159,7 @@ main .movie .wrapper {
   flex-direction: column;
 }
 main .movie .wrapper .movie_header {
-  width: 500px;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -121,9 +169,9 @@ main .movie .wrapper .movie_header h4 {
   font-size: 36px;
   font-weight: 600;
 }
-main .movie .wrapper .movie_header h4 a{
- color:#f0f0f0;
- text-decoration: none;
+main .movie .wrapper .movie_header h4 a {
+  color: #f0f0f0;
+  text-decoration: none;
 }
 main .movie .wrapper .movie_header h5 {
   font-size: 18px;
@@ -134,4 +182,13 @@ img {
   height: 400px;
   box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
     inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.email-error,
+.password-error {
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: rgb(245, 65, 20);
 }

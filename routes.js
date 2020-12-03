@@ -9,6 +9,7 @@ const JOIN = "/join";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const SEARCH = "/search";
+const ME = "/me";
 
 // users
 const USERS = "/users";
@@ -30,17 +31,23 @@ const routes = {
   login: LOGIN,
   logout: LOGOUT,
   search: SEARCH,
+  me:ME,
   users: USERS,
-  userDetail: USER_DETAIL,
+  // if there is id parameter, redirects to that id
+  userDetail: (id) => {
+    if (id) {
+      return `/users/${id}`;
+    } else return USER_DETAIL;
+  },
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
   posts: POSTS,
   upload: UPLOAD,
-  postDetail: (id)=>{
-    if (id) return `/posts/${id}`
+  // if there is id parameter, redirects to that id
+  postDetail: (id) => {
+    if (id) return `/posts/${id}`;
     else return POST_DETAIL;
-  }
-  ,
+  },
   editPost: EDIT_POST,
   deletePost: DELETE_POST,
 };

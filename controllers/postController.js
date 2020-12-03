@@ -1,4 +1,4 @@
-const path = require("path");
+"use strict";
 const routes = require("../routes");
 const posts = require("../db");
 const postModel = require('../models/postModel');
@@ -9,48 +9,44 @@ const postModel = require('../models/postModel');
 
 
 
-// render html file with required source files
-// send variable pageTitle to layout file
+// render index.ejs file with required source files
+// Each functions send variable pageTitle to the layout file
+
+// main page
 const home = (req, res) => {
+  console.log(req.user)
   res.render("index", { pageTitle: "main", posts });
 };
 
+// show search results and query word
 const search = (req, res) => {
   const searchingBy = req.query.term;
   console.log(searchingBy);
   res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy });
-  //res.sendFile(path.resolve(__dirname, "../public/html", "search.html"));
 };
 
 const postHome = (req, res) => res.send("post home");
-/*
-const post_list_get = async (req, res) => {
-  const posts = await postModel.getAllPosts();
-  res.json(posts);
-};
-*/
-const postDetail = async (req, res) => {
+
+// post detail
+const postDetail = (req, res) => {
   const id = req.params.id;
   console.log(id);
   try {
-    //TODO: check to database
-    const post = await postModel.getPost(req.params.id);
-    res.json(post);
-    //
-    res.render("postDetail", { pageTitle: "main", posts });
+    //TODO: connect to database
+    res.render("postDetail", { pageTitle: "main", post });
   } catch (err) {
     console.log(err);
     res.redirect(routes.home);
   }
 };
 
-/*const post_get_by_id = async (req, res) => {
-  const post = await postModel.getPost(req.params.id);
-  res.json(post);
-};
-*/
-const upload = (req, res) => res.send("upload");
+// upload page
+const getUpload = (req, res) => res.render("upload", { pageTitle: "Upload post" });
 
+// send upload request
+const postUpload = async (req, res) => {};
+
+// edit post
 const editPost = (req, res) => res.send("edit post");
 
 
@@ -117,7 +113,8 @@ module.exports = {
   search,
   postHome,
   postDetail,
-  upload,
+  getUpload,
+  postUpload,
   editPost,
   deletePost,
   make_thumbnail,

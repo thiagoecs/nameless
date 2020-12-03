@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
   try {
-    const [rows] = await promisePool.execute("SELECT * FROM Users");
+    const [rows] = await promisePool.execute("SELECT * FROM users");
     return rows;
   } catch (e) {
     console.error("UserModel getAllUsers error: ", e.message);
@@ -13,7 +13,7 @@ const getAllUsers = async () => {
 
 const getUser = async (id) => {
   try {
-    const [rows] = await promisePool.execute("SELECT * FROM Users where id = ?", [
+    const [rows] = await promisePool.execute("SELECT * FROM users where id = ?", [
       id,
     ]);
     return rows[0];
@@ -27,7 +27,7 @@ const insertUser = async (nickname, email, password) => {
     const [
       rows,
     ] = await promisePool.execute(
-      "INSERT INTO Users (nickname, email, password) VALUES(?, ?, ?)",
+      "INSERT INTO users (nickname, email, password) VALUES(?, ?, ?)",
       [nickname, email, password]
     );
     return rows.insertId;
@@ -40,7 +40,7 @@ const getUserLogin = async (params) => {
   try {
     console.log(params);
     const [rows] = await promisePool.execute(
-      "SELECT * FROM Users WHERE email = ?;",
+      "SELECT * FROM users WHERE email = ?;",
       [params]
     );
     return rows[0];
@@ -64,7 +64,7 @@ const updateUser = async (id,req) =>{
 const deleteUser = async (id) => {
   try {
     const [rows] = await promisePool.execute(
-      "DELETE FROM wop_user WHERE user_id=?",
+      "DELETE FROM users WHERE user_id=?",
       [id]
     );
     return rows.affectedRows === 1;
