@@ -1,6 +1,5 @@
 "use strict";
 // This file is for managing indexes of each routers.
-// prob we can only use them in backend side..?
 
 const HOME ="/";
 
