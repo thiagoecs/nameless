@@ -2,9 +2,9 @@ main {
   display: flex;
   height: 100%;
 }
-span{
+span {
   margin-right: 5px;
-  color: #5FAA51;
+  color: #5faa51;
   font-weight: 600;
 }
 .form-wrapper {
@@ -16,6 +16,8 @@ span{
   margin-top: 10vh;
 }
 .form-container {
+  display: flex;
+  flex-direction: column;
   background: #f0f0f0;
   margin: 2rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -25,12 +27,13 @@ span{
   display: flex;
   flex-direction: column;
   min-width: 500px;
-  padding: 55px 40px;
+  padding: 40px 40px;
 }
 .form-container,
 .input-field,
 .submit,
-.textarea,.file-button {
+.textarea,
+.file-button {
   border: 1px solid #d2d6dc;
   border-radius: 8px;
 }
@@ -46,14 +49,19 @@ span{
   font-weight: 500;
   padding: 10px 19px;
   width: fit-content;
-  background: #5FAA51;
-  color:white;
+  background: #5faa51;
+  color: white;
   cursor: pointer;
   margin-bottom: 30px;
+  z-index: 1;
+  margin-top: 5px;
 }
 
 .filetype {
-  display: none;
+  display: inline-block;
+  color: black;
+  margin: -55px 0 1.3rem 1.25rem;
+  width: fit-content;
 }
 
 .textarea {
@@ -84,4 +92,10 @@ label {
 label,
 .submit {
   font-weight: 600;
+}
+.delete {
+  width: 200px;
+  text-align: center;
+  margin-bottom: 50px;
+  text-decoration: none;
 }

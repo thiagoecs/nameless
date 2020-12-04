@@ -48,8 +48,16 @@ const routes = {
     if (id) return `/posts/${id}`;
     else return POST_DETAIL;
   },
-  editPost: EDIT_POST,
-  deletePost: DELETE_POST,
+  editPost: (id) => {
+    if (id) {
+      return `/posts/${id}/edit`;
+    } else return EDIT_POST;
+  },
+  deletePost: (id) => {
+    if (id) {
+      return `/posts/${id}/delete`;
+    } else return DELETE_POST;
+  },
 };
 
 module.exports = routes;

@@ -134,7 +134,25 @@ const userDetail = async (req, res) => {
 }
 
 // edit profile
-const editProfile = (req, res) => res.send("edit profile");
+const getEditProfile = (req, res) => {
+  res.render("editProfile", { pageTitle: "Edit profile", user: res.locals.loggedUser });
+}
+
+const postEditProfile = async (req, res) => {
+  const {
+    body: { nickname, email },
+    file:{path},
+  } = req;
+  const user = res.locals.loggedUser
+  console.log(req.file)
+  try {
+    await userModel.updateUser(user.id,nickname,email,path)
+    res.redirect(routes.me);
+  } catch (err) {
+    console.log(err);
+    res.redirect(routes.editProfile);
+  }
+};
 
 // change password
 const changePassword = (req, res) => res.send("change password");
@@ -179,7 +197,8 @@ module.exports = {
   logout,
   userHome,
   userDetail,
-  editProfile,
+  getEditProfile,
+  postEditProfile,
   changePassword,
   getMe,
 };

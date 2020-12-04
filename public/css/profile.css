@@ -1,0 +1,19 @@
+main{
+    margin-top:18vh;
+}
+.user-profile{
+    width: min-content;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile{
+    flex-direction: column;
+}
+.u-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: none;
+}

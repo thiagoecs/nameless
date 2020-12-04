@@ -49,10 +49,10 @@ const getUserLogin = async (params) => {
   }
 };
 
-const updateUser = async (id,req) =>{
+const updateUser = async (id,nickname,email,avatarUrl) =>{
   try{
-    const [rows] = await promisePool.query('UPDATE user SET nickname = ?, email = ?, password = ? WHERE user_id = ?;',
-    [req.body.nickname, req.body.email, req.body.password, id]);
+    const [rows] = await promisePool.query('UPDATE users SET nickname = ?, email = ?, avatarUrl =? WHERE id = ?;',
+    [nickname,email,avatarUrl, id]);
     console.log('userModel updateUser:', rows);
     return rows.affectedRows === 1;
   }
@@ -64,7 +64,7 @@ const updateUser = async (id,req) =>{
 const deleteUser = async (id) => {
   try {
     const [rows] = await promisePool.execute(
-      "DELETE FROM users WHERE user_id=?",
+      "DELETE FROM users WHERE id=?",
       [id]
     );
     return rows.affectedRows === 1;

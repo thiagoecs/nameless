@@ -14,10 +14,13 @@ const app = express();
 
 //app.use(cookieParser());
 app.use(cookieParser('secret'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(localsMiddleware);
 
+// load directory that has source files (css files...)
+app.use(express.static("./public"));
+app.use("/uploads", express.static("uploads"));
 //set view engine as ejs
 app
   .set("views", path.join(__dirname, "views"))
@@ -25,12 +28,19 @@ app
   .use(require("express-ejs-layouts"))
   .set("layout", "layouts/layout");
 
+
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+if (process.env.NODE_ENV === "production") {
+  require("./production")(app, process.env.PORT);
+} else {
+  require("./localhost")(app, process.env.HTTPS_PORT, process.env.HTTP_PORT);
+}
+
+
 app.use(passport.initialize());
 
-// load directory that has source files (css files...)
-app.use(express.static("./public"));
 app.get('*',loggedUser)
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
 app.use(routes.users, verifyToken, userRouter);
-app.listen(4000, () => console.log("ok"));
+// app.listen(4000, () => console.log("ok"));

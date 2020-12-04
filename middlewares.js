@@ -1,14 +1,21 @@
 "use strict";
 // This file contains some middlewares.
 
+const userModel = require("./models/userModel");
 const routes = require("./routes");
 const jwt = require("jsonwebtoken");
-const userModel = require("./models/userModel");
+const multer = require("multer");
 
+const multerFiles = multer({dest:'uploads/files'})
+// const multerVideo = multer({ dest: "uploads/posts/videos/" });
+// const multerImage = multer({dest: "uploads/posts/images/"});
+// const multerAudio = multer({ dest: "uploads/posts/audios/" });
+const multerAvatar = multer({ dest: "uploads/avatars/" });
+
+// saving local variables for frontend files
 const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Food Advisor";
   res.locals.routes = routes;
-  //res.locals.loggedUser = req.cookies.userToken || undefined
   next();
 };
 
@@ -32,29 +39,33 @@ const verifyToken = (req, res, next) => {
 };
 
 // check current user
-const loggedUser = (req, res,next) => {
+const loggedUser = (req, res, next) => {
   const clientToken = req.cookies.userToken;
+  // find token and verify it
   if (clientToken) {
-    jwt.verify(clientToken, "test", async(err,decodedToken)=>{
-      if(err){
-        res.locals.loggedUser = undefined
-       next()
-      } else{
-        let user = await userModel.getUser(decodedToken.user)
-        console.log('tokenuser',user)
-        res.locals.loggedUser = user
+    jwt.verify(clientToken, "test", async (err, decodedToken) => {
+      // if the token is expired, return undefined
+      if (err) {
+        res.locals.loggedUser = undefined;
+        next();
+      } else {
+        // if there is a valid token, find data from database and save it as local variable
+        let user = await userModel.getUser(decodedToken.user);
+        res.locals.loggedUser = user;
         next();
       }
     });
   } else {
-    res.locals.loggedUser = undefined
-    next()
+    // if there's no token, return undefined
+    res.locals.loggedUser = undefined;
+    next();
   }
 };
 
 // managing routes that is only for not logged in users
 const onlyPublic = (req, res, next) => {
   const clientToken = req.cookies.userToken;
+  // If there is a token, redirected to main page
   if (clientToken) {
     res.redirect(routes.home);
   } else {
@@ -62,4 +73,9 @@ const onlyPublic = (req, res, next) => {
   }
 };
 
-module.exports = { localsMiddleware, verifyToken, onlyPublic,loggedUser };
+// const uploadVideo = multerVideo.single("videoFile");
+// const uploadImg = multerImage.single("imgFile");
+// const uploadAudio = multerAudio.single("audioFile");
+const uploadFiles = multerFiles.single('file');
+const uploadAvatar = multerAvatar.single("avatar");
+module.exports = { localsMiddleware, verifyToken, onlyPublic, loggedUser, uploadFiles,uploadAvatar };

@@ -279,4 +279,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# https certificate and keys must be generate on every machine and never move out of there ever
+certrequest.csr
+ssl-cert.pem
+ssl-key.pem
+
 # End of https://www.toptal.com/developers/gitignore/api/node,vscode,webstorm,windows,macos

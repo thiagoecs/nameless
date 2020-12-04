@@ -7,23 +7,26 @@ const {
   postDetail,
   getUpload,
   postUpload,
-  editPost,
+  getEditPost,
   deletePost,
+  postEditPost,
 } = require("../controllers/postController");
-const { verifyToken } = require("../middlewares");
-const passport = require('../utils/passport')
+const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 
 postRouter.get(routes.home, verifyToken, postHome);
 
 // upload a post
+postRouter.use("/uploads", express.static("uploads"));
 postRouter.get(routes.upload, verifyToken, getUpload);
-postRouter.post(routes.upload, verifyToken, postUpload)
+postRouter.post(routes.upload, verifyToken, loggedUser, uploadFiles, postUpload);
 
 // post detail page
 postRouter.get(routes.postDetail(), postDetail);
 
 // edit a post
-postRouter.get(routes.editPost, verifyToken, editPost);
-postRouter.get(routes.deletePost, verifyToken, deletePost);
+postRouter.get(routes.editPost(), verifyToken, getEditPost);
+postRouter.post(routes.editPost(), verifyToken, loggedUser,uploadFiles, postEditPost);
+
+postRouter.get(routes.deletePost(), verifyToken, deletePost);
 
 module.exports = postRouter;

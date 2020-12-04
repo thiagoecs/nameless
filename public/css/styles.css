@@ -129,6 +129,10 @@ body {
 .login_header a:hover {
   color: black;
 }
+figure{
+  display:flex;
+  justify-content: center;
+}
 main {
   color: #f0f0f0;
   margin-left: 33%;
@@ -142,6 +146,7 @@ main .movie .wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 9vh;
 }
 main .movie {
   background: linear-gradient(
@@ -157,8 +162,9 @@ main .movie {
 main .movie .wrapper {
   width: 75%;
   flex-direction: column;
+  justify-content: center;
 }
-main .movie .wrapper .movie_header {
+main .movie .wrapper .movie_header, .upload_time, .view-votes {
   width: 95%;
   display: flex;
   justify-content: space-between;
@@ -169,7 +175,7 @@ main .movie .wrapper .movie_header h4 {
   font-size: 36px;
   font-weight: 600;
 }
-main .movie .wrapper .movie_header h4 a {
+main .movie .wrapper .movie_header h4 a, h5 a {
   color: #f0f0f0;
   text-decoration: none;
 }
@@ -178,12 +184,24 @@ main .movie .wrapper .movie_header h5 {
   font-weight: 600;
 }
 img {
-  width: 100%;
+  width: 90%;
+  min-width: 450px;
   height: 400px;
   box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
     inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
+.view-votes{
+  margin-top: 1.3rem;
+  justify-content: flex-start;
+}
+.view-votes h5:first-child{
+  margin-right: 2.5rem;
+}
 
+p{
+  margin-bottom: 3rem;
+  font-size: 1.2rem;
+}
 .email-error,
 .password-error {
   margin-top: -1.5rem;

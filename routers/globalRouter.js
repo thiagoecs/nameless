@@ -2,7 +2,7 @@
 const express = require("express");
 const globalRouter = express.Router();
 const routes = require("../routes");
-const { onlyPublic, verifyToken } = require("../middlewares");
+const { onlyPublic, verifyToken,loggedUser } = require("../middlewares");
 const { home, search } = require("../controllers/postController");
 const {
   getJoin,
@@ -32,6 +32,6 @@ globalRouter.get(routes.logout,verifyToken, logout);
 globalRouter.get(routes.search, search);
 
 // my profile
-globalRouter.get(routes.me, verifyToken, getMe);
+globalRouter.get(routes.me, verifyToken,loggedUser, getMe);
 
 module.exports = globalRouter;
