@@ -5,10 +5,10 @@ const HOME ="/";
 
 // global
 const JOIN = "join";
-const LOGIN = "/login";
-const LOGOUT = "/logout";
-const SEARCH = "/search";
-const ME = "/me";
+const LOGIN = "login";
+const LOGOUT = "logout";
+const SEARCH = "search";
+const ME = "me";
 
 // users
 const USERS = "/users";
