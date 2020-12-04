@@ -19,7 +19,7 @@ globalRouter.all(`/${routes.join}`,(req,res,next)=>{
   next();
 });
 // main page
-globalRouter.get(routes.home, home);
+globalRouter.get('/', home);
 
 // Register and make newly registered account logged in
 globalRouter.get('join', onlyPublic, getJoin);
