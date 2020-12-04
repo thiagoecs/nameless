@@ -14,7 +14,7 @@ const postModel = require('../models/postModel');
 
 // main page
 const home = (req, res) => {
-  console.log(req.user)
+  console.log(req.user);
   res.render("index", { pageTitle: "main", posts });
 };
 

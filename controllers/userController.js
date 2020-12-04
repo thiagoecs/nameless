@@ -123,7 +123,7 @@ const getMe = (req, res) => {
 
 // show users' info
 const userDetail = async (req, res) => {
-  const{params:{id}}=req
+  const{params:{id}}=req;
   const user = await userModel.getUser(id);
   if (user){   
     res.render("userDetail", { pageTitle: "User detail", user });
@@ -131,7 +131,7 @@ const userDetail = async (req, res) => {
   }else{
     res.redirect(routes.home)
   }
-}
+};
 
 // edit profile
 const editProfile = (req, res) => res.send("edit profile");
@@ -143,12 +143,12 @@ const changePassword = (req, res) => res.send("change password");
 const user_update = async (req, res) => {
   const updateOk = await userModel.updateUser(req.params.id, req);
   res.send(`updated... ${updateOk}`);
-}
+};
 
 const user_delete = async (req, res) => {
   const deleteOk = await userModel.deleteUser(req.params.id, req);
   res.send(`deleted... ${deleteOk}`);
-}
+};
 
 const user_list_get = async (req, res) => {
   const users = await userModel.getAllUsers();
