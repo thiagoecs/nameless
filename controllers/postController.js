@@ -62,7 +62,7 @@ const postUpload = async (req, res) => {
   const creator = res.locals.loggedUser.id;
   const newPost = await postModel.insertPost(title, description, creator);
   const newFile = await postModel.insertFiles(newPost, path);
-  res.redirect(routes.postDetail(newPost));
+  res.redirect(`${newpost}`);
 };
 
 // edit post
