@@ -46,7 +46,7 @@ const postDetail = async (req, res) => {
     res.render("postDetail", { pageTitle: post.restaurant, post });
   } catch (err) {
     console.log(err);
-    res.redirect(routes.home);
+    res.redirect('/');
   }
 };
 
@@ -79,7 +79,7 @@ const getEditPost = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.redirect(routes.home);
+    res.redirect('/');
   }
 };
 
@@ -92,9 +92,9 @@ const postEditPost = async (req, res) => {
   try {
     await postModel.updatePost(id, title, description);
     await postModel.updateFiles(id, path);
-    res.redirect(routes.postDetail(id));
+    res.redirect(`/${id}`);
   } catch (err) {
-    res.redirect(routes.home);
+    res.redirect('/');
   }
 };
 

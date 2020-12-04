@@ -110,7 +110,7 @@ const getLogin = (req, res) => {
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
   res.clearCookie("userToken");
-  res.redirect(routes.home);
+  res.redirect('/');
 };
 
 // ******** TODO: make profile pages ********
@@ -129,7 +129,7 @@ const userDetail = async (req, res) => {
     res.render("userDetail", { pageTitle: "User detail", user });
     console.log("user query", user)
   }else{
-    res.redirect(routes.home)
+    res.redirect('/')
   }
 }
 
