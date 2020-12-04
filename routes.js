@@ -4,7 +4,7 @@
 const HOME ="/";
 
 // global
-const JOIN = "join";
+const JOIN = "/join";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const SEARCH = "/search";

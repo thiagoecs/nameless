@@ -12,9 +12,12 @@ const {
   logout,
   getMe
 } = require("../controllers/userController");
-globalRouter.use("/public", express.static("public"));
-const passport = require('passport')
-
+//globalRouter.use("/public", express.static("public"));
+//const passport = require('passport')
+globalRouter.all(routes.join,(req,res,next)=>{
+  console.log('globalRouter');
+  next();
+});
 // main page
 globalRouter.get(routes.home, home);
 
