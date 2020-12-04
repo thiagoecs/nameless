@@ -14,7 +14,7 @@ CREATE TABLE `posts` (
   `views` int DEFAULT '0',
   `votes` int DEFAULT '0',
   `creator` int,
-  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,
   `foodType` int
 );
 
@@ -25,18 +25,18 @@ CREATE TABLE `files` (
 
 CREATE TABLE `comments` (
   `text` varchar(255),
-  `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,
   `post` int,
   `creator` int
 );
 
 CREATE TABLE `foodTypes` (
-  `foodTypeId` INT(11) NOT NULL AUTO_INCREMENT ,
+  `foodTypeId` INT(11) NOT NULL,
   `foodType` varchar(255)
 );
 
 CREATE TABLE `userTypes` ( 
-  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT ,
+  `id` INT PRIMARY KEY NOT NULL,
   `name` VARCHAR(255) NOT NULL );
 
 ALTER TABLE `foodTypes` add PRIMARY KEY (foodTypeId);
