@@ -2,12 +2,12 @@
     <div class="wrapper">
         <div class="movie_header">
             <h4><%=post.restaurant%></a></h4>
-            <h5><a href='<%=routes.userDetail(post.creator)%>'><%=post.nickname%></a></h5>
+            <h5><a href='/users/<%=post.creator%>'><%=post.nickname%></a></h5>
         </div>
         <div class="upload_time">
             <h6 style="font-size: 0.8rem;"><%=post.createdAt%></h6>
             <%if (loggedUser && post.creator === loggedUser.id){%>
-            <a href="<%=routes.editPost(post.id)%>">
+            <a href="edit">
                 <button>Edit post</button>
             </a>
             <%}%>

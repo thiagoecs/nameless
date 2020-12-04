@@ -2,11 +2,11 @@
 <section class="movie">
   <div class="wrapper">
     <div class="movie_header">
-      <h4><a href='<%=routes.postDetail(post.id)%>'><%=post.restaurant%></a></h4>
-      <h5><a href='<%=routes.userDetail(post.creator)%>'><%=post.nickname%></a></h5>
+      <h4><a href='posts/<%=post.id%>'><%=post.restaurant%></a></h4>
+      <h5><a href='users/<%=post.creator%>'><%=post.nickname%></a></h5>
     </div>
     <figure>
-      <a href='<%=routes.postDetail(post.id)%>'>
+      <a href='posts/<%=post.id%>'>
       <img src="<%=post.sourceFile%>" alt=""></a>
     </figure>
     <h5>views: <%=post.views%></h5>

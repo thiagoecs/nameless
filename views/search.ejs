@@ -5,11 +5,11 @@
 <section class="movie">
   <div class="wrapper">
     <div class="movie_header">
-      <h4><a href='<%=routes.postDetail(post.id)%>'><%=post.restaurant%></a></h4>
+      <h4><a href='posts/<%=post.id%>'><%=post.restaurant%></a></h4>
       <h5><%=post.nickname%></h5>
     </div>
     <figure>
-      <a href='<%=routes.postDetail(post.id)%>'>
+      <a href='posts/<%=post.id%>'>
         <img src="<%=post.sourceFile%>" alt=""></a>
     </figure>
     <h5>views: <%=post.views%></h5>
