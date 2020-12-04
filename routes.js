@@ -2,23 +2,23 @@
 // This file is for managing indexes of each routers.
 // prob we can only use them in backend side..?
 
-const HOME = "/";
+const HOME = "/app/";
 
 // global
-const JOIN = "/join";
-const LOGIN = "/login";
-const LOGOUT = "/logout";
-const SEARCH = "/search";
-const ME = "/me";
+const JOIN = "/app/join";
+const LOGIN = "/app/login";
+const LOGOUT = "/app/logout";
+const SEARCH = "/app/search";
+const ME = "/app/me";
 
 // users
-const USERS = "/users";
+const USERS = "/app/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-passwd";
 
 // posts
-const POSTS = "/posts";
+const POSTS = "/app/posts";
 const UPLOAD = "/upload";
 const POST_DETAIL = "/:id";
 const EDIT_POST = "/:id/edit";

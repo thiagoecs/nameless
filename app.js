@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(localsMiddleware);
 
 // load directory that has source files (css files...)
-app.use(express.static("./public"));
+app.use("/public",express.static("./public"));
 app.use("/uploads", express.static("uploads"));
 //set view engine as ejs
 app
