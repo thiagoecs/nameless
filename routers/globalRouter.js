@@ -22,7 +22,7 @@ globalRouter.all(`/${routes.join}`,(req,res,next)=>{
 globalRouter.get(routes.home, home);
 
 // Register and make newly registered account logged in
-globalRouter.get(routes.join, onlyPublic, getJoin);
+globalRouter.get('join', onlyPublic, getJoin);
 globalRouter.post(routes.join, onlyPublic, postJoin, postLogin);
 
 // login
