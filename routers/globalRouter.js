@@ -14,16 +14,16 @@ const {
 } = require("../controllers/userController");
 //globalRouter.use("/public", express.static("public"));
 //const passport = require('passport')
-globalRouter.all(`/${routes.join}`,(req,res,next)=>{
-  console.log('globalRouter');
-  next();
-});
+// globalRouter.all(`/${routes.join}`,(req,res,next)=>{
+//   console.log('globalRouter');
+//   next();
+// });
 // main page
-globalRouter.get('', home);
+globalRouter.get('/', home);
 
 // Register and make newly registered account logged in
-globalRouter.get('join', onlyPublic, getJoin);
-globalRouter.post('join', onlyPublic, postJoin, postLogin);
+globalRouter.get('/join', onlyPublic, getJoin);
+globalRouter.post('/join', onlyPublic, postJoin, postLogin);
 
 // login
 globalRouter.get('login', onlyPublic, getLogin);
