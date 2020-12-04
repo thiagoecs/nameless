@@ -2,7 +2,7 @@
 const express = require("express");
 const globalRouter = express.Router();
 const routes = require("../routes");
-const { onlyPublic, verifyToken,loggedUser } = require("../middlewares");
+const { onlyPublic, verifyToken, loggedUser } = require("../middlewares");
 const { home, search } = require("../controllers/postController");
 const {
   getJoin,
@@ -10,7 +10,7 @@ const {
   getLogin,
   postLogin,
   logout,
-  getMe
+  getMe,
 } = require("../controllers/userController");
 //globalRouter.use("/public", express.static("public"));
 //const passport = require('passport')
@@ -19,23 +19,23 @@ const {
 //   next();
 // });
 // main page
-globalRouter.get('/', home);
+globalRouter.get("/", home);
 
 // Register and make newly registered account logged in
-globalRouter.get('/join', onlyPublic, getJoin);
-globalRouter.post('/join', onlyPublic, postJoin, postLogin);
+globalRouter.route("/join").get(onlyPublic, getJoin)
+.post(onlyPublic, postJoin, postLogin);
 
 // login
-globalRouter.get('login', onlyPublic, getLogin);
-globalRouter.post('login', onlyPublic, postLogin);
+globalRouter.route('/login').get(onlyPublic, getLogin)
+.post(onlyPublic, postLogin);
 
 // logout
-globalRouter.get('logout',verifyToken, logout);
+globalRouter.get("/logout", verifyToken, logout);
 
 // search
-globalRouter.get('search', search);
+globalRouter.get("/search", search);
 
 // my profile
-globalRouter.get('me', verifyToken,loggedUser, getMe);
+globalRouter.get("/me", verifyToken, loggedUser, getMe);
 
 module.exports = globalRouter;

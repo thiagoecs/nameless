@@ -12,15 +12,15 @@ const {
 } = require("../controllers/userController");
 userRouter.use("/uploads", express.static("uploads"));
 
-userRouter.get(routes.home, userHome);
+userRouter.get('/users', userHome);
 
 // edit profile
-userRouter.get(routes.editProfile,getEditProfile);
-userRouter.post(routes.editProfile,loggedUser,uploadAvatar, postEditProfile)
+userRouter.route('/edit-profile').get(getEditProfile)
+.post(loggedUser,uploadAvatar, postEditProfile)
 // change password
 userRouter.get(routes.changePassword, changePassword);
 
 // user profile
-userRouter.get(routes.userDetail(),userDetail);
+userRouter.get('/:id',userDetail);
 
 module.exports = userRouter;
