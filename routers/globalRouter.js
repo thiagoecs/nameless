@@ -19,23 +19,23 @@ globalRouter.all(`/${routes.join}`,(req,res,next)=>{
   next();
 });
 // main page
-globalRouter.get('/', home);
+globalRouter.get('', home);
 
 // Register and make newly registered account logged in
 globalRouter.get('join', onlyPublic, getJoin);
-globalRouter.post(routes.join, onlyPublic, postJoin, postLogin);
+globalRouter.post('join', onlyPublic, postJoin, postLogin);
 
 // login
-globalRouter.get(routes.login, onlyPublic, getLogin);
-globalRouter.post(routes.login, onlyPublic, postLogin);
+globalRouter.get('login', onlyPublic, getLogin);
+globalRouter.post('login', onlyPublic, postLogin);
 
 // logout
-globalRouter.get(routes.logout,verifyToken, logout);
+globalRouter.get('logout',verifyToken, logout);
 
 // search
-globalRouter.get(routes.search, search);
+globalRouter.get('search', search);
 
 // my profile
-globalRouter.get(routes.me, verifyToken,loggedUser, getMe);
+globalRouter.get('me', verifyToken,loggedUser, getMe);
 
 module.exports = globalRouter;
