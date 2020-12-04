@@ -12,6 +12,7 @@ const {
   logout,
   getMe
 } = require("../controllers/userController");
+globalRouter.use("/public", express.static("public"));
 const passport = require('passport')
 
 // main page
