@@ -110,7 +110,7 @@ const getLogin = (req, res) => {
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
   res.clearCookie("userToken");
-  res.redirect('/');
+  res.redirect('https://10.114.32.39/app/');
 };
 
 // ******** TODO: make profile pages ********
