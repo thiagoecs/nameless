@@ -1,11 +1,25 @@
-<div class="post__container">
-    <h4><%=post.title%></h4>
-    <h5><%=post.creator.name%></h5>
-    <div class="post__info">
-        <a href=""></a>
-        <h5>views: <%=post.views%></h5>
-        <h5>comments: <%=post.comments%></h5>
-        <h5>Vote: <%=post.votes%></h5>
-        <p class="post__description"></p>
+<section class="movie">
+    <div class="wrapper">
+        <div class="movie_header">
+            <h4><%=post.restaurant%></a></h4>
+            <h5><a href='<%=routes.userDetail(post.creator)%>'><%=post.nickname%></a></h5>
+        </div>
+        <div class="upload_time">
+            <h6 style="font-size: 0.8rem;"><%=post.createdAt%></h6>
+            <%if (loggedUser && post.creator === loggedUser.id){%>
+            <a href="<%=routes.editPost(post.id)%>">
+                <button>Edit post</button>
+            </a>
+            <%}%>
+        </div>
+        <figure>
+            <img src="<%=post.sourceFile%>" alt="">
+        </figure>
+            <div class="view-votes">
+                <h5>views: <%=post.views%></h5>
+                <h5>Vote: <%=post.votes%></h5>
+            </div>
+        <p class="post__description"><%=post.description%></p>
+        <h5>comments: </h5>
     </div>
-</div>
+</section>

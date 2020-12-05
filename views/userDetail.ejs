@@ -1,0 +1,19 @@
+<div class="user-profile">
+    <div class="user-profile__header">
+        <figure class="profile">
+            <img class="u-avatar" src="/<%=user.avatarUrl%>">
+            <h4 class="profile__username"><%=user.nickname%></h4>
+        </figure>
+    </div>
+    <%if (user.id === loggedUser.id) {%>
+    <div class="user-profile__btns">
+        <a href="/users<%= routes.editProfile%>">
+            <button>Edit Profile</button>
+        </a>
+        <a href="/users<%= routes.changePassword%>">
+            <button>Change Password</button>
+        </a>
+    </div>
+    <%}%>
+</div>
+<link rel="stylesheet" href="../css/profile.css" />

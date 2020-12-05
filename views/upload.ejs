@@ -1,0 +1,17 @@
+<div class="form-wrapper">
+    <h2>Upload Post</h2>
+    <div class="form-container">
+        <!-- TODO: add validators-->
+        <form action="/posts<%=routes.upload%>" method="POST" enctype="multipart/form-data" id="upload">
+            <label><span>*</span>Add files (image, video, audio files available)</label>
+            <label class="file-button" for="file">Add file</label>
+            <input class="filetype" type="file" name="file" id="file" accept="audio/*,video/*,image/*" required />
+            <label for="title"><span>*</span>Restaurant</label>
+            <input class="input-field" type="text" name="title" id="title" placeholder="Restaurant's name" required />
+            <label for="description">Description</label>
+            <textarea class="textarea" form="upload" name="description" id="description"></textarea>
+            <input class="submit" type="submit" value="🥞 Upload post" />
+        </form>
+    </div>
+</div>
+<link rel="stylesheet" href="../css/form.css" />
