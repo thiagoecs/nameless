@@ -1,6 +1,8 @@
 "use strict";
 const routes = require("../routes");
 const postModel = require("../models/postModel");
+const path = require('path')
+
 
 //const {validationResult } = require('express-validator');
 //const {makeThumbnail} = require('../utils/resize');
@@ -12,13 +14,17 @@ const postModel = require("../models/postModel");
 
 // main page
 const home = async (req, res) => {
-  try {
-    const posts = await postModel.getAllPosts();
-    res.render("index", { pageTitle: "main", posts });
-  } catch (e) {
-    console.log(e);
-    res.render("index", { pageTitle: "main", posts: [] });
-  }
+  // try {
+  //   const posts = await postModel.getAllPosts();
+  //   res.render("index", { pageTitle: "main", posts });
+  // } catch (e) {
+  //   console.log(e);
+  //   res.render("index", { pageTitle: "main", posts: [] });
+  // }
+  const posts = await postModel.getAllPosts();
+ res.sendFile(path.join(__dirname,'../public/html'+'/index.html'))
+ //res.render('index')
+ //res.json(posts)
 };
 
 // show search results and query word
@@ -34,9 +40,11 @@ const search = async (req, res) => {
   }
 };
 
-// for /video route
-const postHome = (req, res) => res.send("post home");
-
+// for /post route
+const postHome =async (req, res) => {
+  const posts = await postModel.getAllPosts()
+  res.json(posts)
+}
 // post detail
 const postDetail = async (req, res) => {
   const id = req.params.id;

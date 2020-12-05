@@ -43,4 +43,4 @@ app.get('*',loggedUser)
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
 app.use(routes.users, verifyToken, userRouter);
-// app.listen(4000, () => console.log("ok"));
+app.listen(4000, () => console.log("ok"));

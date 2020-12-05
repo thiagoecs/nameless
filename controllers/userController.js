@@ -1,6 +1,7 @@
 "use strict";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
@@ -34,7 +35,8 @@ const errorHandler = (err) => {
 
 // access join page
 const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "Join" });
+  //res.render("join", { pageTitle: "Join" });
+  res.sendFile(path.join(__dirname, "../public/html" + "/join.html"));
 };
 
 // sending join request

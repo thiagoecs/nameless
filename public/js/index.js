@@ -1,13 +1,12 @@
-<script>
-  const url = "https://localhost:8000"
-  const main = document.querySelector('main')
+const url = "https://localhost:8000";
+const main = document.querySelector("main");
 
-  const getPost = async () => {
+const getPost = async () => {
   try {
-      const response = await fetch(url + "/posts")
-      const posts = await response.json()
-      for (const post of posts) {
-        main.innerHTML += `
+    const response = await fetch(url + "/posts");
+    const posts = await response.json();
+    for (const post of posts) {
+      main.innerHTML += `
         <section class="movie">
           <div class="wrapper">
             <div class="movie_header">
@@ -22,11 +21,10 @@
           <h5 class='comments'>comments: ${post.comments}</h5>
           <h5 class="votes">Vote: ${post.votes}</h5>
         </div>
-        </section>`
-      }
-    } catch (e) {
-      console.log(e)
+        </section>`;
     }
+  } catch (e) {
+    console.log(e);
   }
-  getPost()
-</script>
+};
+getPost();
