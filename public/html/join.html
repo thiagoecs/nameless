@@ -6,13 +6,12 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css" />
     <link rel="stylesheet" type="text/css" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/form.css" />
-    <title>Food Advisor</title>
-
+    <title>Join | Food Advisor</title>
 </head>
 <body>
     <header class="title_header">
-        <h1><a href='<%=routes.home%>'>Food advisor</a></h1>
-        <form action="<%=routes.search%>" method="get">
+        <h1><a href='https://localhost:8000'>Food advisor</a></h1>
+        <form action="https://localhost:8000/search" method="get">
             <input id="search-bar" type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
@@ -29,7 +28,6 @@
             <p>
                 some explanation...
             </p>
-        
             <nav>
                 <ul>
                     <li>About us</li>
@@ -39,12 +37,11 @@
     </header>
     <header class="login_header">
         <ul>
-
             <li>
-                <a class="join" href="#">Join</a>
+                <a class="join" href="https://localhost:8000/join">Join</a>
             </li>
             <li>
-                <a class="login" href="#">Log In</a>
+                <a class="login" href="https://localhost:8000/login">Log In</a>
             </li>
         </ul>
     </header>
@@ -53,7 +50,7 @@
         <h2>Join Food Advisor!</h2>
         <div class="form-container">
             <!-- TODO: add validators-->
-            <form class="register-form" action="<%=routes.join%>" method="POST">
+            <form class="register-form" action="https://localhost:8000/join" method="POST">
                 <label for="nickname">Nickname</label>
                 <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname" pattern=".{3,}"
                     required>

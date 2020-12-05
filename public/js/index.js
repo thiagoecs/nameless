@@ -1,3 +1,4 @@
+'use strict';
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
 

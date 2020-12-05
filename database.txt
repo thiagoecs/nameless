@@ -39,6 +39,10 @@ CREATE TABLE `userTypes` (
   `id` INT PRIMARY KEY NOT NULL,
   `name` VARCHAR(255) NOT NULL );
 
+alter table `files` add column `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT;
+
+alter table `comments` add column `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `foodTypes` add PRIMARY KEY (foodTypeId);
 
 ALTER TABLE `posts` ADD FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
