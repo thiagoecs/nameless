@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="title_header">
-        <h1><a href='https://localhost:8000'>Food advisor</a></h1>
+        <h1><a href='https://localhost:8000/'>Food advisor</a></h1>
         <form action="https://localhost:8000/search" method="get">
             <input id="search-bar" type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
@@ -49,25 +49,11 @@
         </ul>
     </header>
     <main>
-        <div class="form-wrapper">
-            <h2>Log In</h2>
-            <div class="form-container">
-                <!-- TODO: add validators-->
-                <form class="login-form" action="https://localhost:8000/join" method="POST">
-                    <label for="email">Email</label>
-                    <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
-                    <span class="email-error"></span>
-                    <label for="password">Password</label>
-                    <input class="input-field" type="password" name="password" id="password" placeholder="Password" required>
-                    <span class="password-error"></span>
-                    <input class="submit" type="submit" value="🍕 Enter">
-                </form>
-            </div>
-        </div>
+    
     </main>
     <footer>
         <span class="footer__text"></span>
     </footer>
-    <script src="../js/login.js"></script>
+    <script src="../js/search.js"></script>
 </body>
 </html>

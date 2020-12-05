@@ -11,8 +11,8 @@
 </head>
 <body>
     <header class="title_header">
-        <h1><a href='<%=routes.home%>'>Food advisor</a></h1>
-        <form action="<%=routes.search%>" method="get">
+        <h1><a href='https://localhost:8000/'>Food advisor</a></h1>
+        <form action="https://localhost:8000/search" method="get">
             <input id="search-bar" type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
@@ -41,39 +41,15 @@
         <ul>
 
             <li>
-                <a class="join" href="#">Join</a>
+                <a class="join" href="https://localhost:8000/join">Join</a>
             </li>
             <li>
-                <a class="login" href="#">Log In</a>
+                <a class="login" href="https://localhost:8000/login">Log In</a>
             </li>
         </ul>
     </header>
     <main>
-        <section class="movie">
-            <div class="wrapper">
-                <div class="movie_header">
-                    <h4><%=post.restaurant%></a></h4>
-                    <h5><a href='<%=routes.userDetail(post.creator)%>'><%=post.nickname%></a></h5>
-                </div>
-                <div class="upload_time">
-                    <h6 style="font-size: 0.8rem;"><%=post.createdAt%></h6>
-                    <%if (loggedUser && post.creator === loggedUser.id){%>
-                    <a href="<%=routes.editPost(post.id)%>">
-                        <button>Edit post</button>
-                    </a>
-                    <%}%>
-                </div>
-                <figure>
-                    <img src="<%=post.sourceFile%>" alt="">
-                </figure>
-                    <div class="view-votes">
-                        <h5>views: <%=post.views%></h5>
-                        <h5>Vote: <%=post.votes%></h5>
-                    </div>
-                <p class="post__description"><%=post.description%></p>
-                <h5>comments: </h5>
-            </div>
-        </section>
+    
     </main>
     <footer>
         <span class="footer__text"></span>
