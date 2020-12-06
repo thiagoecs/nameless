@@ -92,7 +92,7 @@ const postLogin = (req, res) => {
         }
         // if user succeeds login, jwt token is made
         const accessToken = jwt.sign({ user: user.id }, "test");
-        res.cookie("userToken", accessToken)
+        res.cookie("userToken", accessToken);
         // sending json data with user id to frontend
         return res.status(201).json({ user: user.id, accessToken });
       });
@@ -109,17 +109,18 @@ const getLogin = (req, res) => {
 
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
-  req.logout();
+  //req.logout();
+  res.clearCookie("userToken");
   res.status(200).json({ message: "logged out" });
 };
 
 // ******** TODO: make profile pages ********
 const userHome = (req, res) => {
-  res.send({hi:req.onnewsession})
-}
+  res.send({ hi: req.onnewsession });
+};
 // get my profile
 const getMe = async (req, res) => {
-  res.json({req})
+  res.json({ req });
 };
 
 // show users' info
@@ -131,7 +132,7 @@ const userDetail = async (req, res) => {
   if (user) {
     // res.render("userDetail", { pageTitle: "User detail", user });
     // console.log("user query", user);
-    res.status(200).json({user})
+    res.status(200).json({ user });
   } else {
     res.redirect(routes.home);
   }

@@ -34,6 +34,7 @@ const getPost = async () => {
 
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
+  console.log(document.cookie)
   const token = sessionStorage.getItem("userToken");
   if (token) {
     redButton.href = `${url}/posts/upload`;
