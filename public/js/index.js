@@ -54,6 +54,7 @@ const deleteCookie = (name) => {
   expireDate.setDate(expireDate.getDate() - 1);
   document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
 };
+
 // log out
 const logOut = () => {
   const logOut = document.querySelector(".logout");

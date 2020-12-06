@@ -6,6 +6,7 @@ const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
 const htmlFilePath = "../public/html";
+const maxAge = 60 * 60 * 1000; // maximum storage period in millisecond
 
 // error handler
 // This is for sending error information to frontend side.
@@ -88,15 +89,17 @@ const postLogin = (req, res) => {
       }
       req.login(user, { session: false }, (err) => {
         if (err) {
+          console.log(err)
           return res.status(400).json({ err });
         }
         // if user succeeds login, jwt token is made
         const accessToken = jwt.sign({ user: user.id }, "test");
-        res.cookie("userToken", accessToken);
+        res.cookie("userToken", accessToken, { maxAge: maxAge * 2 });
         // sending json data with user id to frontend
-        return res.status(201).json({ user: user.id, accessToken });
+        return res.status(201).json({ user: user.id});
       });
     } catch (err) {
+      console.log(err)
       return res.status(400).json({ err });
     }
   })(req, res);
