@@ -26,12 +26,12 @@ globalRouter.get(routes.login, onlyPublic, getLogin);
 globalRouter.post(routes.login, onlyPublic, postLogin);
 
 // logout
-globalRouter.get(routes.logout,verifyToken, logout);
+globalRouter.get(routes.logout, logout);
 
 // search
 globalRouter.get(routes.search, search);
 
 // my profile
-globalRouter.get(routes.me, verifyToken,loggedUser, getMe);
+globalRouter.get(routes.me, passport.authenticate("jwt", { session: false }), getMe);
 
 module.exports = globalRouter;

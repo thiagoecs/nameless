@@ -2,29 +2,16 @@
 const routes = require("../routes");
 const postModel = require("../models/postModel");
 const path = require('path')
-
+const htmlFilePath = '../public/html'
 
 //const {validationResult } = require('express-validator');
 //const {makeThumbnail} = require('../utils/resize');
 //const imageMeta = require('../utils/imageMeta');
 //const { getCoordinates } = require('../utils/imageMeta');
 
-// render index.ejs file with required source files
-// Each functions send variable pageTitle to the layout file
-
 // main page
 const home = async (req, res) => {
-  // try {
-  //   const posts = await postModel.getAllPosts();
-  //   res.render("index", { pageTitle: "main", posts });
-  // } catch (e) {
-  //   console.log(e);
-  //   res.render("index", { pageTitle: "main", posts: [] });
-  // }
-  const posts = await postModel.getAllPosts();
- res.sendFile(path.join(__dirname,'../public/html'+'/index.html'))
- //res.render('index')
- //res.json(posts)
+ res.sendFile(path.join(__dirname,htmlFilePath+'/index.html'))
 };
 
 // show search results and query word
@@ -40,11 +27,12 @@ const search = async (req, res) => {
   }
 };
 
-// for /post route
+// get posts' information
 const postHome =async (req, res) => {
   const posts = await postModel.getAllPosts()
   res.json(posts)
 }
+
 // post detail
 const postDetail = async (req, res) => {
   const id = req.params.id;

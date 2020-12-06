@@ -1,6 +1,9 @@
-'use strict';
+"use strict";
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
+const loginHeader = document.querySelector(".top_header");
+const redButton = document.querySelector(".redbox");
+const profile = document.querySelector(".profile");
 
 const getPost = async () => {
   try {
@@ -28,4 +31,39 @@ const getPost = async () => {
     console.log(e);
   }
 };
+
+// checking if users are logged in or not and changing header
+const isLoggedIn = () => {
+  const token = sessionStorage.getItem("userToken");
+  if (token) {
+    redButton.href = `${url}/posts/upload`;
+    redButton.innerText = "Upload";
+    profile.href = `${url}/me`;
+    profile.innerText = "Profile";
+    loginHeader.innerHTML += `<li>
+                                <a class="logout" href="${url}/logout">Log Out</a>
+                              </li>`;
+  }
+};
+
+// log out
+const logOut = () => {
+  const logOut = document.querySelector(".logout");
+  if (logOut) {
+    logOut.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        // remove token
+        sessionStorage.removeItem("userToken");
+        alert("See you :p 🍽");
+        location.assign("/");
+      } catch (e) {
+        console.log(e.message);
+      }
+    });
+  }
+};
+
+isLoggedIn();
 getPost();
+logOut();

@@ -5,10 +5,10 @@ const path = require("path");
 const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
-const maxAge = 60 * 60 *1000; // maximum storage period in millisecond
+const htmlFilePath = "../public/html";
 
 // error handler
-// This is for sending error information to frontend side
+// This is for sending error information to frontend side.
 const errorHandler = (err) => {
   // object init (about email and password)
   let errors = { email: "", password: "" };
@@ -35,8 +35,7 @@ const errorHandler = (err) => {
 
 // access join page
 const getJoin = (req, res) => {
-  //res.render("join", { pageTitle: "Join" });
-  res.sendFile(path.join(__dirname, "../public/html" + "/join.html"));
+  res.sendFile(path.join(__dirname, htmlFilePath + "/join.html"));
 };
 
 // sending join request
@@ -46,7 +45,7 @@ const postJoin = async (req, res, next) => {
   let password = req.body.password;
 
   // checking if two passowrds users typed are same
-  // If they are not same, redirects to join page
+  // If they are not same, redirects to join page.
   if (password !== password2) {
     const pwErrorMsg = "pwerr";
     const errors = errorHandler(pwErrorMsg);
@@ -92,11 +91,10 @@ const postLogin = (req, res) => {
           return res.status(400).json({ err });
         }
         // if user succeeds login, jwt token is made
-        const accessToken = jwt.sign({ user: user.id }, "test", { expiresIn: maxAge });
-        // saving accessToken to cookie
-        res.cookie("userToken", accessToken, { maxAge: maxAge * 2 });
-        // and sending json data with user id to frontend
-        return res.status(201).json({ user: user.id });
+        const accessToken = jwt.sign({ user: user.id }, "test");
+        res.cookie("userToken", accessToken)
+        // sending json data with user id to frontend
+        return res.status(201).json({ user: user.id, accessToken });
       });
     } catch (err) {
       return res.status(400).json({ err });
@@ -106,49 +104,53 @@ const postLogin = (req, res) => {
 
 // access to login page
 const getLogin = (req, res) => {
-  res.render("login", { pageTitle: "Log In" });
+  res.sendFile(path.join(__dirname, htmlFilePath + "/login.html"));
 };
 
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
-  res.clearCookie("userToken");
-  res.redirect(routes.home);
+  req.logout();
+  res.status(200).json({ message: "logged out" });
 };
 
 // ******** TODO: make profile pages ********
-const userHome = (req, res) => res.send("user home");
-
+const userHome = (req, res) => {
+  res.send({hi:req.onnewsession})
+}
 // get my profile
-const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: `User`, user: res.locals.loggedUser });
+const getMe = async (req, res) => {
+  res.json({req})
 };
 
 // show users' info
 const userDetail = async (req, res) => {
-  const{params:{id}}=req
+  const {
+    params: { id },
+  } = req;
   const user = await userModel.getUser(id);
-  if (user){   
-    res.render("userDetail", { pageTitle: "User detail", user });
-    console.log("user query", user)
-  }else{
-    res.redirect(routes.home)
+  if (user) {
+    // res.render("userDetail", { pageTitle: "User detail", user });
+    // console.log("user query", user);
+    res.status(200).json({user})
+  } else {
+    res.redirect(routes.home);
   }
-}
+};
 
 // edit profile
 const getEditProfile = (req, res) => {
   res.render("editProfile", { pageTitle: "Edit profile", user: res.locals.loggedUser });
-}
+};
 
 const postEditProfile = async (req, res) => {
   const {
     body: { nickname, email },
-    file:{path},
+    file: { path },
   } = req;
-  const user = res.locals.loggedUser
-  console.log(req.file)
+  const user = res.locals.loggedUser;
+  console.log(req.file);
   try {
-    await userModel.updateUser(user.id,nickname,email,path)
+    await userModel.updateUser(user.id, nickname, email, path);
     res.redirect(routes.me);
   } catch (err) {
     console.log(err);
@@ -163,12 +165,12 @@ const changePassword = (req, res) => res.send("change password");
 const user_update = async (req, res) => {
   const updateOk = await userModel.updateUser(req.params.id, req);
   res.send(`updated... ${updateOk}`);
-}
+};
 
 const user_delete = async (req, res) => {
   const deleteOk = await userModel.deleteUser(req.params.id, req);
   res.send(`deleted... ${deleteOk}`);
-}
+};
 
 const user_list_get = async (req, res) => {
   const users = await userModel.getAllUsers();
@@ -176,16 +178,16 @@ const user_list_get = async (req, res) => {
 };
 
 const user_get_by_id = async (req, res) => {
-    const user = await userModel.getUser(req.params.id);
-    res.json(user);
+  const user = await userModel.getUser(req.params.id);
+  res.json(user);
 };
 
-const user_create = async (req,res) => {
-  console.log('userController user_create', req.body);
+const user_create = async (req, res) => {
+  console.log("userController user_create", req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
-    }
+  }
   const id = await userModel.insertUser(req);
   const user = await userModel.getUser(id);
   res.send(user);

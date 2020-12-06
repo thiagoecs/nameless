@@ -42,5 +42,5 @@ app.use(passport.initialize());
 app.get('*',loggedUser)
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
-app.use(routes.users, verifyToken, userRouter);
+app.use(routes.users, userRouter);
 app.listen(4000, () => console.log("ok"));
