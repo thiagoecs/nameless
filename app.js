@@ -22,12 +22,13 @@ app.use(localsMiddleware);
 app.use(express.static("./public"));
 app.use("/uploads", express.static("uploads"));
 //set view engine as ejs
+/*
 app
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
   .use(require("express-ejs-layouts"))
   .set("layout", "layouts/layout");
-
+*/
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 if (process.env.NODE_ENV === "production") {

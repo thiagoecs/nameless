@@ -64,6 +64,8 @@ const logOut = () => {
   }
 };
 
+
+
 isLoggedIn();
 getPost();
 logOut();
