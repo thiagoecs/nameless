@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
-      sessionStorage.setItem("userToken", data.accessToken, { maxAge: maxAge * 2 });
+      //sessionStorage.setItem("userToken", data.accessToken, { maxAge: maxAge * 2 });
       location.assign("/");
     } else {
       alert(data.message);
