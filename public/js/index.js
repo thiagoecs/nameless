@@ -34,7 +34,7 @@ const getPost = async () => {
 
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
-  console.log(document.cookie)
+  console.log(document.cookie);
   const token = sessionStorage.getItem("userToken");
   if (token) {
     redButton.href = `${url}/posts/upload`;
@@ -47,6 +47,12 @@ const isLoggedIn = () => {
   }
 };
 
+const deleteCookie = (name) => {
+  const expireDate = new Date();
+  // making expire date to yesterday
+  expireDate.setDate(expireDate.getDate() - 1);
+  document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
+};
 // log out
 const logOut = () => {
   const logOut = document.querySelector(".logout");
@@ -55,6 +61,7 @@ const logOut = () => {
       e.preventDefault();
       try {
         // remove token
+        deleteCookie("userToken");
         sessionStorage.removeItem("userToken");
         alert("See you :p 🍽");
         location.assign("/");
