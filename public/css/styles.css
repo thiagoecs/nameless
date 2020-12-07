@@ -116,13 +116,19 @@ body, input{
 .login_header ul li {
   margin-right: 30px;
 }
+#back{
+  margin-left: 30px;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #255e1ae1;
+}
 .login_header ul li:first-child a {
   padding: 10px 30px;
   color: white;
   background: #fd8664;
   border-radius: 10px;
 }
-.login_header ul li:first-child a:hover {
+.login_header ul li:first-child a:hover , #back:hover{
   opacity: 0.8;
 }
 .login_header a {

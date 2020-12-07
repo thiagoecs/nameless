@@ -22,8 +22,6 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   userDetailJSON
 );
-<<<<<<< HEAD
-=======
 
 userRouter.post('/',[
   body('name', 'minimum length 3 characters').isLength({min: 3}),
@@ -32,7 +30,6 @@ userRouter.post('/',[
 ],
   postJoin);
 
->>>>>>> aeaa142a58c9877e5e42bfe5337eb055968014a3
 // edit profile
 userRouter.get("/edit-profile",getEditProfile);
 userRouter.post("/edit-profile",loggedUser,uploadAvatar, postEditProfile)

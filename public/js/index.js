@@ -58,8 +58,11 @@ const getPost = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    const back = document.createElement('span')
+    loginHeader.style.justifyContent = 'space-between'
+    const back = document.createElement('a')
+    back.id = 'back'
     back.innerText = '← Back'
+    back.href=`../html/index.html`
     loginHeader.insertBefore(back, loginHeader.firstChild)
     main.innerHTML = `
         <section class="movie">
