@@ -47,9 +47,9 @@ passport.use(
     async (req, token, done) => {
       try {
         console.log("jwtPayload: ", token);
-        const user = await userModel.getUser(token.id);
+        const user = await userModel.getUser(token.user);
         if (user) {
-           const plainUser = { ...user };
+          const plainUser = { ...user };
           req.user = plainUser;
           return done(null, plainUser);
         } else {
