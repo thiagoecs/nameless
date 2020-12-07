@@ -1,7 +1,8 @@
 "use strict";
 const express = require("express");
-const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require('cors')
 const path = require("path");
 const passport = require("./utils/passport");
 const { localsMiddleware, verifyToken, loggedUser } = require("./middlewares");
@@ -13,6 +14,7 @@ const app = express();
 
 
 //app.use(cookieParser());
+app.use(cors());
 app.use(cookieParser('secret'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,7 +23,6 @@ app.use(localsMiddleware);
 // load directory that has source files (css files...)
 app.use("/public",express.static("./public"));
 app.use("/uploads", express.static("uploads"));
-//set view engine as ejs
 app
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
@@ -42,5 +43,5 @@ app.use(passport.initialize());
 app.get('*',loggedUser)
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
-app.use(routes.users, verifyToken, userRouter);
-// app.listen(4000, () => console.log("ok"));
+app.use(routes.users, userRouter);
+app.listen(4000, () => console.log("ok"));

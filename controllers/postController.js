@@ -1,24 +1,17 @@
 "use strict";
 const routes = require("../routes");
 const postModel = require("../models/postModel");
+const path = require('path')
+const htmlFilePath = '../public/html'
 
 //const {validationResult } = require('express-validator');
 //const {makeThumbnail} = require('../utils/resize');
 //const imageMeta = require('../utils/imageMeta');
 //const { getCoordinates } = require('../utils/imageMeta');
 
-// render index.ejs file with required source files
-// Each functions send variable pageTitle to the layout file
-
 // main page
 const home = async (req, res) => {
-  try {
-    const posts = await postModel.getAllPosts();
-    res.render("index", { pageTitle: "main", posts });
-  } catch (e) {
-    console.log(e);
-    res.render("index", { pageTitle: "main", posts: [] });
-  }
+ res.sendFile(path.join(__dirname,htmlFilePath+'/index.html'))
 };
 
 // show search results and query word
@@ -27,15 +20,18 @@ const search = async (req, res) => {
   try {
     const posts = await postModel.searchPosts(searchingBy);
     console.log(posts);
-    res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy, posts });
+    res.json({searchingBy, posts})
   } catch (e) {
     console.log(e);
-    res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy, posts: [] });
   }
 };
 
-// for /video route
-const postHome = (req, res) => res.send("post home");
+
+// get posts' information
+const postHome =async (req, res) => {
+  const posts = await postModel.getAllPosts()
+  res.json(posts)
+}
 
 // post detail
 const postDetail = async (req, res) => {
@@ -43,7 +39,7 @@ const postDetail = async (req, res) => {
   try {
     const post = await postModel.getPostById(id);
     //res.send(post)
-    res.render("postDetail", { pageTitle: post.restaurant, post });
+    res.json(post)
   } catch (err) {
     console.log(err);
     res.redirect(routes.home);
@@ -134,42 +130,6 @@ const make_thumbnail = async (req, res, next) => {
   }
 };
 
-const post_list_get = async (req, res) => {
-  const posts = await postModel.getAllPosts();
-  res.json(posts);
-};
-
-const post_get_by_id = async (req, res) => {
-  const post = await postModel.getPost(req.params.id);
-  res.json(post);
-};
-
-const post_create = async (req, res) => {
-  console.log("postController post_create", req.body, req.file);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  const coords = await imageMeta;
-  getCoordinates(req.file.path);
-  console.log("coords", coords);
-  req.body.coords = coords;
-
-  const id = await postModel.insertPost(req, coords);
-  const post = await postModel.getPost(id);
-  res.send(post);
-};
-
-const post_update = async (req, res) => {
-  const updateOk = await postModel.updatePost(req);
-  res.json(`{message: "updated... ${updateOk}"}`);
-};
-
-const post_delete = async (req, res) => {
-  const post = await postModel.deletePost(req.params.id);
-  res.json(post);
-};
-
 module.exports = {
   home,
   search,
@@ -181,9 +141,4 @@ module.exports = {
   postEditPost,
   deletePost,
   make_thumbnail,
-  post_list_get,
-  post_get_by_id,
-  post_create,
-  post_update,
-  post_delete,
 };

@@ -13,7 +13,11 @@ const {
 } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 
+<<<<<<< HEAD
 postRouter.get("/app/posts", verifyToken, postHome);
+=======
+postRouter.get(routes.home, postHome);
+>>>>>>> html-test
 
 // upload a post
 postRouter.use("/upload", express.static("uploads"));

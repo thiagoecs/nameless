@@ -77,6 +77,17 @@ label {
   color: #464545;
   margin-bottom: 10px;
 }
+.checkbox {
+  display: flex;
+  align-items: end;
+  margin-bottom: 50px;
+}
+.info {
+  margin: 0 1rem;
+  border: 0.3px solid #fd8664;
+  cursor: pointer;
+  padding: 0.3rem;
+}
 .submit {
   border: none;
   background: #fd8664;
@@ -87,7 +98,10 @@ label {
   font-size: 1.2rem;
   cursor: pointer;
 }
-
+input[type="checkbox"] {
+  height: fit-content;
+  margin: auto 0;
+}
 .form-wrapper h2,
 label,
 .submit {
@@ -98,4 +112,41 @@ label,
   text-align: center;
   margin-bottom: 50px;
   text-decoration: none;
+}
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  padding-left: 33vw;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  margin: auto;
+  padding: 40px;
+  border: 1px solid yellowgreen;
+  width: 80%;
+}
+.modal-content p {
+  color: rgb(37, 37, 37);
+  width: 80%;
+  margin: 20px auto;
+}
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #396631;
+  text-decoration: none;
+  cursor: pointer;
 }
