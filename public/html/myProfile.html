@@ -52,13 +52,23 @@
                     <h4 class="profile__username"></h4>
                 </figure>
             </div>
-            
+            <div class="user-profile__btns">
+                <a href="/users<%= routes.editProfile%>">
+                    <button>Edit Profile</button>
+                </a>
+                <a href="/users<%= routes.changePassword%>">
+                    <button>Change Password</button>
+                </a>
+            </div>
+            <div class="user-profile__posts_list">
+                <h4>Post list</h4>
+            </div>
         </div>
         <link rel="stylesheet" href="../css/profile.css" />
     </main>
     <footer>
         <span class="footer__text"></span>
     </footer>
-    <script src='../js/userDetail.js'></script>
+    <script src='../js/myProfile.js'></script>
 </body>
 </html>

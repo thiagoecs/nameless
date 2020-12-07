@@ -26,6 +26,11 @@ const getPost = async () => {
           <h5 class="votes">Vote: ${post.votes}</h5>
         </div>
         </section>`;
+      const titleLink = document.querySelector(".post-link");
+      titleLink.addEventListener("click", (e) => {
+        e.preventDefault;
+        console.log(titleLink.value);
+      });
     }
   } catch (e) {
     console.log(e);
@@ -48,6 +53,7 @@ const isLoggedIn = () => {
   }
 };
 
+// deleting cookie
 const deleteCookie = (name) => {
   const expireDate = new Date();
   // making expire date to yesterday
@@ -64,7 +70,6 @@ const logOut = () => {
       try {
         // remove token
         deleteCookie("userToken");
-        sessionStorage.removeItem("userToken");
         alert("See you :p 🍽");
         location.assign("/");
       } catch (e) {
@@ -74,7 +79,17 @@ const logOut = () => {
   }
 };
 
+const searchForm = document.querySelector("form");
+const searchBar = searchForm.querySelector("#search-bar");
 
+searchForm.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  const query = searchBar.value;
+  console.log(query);
+  const response = await fetch(url + "/search?term=" + query);
+  const posts = await response.json();
+  console.log(posts);
+});
 
 isLoggedIn();
 getPost();

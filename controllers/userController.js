@@ -89,17 +89,17 @@ const postLogin = (req, res) => {
       }
       req.login(user, { session: false }, (err) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           return res.status(400).json({ err });
         }
         // if user succeeds login, jwt token is made
         const accessToken = jwt.sign({ user: user.id }, "test");
         res.cookie("userToken", accessToken, { maxAge: maxAge * 2 });
         // sending json data with user id to frontend
-        return res.status(201).json({ user: user.id});
+        return res.status(201).json({ user: user.id });
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(400).json({ err });
     }
   })(req, res);
@@ -116,28 +116,48 @@ const logout = (req, res) => {
   res.status(200).json({ message: "logged out" });
 };
 
-// ******** TODO: make profile pages ********
+// getting current user's info and sending JSON
 const userHome = (req, res) => {
-  res.send({ hi: req.onnewsession });
+  const clientToken = req.cookies.userToken;
+  // find token and verify it
+  if (clientToken) {
+    jwt.verify(clientToken, "test", async (err, decodedToken) => {
+      // if the token is expired, return undefined
+      if (err) {
+        console.log(err);
+        res.json({ user: undefined });
+      } else {
+        // if there is a valid token, find data from database and save it as local variable
+        let user = await userModel.getUser(decodedToken.user);
+        res
+          .status(201)
+          .json({ id: user.id, nickname: user.nickname, avatarUrl: user.avatarUrl });
+      }
+    });
+  } else {
+    res.json({ user: undefined });
+  }
 };
 // get my profile
 const getMe = async (req, res) => {
-  res.json({ req });
+  res.sendFile(path.join(__dirname, htmlFilePath + "/myProfile.html"));
 };
 
-// show users' info
-const userDetail = async (req, res) => {
+const userDetailJSON = async (req, res) => {
   const {
     params: { id },
   } = req;
   const user = await userModel.getUser(id);
   if (user) {
-    // res.render("userDetail", { pageTitle: "User detail", user });
-    // console.log("user query", user);
-    res.status(200).json({ user });
+    res.status(200).json({ id: user.id, nickname: user.nickname, avatarUrl: user.avatarUrl });
   } else {
     res.redirect(routes.home);
   }
+};
+
+// show users' info
+const userDetail = async (req, res) => {
+  res.sendFile(path.join(__dirname, htmlFilePath + "/userDetail.html"));
 };
 
 // edit profile
@@ -164,38 +184,6 @@ const postEditProfile = async (req, res) => {
 // change password
 const changePassword = (req, res) => res.send("change password");
 
-//functions using the model
-const user_update = async (req, res) => {
-  const updateOk = await userModel.updateUser(req.params.id, req);
-  res.send(`updated... ${updateOk}`);
-};
-
-const user_delete = async (req, res) => {
-  const deleteOk = await userModel.deleteUser(req.params.id, req);
-  res.send(`deleted... ${deleteOk}`);
-};
-
-const user_list_get = async (req, res) => {
-  const users = await userModel.getAllUsers();
-  res.json(users);
-};
-
-const user_get_by_id = async (req, res) => {
-  const user = await userModel.getUser(req.params.id);
-  res.json(user);
-};
-
-const user_create = async (req, res) => {
-  console.log("userController user_create", req.body);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  const id = await userModel.insertUser(req);
-  const user = await userModel.getUser(id);
-  res.send(user);
-};
-
 module.exports = {
   postJoin,
   getJoin,
@@ -203,6 +191,7 @@ module.exports = {
   getLogin,
   logout,
   userHome,
+  userDetailJSON,
   userDetail,
   getEditProfile,
   postEditProfile,

@@ -5,14 +5,21 @@ const userRouter = express.Router();
 const routes = require("../routes");
 const {
   userHome,
+  userDetailJSON,
   userDetail,
   getEditProfile,
   postEditProfile,
   changePassword,
 } = require("../controllers/userController");
-userRouter.use("/uploads", express.static("uploads"));
+const passport = require('../utils/passport')
 
-userRouter.get(routes.home, userHome);
+
+userRouter.get(routes.home, passport.authenticate("jwt", { session: false }), userHome);
+userRouter.get(
+  "/profile/:id",
+  passport.authenticate("jwt", { session: false }),
+  userDetailJSON
+);
 
 // edit profile
 userRouter.get(routes.editProfile,getEditProfile);

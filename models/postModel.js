@@ -36,8 +36,8 @@ const searchPosts = async (query) => {
     const [
       rows,
     ] = await promisePool.execute(
-      "SELECT posts.*, files.sourceFile, users.nickname FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id WHERE posts.restaurant= ?",
-      [query]
+      "SELECT posts.*, files.sourceFile, users.nickname FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id WHERE posts.restaurant LIKE ?",
+      ['%'+query+'%']
     );
     return rows;
   } catch (e) {
