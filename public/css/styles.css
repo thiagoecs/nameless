@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Prompt");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
 * {
   box-sizing: border-box;
@@ -6,6 +7,9 @@
 body {
   height: 100vh;
   background: rgba(60, 151, 42, 0.816);
+}
+body, input{
+  font-family: "DM Sans", sans-serif;
 }
 .title_header {
   padding: 8.5vh 0 15px 60px;
@@ -183,9 +187,13 @@ main .movie .wrapper .movie_header h5 {
   font-size: 18px;
   font-weight: 600;
 }
+.movie_header{
+  max-width: 600px;
+}
 img {
   width: 90%;
   min-width: 450px;
+  max-width: 580px;
   height: 400px;
   box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
     inset 0 0 0 1px rgba(0, 0, 0, 0.2);
@@ -197,7 +205,9 @@ img {
 .view-votes h5:first-child{
   margin-right: 2.5rem;
 }
-
+.post-link, .user-link, img{
+  cursor: pointer;
+}
 p{
   margin-bottom: 3rem;
   font-size: 1.2rem;

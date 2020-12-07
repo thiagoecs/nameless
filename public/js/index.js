@@ -1,7 +1,9 @@
 "use strict";
+// having post view, user view, and search function
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
-const loginHeader = document.querySelector(".top_header");
+const loginHeader = document.querySelector('.login_header')
+const topHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
 
@@ -49,26 +51,33 @@ const addPosts = (posts) => {
     main.appendChild(section);
 
     title.addEventListener("click", ()=>{getPost(post.id)});
+
   });
 };
 const getPost = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
+    const back = document.createElement('span')
+    back.innerText = '← Back'
+    loginHeader.insertBefore(back, loginHeader.firstChild)
     main.innerHTML = `
         <section class="movie">
           <div class="wrapper">
             <div class="movie_header">
-            <h4><a class='post-link' href='#'>${data.restaurant}</a></h4>
+            <h4>${data.restaurant}</h4>
             <h5><a class='user-link' href='#'>${data.nickname}</a></h5>
           </div>
           <figure>
-          <img src="${data.sourceFile}"></a>
+          <img src="../${data.sourceFile}">
           </figure>
+          <div class="view-votes">
           <h5 class="views">views: ${data.views}</h5>
-          <h5 class='comments'>comments: ${data.comments}</h5>
           <h5 class="votes">Vote: ${data.votes}</h5>
-        </div>
+          </div>
+           <p class="post__description">${data.description}</p>
+          <h5 class='comments'>comments: ${data.comments}</h5>
+          </div>
         </section>`;
   } catch (e) {
     console.log(e);
@@ -95,7 +104,7 @@ const isLoggedIn = () => {
     redButton.innerText = "Upload";
     profile.href = `${url}/me`;
     profile.innerText = "Profile";
-    loginHeader.innerHTML += `<li>
+    topHeader.innerHTML += `<li>
                                 <a class="logout" href="${url}/logout">Log Out</a>
                               </li>`;
   }
