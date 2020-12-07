@@ -3,7 +3,7 @@ const express = require("express");
 const globalRouter = express.Router();
 const routes = require("../routes");
 const { onlyPublic, verifyToken,loggedUser } = require("../middlewares");
-const { home, search,getSearch } = require("../controllers/postController");
+const { home, search } = require("../controllers/postController");
 const {
   getJoin,
   postJoin,
@@ -29,7 +29,7 @@ globalRouter.post(routes.login, onlyPublic, postLogin);
 globalRouter.get(routes.logout, logout);
 
 // search
-globalRouter.get(routes.search, search,getSearch);
+globalRouter.get(routes.search, search);
 
 // my profile
 globalRouter.get(routes.me, verifyToken,loggedUser, getMe);

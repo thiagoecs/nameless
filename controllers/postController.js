@@ -21,18 +21,11 @@ const search = async (req, res) => {
     const posts = await postModel.searchPosts(searchingBy);
     console.log(posts);
     res.json({searchingBy, posts})
-    //res.sendFile(path.join(__dirname, htmlFilePath + "/search.html"));
-    //res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy, posts });
   } catch (e) {
     console.log(e);
-    res.sendFile(path.join(__dirname, htmlFilePath + "/search.html"));
-    //res.render("search", { pageTitle: `Search: ${searchingBy}`, searchingBy, posts: [] });
   }
 };
 
-const getSearch = (req, res)=>{
-  res.sendFile(path.join(__dirname, htmlFilePath + "/search.html"));
-}
 
 // get posts' information
 const postHome =async (req, res) => {
@@ -148,5 +141,4 @@ module.exports = {
   postEditPost,
   deletePost,
   make_thumbnail,
-  getSearch
 };

@@ -38,10 +38,10 @@
     <header class="login_header">
         <ul>
             <li>
-                <a class="join" href="https://localhost:8000/join">Join</a>
+                <a class="join" href="../html/join.html">Join</a>
             </li>
             <li>
-                <a class="login" href="https://localhost:8000/login">Log In</a>
+                <a class="login" href="../html/login.html">Log In</a>
             </li>
         </ul>
     </header>
@@ -50,7 +50,7 @@
         <h2>Join Food Advisor!</h2>
         <div class="form-container">
             <!-- TODO: add validators-->
-            <form class="register-form" action="https://localhost:8000/join" method="POST">
+            <form class="register-form" action="../html/join.html" method="POST">
                 <label for="nickname">Nickname</label>
                 <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname" pattern=".{3,}"
                     required>
@@ -63,10 +63,19 @@
                 <input class="input-field" type="password" name="password2" id="password2" placeholder="Verify Password"
                     required>
                 <span class="password-error"></span>
+                <div class='checkbox'>
                 <label for="owner">For business?</label>
+                <span class='info'>❓</span>
                 <input class="input-field" type="checkbox" name="owner" id="owner">
+                </div>
                 <input class="submit" type="submit" value="🍹 Create account">
             </form>
+            <div class='modal'>
+                <div class='modal-content'>
+                    <span class="close">&times;</span>
+                    <p>This option is for restaurant owners who want to promote their restaurant!</p>
+                </div>
+            </div>
         </div>
     </div>
     </main>
