@@ -58,9 +58,9 @@
                 <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
                 <span class="email-error"></span>
                 <label for="password">Password</label>
-                <input class="input-field" type="password" name="password" id="password" placeholder="Password" required>
+                <input class="input-field" type="password" name="password" id="password" pattern="(?=.*[A-Z]).{8,}" placeholder="Password" required>
                 <label for="password2">Verify password</label>
-                <input class="input-field" type="password" name="password2" id="password2" placeholder="Verify Password"
+                <input class="input-field" type="password" name="password2" id="password2" placeholder="Verify Password" pattern="(?=.*[A-Z]).{8,}"
                     required>
                 <span class="password-error"></span>
                 <div class='checkbox'>

@@ -21,6 +21,13 @@ userRouter.get(
   userDetailJSON
 );
 
+router.post('/',[
+  body('name', 'minimum length 3 characters').isLength({min: 3}),
+  body('email', 'is not valid email').isEmail(),
+  body('password', 'minimum length 8 characters, at least one capital letter').matches('(?=.*[A-Z]).{8,}'), 
+],
+  userController.postJoin);
+
 // edit profile
 userRouter.get(routes.editProfile,getEditProfile);
 userRouter.post(routes.editProfile,loggedUser,uploadAvatar, postEditProfile)
