@@ -23,7 +23,6 @@ app.use(localsMiddleware);
 // load directory that has source files (css files...)
 app.use(express.static("./public"));
 app.use("/uploads", express.static("uploads"));
-
 app
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
