@@ -39,7 +39,7 @@ const postDetail = async (req, res) => {
   try {
     const post = await postModel.getPostById(id);
     //res.send(post)
-    res.render("postDetail", { pageTitle: post.restaurant, post });
+    res.json(post)
   } catch (err) {
     console.log(err);
     res.redirect(routes.home);

@@ -5,33 +5,81 @@ const loginHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
 
-const getPost = async () => {
+const addPosts = (posts) => {
+  posts.forEach((post) => {
+    const section = document.createElement("section");
+    section.className = "movie";
+    const wrapper = document.createElement("div");
+    wrapper.className = "wrapper";
+    const postHeader = document.createElement("div");
+    postHeader.className = "movie_header";
+    const title = document.createElement("h4");
+
+    title.className = "post-link";
+    title.innerText = post.restaurant;
+
+    const creator = document.createElement("h5");
+
+    creator.className = "user-link";
+    creator.innerText = post.nickname;
+
+    postHeader.appendChild(title);
+    postHeader.appendChild(creator);
+    wrapper.appendChild(postHeader);
+
+    const img = document.createElement("img");
+    img.src = `../${post.sourceFile}`;
+    const figure = document.createElement("figure").appendChild(img);
+
+    const views = document.createElement("h5");
+    views.classList.add("views");
+    views.innerText = `views: ${post.views}`;
+    const comments = document.createElement("h5");
+    comments.classList.add("comments");
+    comments.innerText = `comments: ${post.comments}`;
+    const votes = document.createElement("h5");
+    votes.classList.add("votes");
+    votes.innerText = `votes: ${post.votes}`;
+
+    wrapper.appendChild(figure);
+    wrapper.appendChild(views);
+    wrapper.appendChild(comments);
+    wrapper.appendChild(votes);
+    section.appendChild(wrapper);
+    main.appendChild(section);
+
+    title.addEventListener("click", ()=>{getPost(post.id)});
+  });
+};
+const getPost = async (id) => {
   try {
-    const response = await fetch(url + "/posts");
-    const posts = await response.json();
-    for (const post of posts) {
-      main.innerHTML += `
+    const response = await fetch(url + "/posts/" + id);
+    const data = await response.json();
+    main.innerHTML = `
         <section class="movie">
           <div class="wrapper">
             <div class="movie_header">
-            <h4><a class='post-link' href='${url}/posts/${post.id}'>${post.restaurant}</a></h4>
-            <h5><a class='user-link' href='${url}/users/${post.creator}'>${post.nickname}</a></h5>
+            <h4><a class='post-link' href='#'>${data.restaurant}</a></h4>
+            <h5><a class='user-link' href='#'>${data.nickname}</a></h5>
           </div>
           <figure>
-          <a href=${url}/posts/${post.id}>
-          <img src="${post.sourceFile}"></a>
+          <img src="${data.sourceFile}"></a>
           </figure>
-          <h5 class="views">views: ${post.views}</h5>
-          <h5 class='comments'>comments: ${post.comments}</h5>
-          <h5 class="votes">Vote: ${post.votes}</h5>
+          <h5 class="views">views: ${data.views}</h5>
+          <h5 class='comments'>comments: ${data.comments}</h5>
+          <h5 class="votes">Vote: ${data.votes}</h5>
         </div>
         </section>`;
-      const titleLink = document.querySelector(".post-link");
-      titleLink.addEventListener("click", (e) => {
-        e.preventDefault;
-        console.log(titleLink.value);
-      });
-    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getPosts = async () => {
+  try {
+    const response = await fetch(url + "/posts");
+    const posts = await response.json();
+    addPosts(posts);
   } catch (e) {
     console.log(e);
   }
@@ -83,7 +131,7 @@ const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
 
 searchForm.addEventListener("submit", async (e) => {
-  e.preventDefault()
+  e.preventDefault();
   const query = searchBar.value;
   console.log(query);
   const response = await fetch(url + "/search?term=" + query);
@@ -92,5 +140,5 @@ searchForm.addEventListener("submit", async (e) => {
 });
 
 isLoggedIn();
-getPost();
+getPosts();
 logOut();

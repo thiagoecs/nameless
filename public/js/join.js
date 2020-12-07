@@ -6,7 +6,6 @@ const infoButton = document.querySelector(".info");
 const modal = document.querySelector(".modal");
 const closeButton = document.querySelector(".close");
 
-
 infoButton.addEventListener("click", () => {
   modal.style.display = 'flex'
 });
@@ -18,17 +17,19 @@ window.addEventListener('click',(e)=>{
     modal.style.display = 'none'
   }
 })
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const nickname = form.nickname.value;
   const email = form.email.value;
   const password = form.password.value;
   const password2 = form.password2.value;
+  const business = form.business.checked;
   try {
     // receiving json data from backend when submit login request
     const res = await fetch("/join", {
       method: "POST",
-      body: JSON.stringify({ nickname, email, password, password2 }),
+      body: JSON.stringify({ nickname, email, password, password2,business }),
       headers: { "Content-Type": "application/json" },
     });
 

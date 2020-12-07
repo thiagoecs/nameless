@@ -13,22 +13,20 @@ const getAllUsers = async () => {
 
 const getUser = async (id) => {
   try {
-    const [rows] = await promisePool.execute("SELECT * FROM users where id = ?", [
-      id,
-    ]);
+    const [rows] = await promisePool.execute("SELECT * FROM users where id = ?", [id]);
     return rows[0];
   } catch (e) {
     console.log("UserModel getUser error: ", e.message);
   }
 };
 
-const insertUser = async (nickname, email, password) => {
+const insertUser = async (nickname, email, password, userType) => {
   try {
     const [
       rows,
     ] = await promisePool.execute(
-      "INSERT INTO users (nickname, email, password) VALUES(?, ?, ?)",
-      [nickname, email, password]
+      "INSERT INTO users (nickname, email, password, userType) VALUES(?, ?, ?,?)",
+      [nickname, email, password, userType]
     );
     return rows.insertId;
   } catch (e) {
@@ -39,34 +37,31 @@ const insertUser = async (nickname, email, password) => {
 const getUserLogin = async (params) => {
   try {
     console.log(params);
-    const [rows] = await promisePool.execute(
-      "SELECT * FROM users WHERE email = ?;",
-      [params]
-    );
+    const [rows] = await promisePool.execute("SELECT * FROM users WHERE email = ?;", [params]);
     return rows[0];
   } catch (e) {
     console.log("error", e.message);
   }
 };
 
-const updateUser = async (id,nickname,email,avatarUrl) =>{
-  try{
-    const [rows] = await promisePool.query('UPDATE users SET nickname = ?, email = ?, avatarUrl =? WHERE id = ?;',
-    [nickname,email,avatarUrl, id]);
-    console.log('userModel updateUser:', rows);
+const updateUser = async (id, nickname, email, avatarUrl) => {
+  try {
+    const [
+      rows,
+    ] = await promisePool.query(
+      "UPDATE users SET nickname = ?, email = ?, avatarUrl =? WHERE id = ?;",
+      [nickname, email, avatarUrl, id]
+    );
+    console.log("userModel updateUser:", rows);
     return rows.affectedRows === 1;
-  }
-  catch(e){
+  } catch (e) {
     return false;
   }
 };
 
 const deleteUser = async (id) => {
   try {
-    const [rows] = await promisePool.execute(
-      "DELETE FROM users WHERE id=?",
-      [id]
-    );
+    const [rows] = await promisePool.execute("DELETE FROM users WHERE id=?", [id]);
     return rows.affectedRows === 1;
   } catch (e) {
     console.error("userModel deleteUser:", e);

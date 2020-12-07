@@ -42,9 +42,13 @@ const getJoin = (req, res) => {
 // sending join request
 const postJoin = async (req, res, next) => {
   // same as const nickname = req.body.nickname ...
-  const { nickname, email, password2 } = req.body;
+  const { nickname, email, password2, business } = req.body;
+  console.log("business:", req.body);
   let password = req.body.password;
-
+  let userType = 1;
+  if (business === true) {
+    userType = 2;
+  }
   // checking if two passowrds users typed are same
   // If they are not same, redirects to join page.
   if (password !== password2) {
@@ -62,7 +66,7 @@ const postJoin = async (req, res, next) => {
         const hash = bcrypt.hashSync(password, salt);
         password = hash;
         // saving data that user filled to the form and move to the next middleware
-        if (await userModel.insertUser(nickname, email, password)) {
+        if (await userModel.insertUser(nickname, email, password, userType)) {
           next();
         }
       } catch (e) {
