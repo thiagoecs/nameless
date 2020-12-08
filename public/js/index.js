@@ -1,6 +1,5 @@
 "use strict";
 
-
 // having post view, user view, and search function
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
@@ -99,39 +98,43 @@ const getPost = async (id) => {
           </div>
         </section>`;
 
+    const subHeader = document.querySelector(".sub_header");
+
     if (data.creator === myProfileData.id) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
-      const subHeader = document.querySelector(".sub_header");
       subHeader.appendChild(editBtn);
-      editBtn.addEventListener('click',()=>{
-        getEditPost(data.id)
-      })
+      editBtn.addEventListener("click", () => {
+        getEditPost(data.id);
+      });
 
       //test vote
-      
+
       const voteBtn = document.createElement("button");
       voteBtn.innerText = "Vote Up";
-      const subHeader2 = document.querySelector(".sub_header");
-      subHeader2.appendChild(voteBtn);
-      voteBtn.addEventListener('click',()=>{
-        const votes = document.querySelector(".votes");
-        data.votes = data.votes +1;
-        //data.votes = addVote(data.id, data.votes)
-        //var results = addVote(data.id, data.votes);
-        //votes.innerText = `Votes: ${data.votes}`;
-        votes.innerText = `Votes: ${data.votes}`;
-        console.log("vote +1");
-      })
-      
+      subHeader.appendChild(voteBtn);
+      voteBtn.addEventListener("click", function handler(e){
+        addUpvote(data)
+        e.currentTarget.removeEventListener(e.type,handler)// remove listner
+        voteBtn.style.opacity = '0.5'
+      });
     }
-    const profileLink = document.querySelector('.user-link')
-    profileLink.addEventListener('click',()=>{
-      getProfile(data.creator)
-    })
+    const profileLink = document.querySelector(".user-link");
+    profileLink.addEventListener("click", () => {
+      getProfile(data.creator);
+    });
   } catch (e) {
     console.log(e);
   }
+};
+
+// *todo: fetch url to update
+const addUpvote = (data) => {
+  const votes = document.querySelector(".votes");
+  const votesValue = data.votes;
+  const newVotes = votesValue + 1;
+  votes.innerText = `Votes: ${newVotes}`;
+  console.log(newVotes);
 };
 
 const getPosts = async () => {
@@ -235,13 +238,12 @@ const getPostDataById = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const post = await response.json();
-    console.log('post:',post)
+    console.log("post:", post);
     return post;
   } catch (e) {
     console.log(e);
   }
 };
-
 
 // search
 searchForm.addEventListener("submit", async (e) => {
@@ -252,10 +254,10 @@ searchForm.addEventListener("submit", async (e) => {
     searchTitle.style.display = "block";
     const response = await fetch(url + "/search?term=" + query);
     const data = await response.json();
-    console.log('data:',data)
+    console.log("data:", data);
     if (data.posts.length == 0) {
       searchTitle.style.marginTop = "10vh";
-    }else{
+    } else {
       searchTitle.style.marginTop = "2vh";
     }
     const posts = document.querySelectorAll(".movie");
@@ -270,29 +272,26 @@ searchForm.addEventListener("submit", async (e) => {
 });
 
 //votes
-const addVote = async (id, votes) =>{
+const addVote = async (id, votes) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    data.votes = data.votes +1;
-    var results = data.votes
+    data.votes = data.votes + 1;
+    var results = data.votes;
     console.log("added 1");
     return results;
-  }
-  catch (e){
+  } catch (e) {
     console.log(e);
   }
 };
 
-const removeVote = async (id, votes) =>{
-  
+const removeVote = async (id, votes) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    data.votes = data.votes -1;
+    data.votes = data.votes - 1;
     return data.votes;
-  }
-  catch (e){
+  } catch (e) {
     console.log(e);
   }
 };

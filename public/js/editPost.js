@@ -1,3 +1,4 @@
+'use strict';
 const head = document.querySelector("head");
 
 const getEditPost = async (id) => {
