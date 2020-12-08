@@ -109,6 +109,23 @@ const deleteFiles = async (id) => {
   }
 };
 
+const getVotes = async (id) => {
+  try {
+    const [rows] = await promisePool.execute("SELECT votes FROM posts WHERE id = ?", [id]);
+    return rows;
+  } catch (e) {
+    return errorJson(e.message);
+  }
+};
+
+const updateVote = async (id,votes) => {
+  try {
+    const [rows] = await promisePool.execute('UPDATE posts SET votes = ? WHERE id = ?;', [votes,id]);
+    return rows;
+  } catch (e) {
+    return errorJson(e.message);
+  }
+};
 
 
 module.exports = {
@@ -119,5 +136,7 @@ module.exports = {
   deletePost,
   insertFiles,
   deleteFiles,
-  searchPosts
+  searchPosts,
+  getVotes,
+  updateVote
 };
