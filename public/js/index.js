@@ -1,4 +1,6 @@
 "use strict";
+
+
 // having post view, user view, and search function
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
@@ -105,6 +107,23 @@ const getPost = async (id) => {
       editBtn.addEventListener('click',()=>{
         getEditPost(data.id)
       })
+
+      //test vote
+      
+      const voteBtn = document.createElement("button");
+      voteBtn.innerText = "Vote Up";
+      const subHeader2 = document.querySelector(".sub_header");
+      subHeader2.appendChild(voteBtn);
+      voteBtn.addEventListener('click',()=>{
+        const votes = document.querySelector(".votes");
+        data.votes = data.votes +1;
+        //data.votes = addVote(data.id, data.votes)
+        //var results = addVote(data.id, data.votes);
+        //votes.innerText = `Votes: ${data.votes}`;
+        votes.innerText = `Votes: ${data.votes}`;
+        console.log("vote +1");
+      })
+      
     }
     const profileLink = document.querySelector('.user-link')
     profileLink.addEventListener('click',()=>{
@@ -249,6 +268,34 @@ searchForm.addEventListener("submit", async (e) => {
     location.assign("/");
   }
 });
+
+//votes
+const addVote = async (id, votes) =>{
+  try {
+    const response = await fetch(url + "/posts/" + id);
+    const data = await response.json();
+    data.votes = data.votes +1;
+    var results = data.votes
+    console.log("added 1");
+    return results;
+  }
+  catch (e){
+    console.log(e);
+  }
+};
+
+const removeVote = async (id, votes) =>{
+  
+  try {
+    const response = await fetch(url + "/posts/" + id);
+    const data = await response.json();
+    data.votes = data.votes -1;
+    return data.votes;
+  }
+  catch (e){
+    console.log(e);
+  }
+};
 
 isLoggedIn();
 getPosts();

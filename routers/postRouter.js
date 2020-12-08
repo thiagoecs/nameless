@@ -10,6 +10,8 @@ const {
   getEditPost,
   deletePost,
   postEditPost,
+  addVote,
+  removeVote
 } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 
@@ -25,7 +27,7 @@ postRouter.route("/:id").get(postDetail).put(postEditPost).delete(deletePost);
 
 // edit a post
 postRouter.get("/:id/edit", verifyToken, getEditPost);
-postRouter.post("/:id/edit", verifyToken, loggedUser, uploadFiles, postEditPost);
+postRouter.post("/:id/edit", verifyToken, loggedUser, uploadFiles, postEditPost, addVote, removeVote);
 
 postRouter.get("/:id/delete", verifyToken, deletePost);
 
