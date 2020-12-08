@@ -233,11 +233,14 @@ searchForm.addEventListener("submit", async (e) => {
     searchTitle.style.display = "block";
     const response = await fetch(url + "/search?term=" + query);
     const data = await response.json();
+    console.log('data:',data)
     if (data.posts.length == 0) {
       searchTitle.style.marginTop = "10vh";
+    }else{
+      searchTitle.style.marginTop = "2vh";
     }
     const posts = document.querySelectorAll(".movie");
-    searchTitle.innerHTML += `'${query}'`;
+    searchTitle.innerHTML = `Searching for: '${query}'    ||    ${data.posts.length} post(s)`;
     posts.forEach((post) => {
       post.parentNode.removeChild(post);
     });
