@@ -15,13 +15,13 @@ const {
 } = require("../controllers/userController");
 const passport = require('../utils/passport')
 
-userRouter.get("/app/users", userHome);
-userRouter.get(routes.home, passport.authenticate("jwt", { session: false }), userHome);
-userRouter.get(
-  "/profile/:id",
-  passport.authenticate("jwt", { session: false }),
-  userDetailJSON
-);
+//userRouter.get("/app/users", userHome);
+//userRouter.get(routes.home, userHome);
+// userRouter.get(
+//   "/profile/:id",
+//   passport.authenticate("jwt", { session: false }),
+//   userDetailJSON
+// );
 
 userRouter.post('/',[
   body('name', 'minimum length 3 characters').isLength({min: 3}),

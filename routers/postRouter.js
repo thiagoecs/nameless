@@ -21,11 +21,11 @@ postRouter.get("/upload", verifyToken, getUpload);
 postRouter.post("/upload", verifyToken, loggedUser, uploadFiles, postUpload);
 
 // post detail page
-postRouter.get("/:id", postDetail);
+postRouter.route("/:id").get(postDetail).put(postEditPost).delete(deletePost);
 
 // edit a post
 postRouter.get("/:id/edit", verifyToken, getEditPost);
-postRouter.post("/:id/edit", verifyToken, loggedUser,uploadFiles, postEditPost);
+postRouter.post("/:id/edit", verifyToken, loggedUser, uploadFiles, postEditPost);
 
 postRouter.get("/:id/delete", verifyToken, deletePost);
 

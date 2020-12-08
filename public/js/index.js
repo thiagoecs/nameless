@@ -2,10 +2,13 @@
 // having post view, user view, and search function
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
-const loginHeader = document.querySelector('.login_header')
+const loginHeader = document.querySelector(".login_header");
 const topHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
+const searchForm = document.querySelector("form");
+const searchBar = searchForm.querySelector("#search-bar");
+const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
 
 const addPosts = (posts) => {
   posts.forEach((post) => {
@@ -50,27 +53,38 @@ const addPosts = (posts) => {
     section.appendChild(wrapper);
     main.appendChild(section);
 
-    title.addEventListener("click", ()=>{getPost(post.id)});
-
+    title.addEventListener("click", () => {
+      getPost(post.id);
+    });
+    img.addEventListener("click", () => {
+      getPost(post.id);
+    });
+    creator.addEventListener("click", () => {
+      getProfile(post.creator);
+    });
   });
 };
+
 const getPost = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    loginHeader.style.justifyContent = 'space-between'
-    const back = document.createElement('a')
-    back.id = 'back'
-    back.innerText = '← Back'
-    back.href=`../html/index.html`
-    loginHeader.insertBefore(back, loginHeader.firstChild)
+    const myProfile = await fetch(url + "/me");
+    const myProfileData = await myProfile.json();
+    const uploadTime = data.createdAt.split("T");
+    const date = uploadTime[0];
+    const time = uploadTime[1].split(".")[0];
+    makeBackButton();
     main.innerHTML = `
         <section class="movie">
-          <div class="wrapper">
+          <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5><a class='user-link' href='#'>${data.nickname}</a></h5>
+            <h5><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
           </div>
+          <div class="sub_header">
+            <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
+        </div>
           <figure>
           <img src="../${data.sourceFile}">
           </figure>
@@ -82,6 +96,20 @@ const getPost = async (id) => {
           <h5 class='comments'>comments: ${data.comments}</h5>
           </div>
         </section>`;
+
+    if (data.creator === myProfileData.id) {
+      const editBtn = document.createElement("button");
+      editBtn.innerText = "Edit Post";
+      const subHeader = document.querySelector(".sub_header");
+      subHeader.appendChild(editBtn);
+      editBtn.addEventListener('click',()=>{
+        getEditPost(data.id)
+      })
+    }
+    const profileLink = document.querySelector('.user-link')
+    profileLink.addEventListener('click',()=>{
+      getProfile(data.creator)
+    })
   } catch (e) {
     console.log(e);
   }
@@ -97,18 +125,63 @@ const getPosts = async () => {
   }
 };
 
+const getProfile = async (id) => {
+  try {
+    const myProfile = await fetch(url + "/me");
+    const myProfileData = await myProfile.json();
+    const user = await fetch(url + "/users/" + id);
+    const userData = await user.json();
+    console.log(myProfileData, userData);
+    makeBackButton();
+    main.innerHTML = `
+        <div class="user-profile">
+    <div class="user-profile__header">
+        <figure class="profile">
+            <img class="u-avatar" src="../${userData.avatarUrl}">
+            <h4 class="profile__username">${userData.nickname}</h4>
+        </figure>
+    </div>
+    <div class="user-profile__btns"></div>
+    <div>
+    <h4>Post list</h4>
+    </div>
+</div>`;
+    if (myProfileData.id === userData.id) {
+      const editBtn = document.createElement("button");
+      editBtn.innerText = "Edit Profile";
+      const passwdBtn = document.createElement("button");
+      passwdBtn.innerText = "Change Password";
+      const btnContainer = document.querySelector(".user-profile__btns");
+      btnContainer.appendChild(editBtn);
+      btnContainer.appendChild(passwdBtn);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// making back button when clicking user nickname and post title
+const makeBackButton = () => {
+  loginHeader.style.justifyContent = "space-between";
+  const back = document.createElement("a");
+  back.id = "back";
+  back.innerText = "← Back";
+  back.href = `../html/index.html`;
+  loginHeader.insertBefore(back, loginHeader.firstChild);
+};
+
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
   console.log(document.cookie);
   //const token = sessionStorage.getItem("userToken");
   const token = document.cookie;
   if (token) {
-    redButton.href = `${url}/posts/upload`;
+    redButton.href = "../html/upload.html";
     redButton.innerText = "Upload";
     profile.href = `${url}/me`;
     profile.innerText = "Profile";
     topHeader.innerHTML += `<li>
-                                <a class="logout" href="${url}/logout">Log Out</a>
+                                <a class="logout" href="/">Log Out</a>
                               </li>`;
   }
 };
@@ -133,22 +206,45 @@ const logOut = () => {
         alert("See you :p 🍽");
         location.assign("/");
       } catch (e) {
-        console.log(e.message);
+        console.log(e);
       }
     });
   }
 };
 
-const searchForm = document.querySelector("form");
-const searchBar = searchForm.querySelector("#search-bar");
+const getPostDataById = async (id) => {
+  try {
+    const response = await fetch(url + "/posts/" + id);
+    const post = await response.json();
+    console.log('post:',post)
+    return post;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
+
+// search
 searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const query = searchBar.value;
-  console.log(query);
-  const response = await fetch(url + "/search?term=" + query);
-  const posts = await response.json();
-  console.log(posts);
+  if (query !== "") {
+    console.log(query);
+    searchTitle.style.display = "block";
+    const response = await fetch(url + "/search?term=" + query);
+    const data = await response.json();
+    if (data.posts.length == 0) {
+      searchTitle.style.marginTop = "10vh";
+    }
+    const posts = document.querySelectorAll(".movie");
+    searchTitle.innerHTML += `'${query}'`;
+    posts.forEach((post) => {
+      post.parentNode.removeChild(post);
+    });
+    addPosts(data.posts);
+  } else {
+    location.assign("/");
+  }
 });
 
 isLoggedIn();
