@@ -113,10 +113,10 @@ const getPost = async (id) => {
       const voteBtn = document.createElement("button");
       voteBtn.innerText = "Vote Up";
       subHeader.appendChild(voteBtn);
-      voteBtn.addEventListener("click", function handler(e){
-        addUpvote(data)
-        e.currentTarget.removeEventListener(e.type,handler)// remove listner
-        voteBtn.style.opacity = '0.5'
+      voteBtn.addEventListener("click", function handler(e) {
+        addUpvote(data);
+        e.currentTarget.removeEventListener(e.type, handler); // remove listner
+        voteBtn.style.opacity = "0.5";
       });
     }
     const profileLink = document.querySelector(".user-link");
@@ -149,12 +149,13 @@ const getPosts = async () => {
 
 const getProfile = async (id) => {
   try {
-    const myProfile = await fetch(url + "/me");
-    const myProfileData = await myProfile.json();
-    const user = await fetch(url + "/users/" + id);
-    const userData = await user.json();
+    const myProfileData = await getMyProfile();
+    const userData = await getUserDataById(id);
     console.log(myProfileData, userData);
-    makeBackButton();
+    const backButton = document.querySelector("#back");
+    if (!backButton) {
+      makeBackButton();
+    }
     main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
@@ -169,14 +170,40 @@ const getProfile = async (id) => {
     </div>
 </div>`;
     if (myProfileData.id === userData.id) {
-      const editBtn = document.createElement("button");
-      editBtn.innerText = "Edit Profile";
-      const passwdBtn = document.createElement("button");
-      passwdBtn.innerText = "Change Password";
-      const btnContainer = document.querySelector(".user-profile__btns");
-      btnContainer.appendChild(editBtn);
-      btnContainer.appendChild(passwdBtn);
+      addEditProfileBtn();
     }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const addEditProfileBtn = () => {
+  const editBtn = document.createElement("button");
+  editBtn.innerText = "Edit Profile";
+  const passwdBtn = document.createElement("button");
+  passwdBtn.innerText = "Change Password";
+  const btnContainer = document.querySelector(".user-profile__btns");
+  btnContainer.appendChild(editBtn);
+  btnContainer.appendChild(passwdBtn);
+};
+
+const getMyProfile = async () => {
+  try {
+    const response = await fetch(url + "/me");
+    const myProfile = await response.json();
+    console.log("me:", myProfile);
+    return myProfile;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getUserDataById = async (id) => {
+  try {
+    const response = await fetch(url + "/users/" + id);
+    const user = await response.json();
+    console.log("user:", user);
+    return user;
   } catch (e) {
     console.log(e);
   }
@@ -194,14 +221,31 @@ const makeBackButton = () => {
 
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
-  console.log(document.cookie);
+  //console.log(document.cookie);
   //const token = sessionStorage.getItem("userToken");
   const token = document.cookie;
   if (token) {
     redButton.href = "../html/upload.html";
     redButton.innerText = "Upload";
-    profile.href = `${url}/me`;
     profile.innerText = "Profile";
+    profile.href = "#";
+    profile.addEventListener("click", () => {
+      console.log('clicked')
+      makeBackButton();
+      main.innerHTML = `
+        <div class="user-profile">
+    <div class="user-profile__header">
+        <figure class="profile">
+            <img class="u-avatar" src="../${userData.avatarUrl}">
+            <h4 class="profile__username">${userData.nickname}</h4>
+        </figure>
+    </div>
+    <div class="user-profile__btns"></div>
+    <div>
+    <h4>Post list</h4>
+    </div>
+</div>`;
+    });
     topHeader.innerHTML += `<li>
                                 <a class="logout" href="/">Log Out</a>
                               </li>`;
