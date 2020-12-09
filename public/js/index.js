@@ -10,69 +10,68 @@ const profile = document.querySelector(".profile");
 const token = document.cookie.split("userToken=")[1]; //JWT token
 
 // iterating posts data and displaying each element on main page
-const addPosts = (posts) => {
-  posts.forEach((post) => {
-    const section = document.createElement("section");
-    section.className = "movie";
-    const wrapper = document.createElement("div");
-    wrapper.className = "wrapper";
-    const postHeader = document.createElement("div");
-    postHeader.className = "movie_header";
-    const title = document.createElement("h4");
-    const emoji = document.createElement("span");
+// const addPosts = (posts) => {
+//   posts.forEach((post) => {
+//     const section = document.createElement("section");
+//     section.className = "movie";
+//     const wrapper = document.createElement("div");
+//     wrapper.className = "wrapper";
+//     const postHeader = document.createElement("div");
+//     postHeader.className = "movie_header";
+//     const title = document.createElement("h4");
+//     const emoji = document.createElement("span");
 
-    emoji.className = "user-type";
+//     emoji.className = "user-type";
 
-    title.className = "post-link";
-    title.innerText = post.restaurant;
+//     title.className = "post-link";
+//     title.innerText = post.restaurant;
 
-    const creator = document.createElement("h5");
+//     const creator = document.createElement("h5");
 
-    creator.className = "user-link";
-    creator.innerText = post.nickname;
+//     creator.className = "user-link";
+//     creator.innerText = post.nickname;
 
-    postHeader.appendChild(title);
-    creator.appendChild(emoji);
-    postHeader.appendChild(creator);
-    wrapper.appendChild(postHeader);
+//     postHeader.appendChild(title);
+//     creator.appendChild(emoji);
+//     postHeader.appendChild(creator);
+//     wrapper.appendChild(postHeader);
 
-    if (post.userType === 2) {
-      console.log("im the chef");
-      emoji.innerText = `👨‍🍳`;
-    }
+//     if (post.userType === 2) {
+//       emoji.innerText = `👨‍🍳`;
+//     }
 
-    const img = document.createElement("img");
-    img.src = `../${post.sourceFile}`;
-    const figure = document.createElement("figure").appendChild(img);
+//     const img = document.createElement("img");
+//     img.src = `../${post.sourceFile}`;
+//     const figure = document.createElement("figure").appendChild(img);
 
-    const views = document.createElement("h5");
-    views.classList.add("views");
-    views.innerText = `views: ${post.views}`;
-    const comments = document.createElement("h5");
-    comments.classList.add("comments");
-    comments.innerText = `comments: ${post.comments}`;
-    const votes = document.createElement("h5");
-    votes.classList.add("votes");
-    votes.innerText = `votes: ${post.votes}`;
+//     const views = document.createElement("h5");
+//     views.classList.add("views");
+//     views.innerText = `views: ${post.views}`;
+//     const comments = document.createElement("h5");
+//     comments.classList.add("comments");
+//     comments.innerText = `comments: ${post.comments}`;
+//     const votes = document.createElement("h5");
+//     votes.classList.add("votes");
+//     votes.innerText = `votes: ${post.votes}`;
 
-    wrapper.appendChild(figure);
-    wrapper.appendChild(views);
-    wrapper.appendChild(comments);
-    wrapper.appendChild(votes);
-    section.appendChild(wrapper);
-    main.appendChild(section);
+//     wrapper.appendChild(figure);
+//     wrapper.appendChild(views);
+//     wrapper.appendChild(comments);
+//     wrapper.appendChild(votes);
+//     section.appendChild(wrapper);
+//     main.appendChild(section);
 
-    title.addEventListener("click", () => {
-      getPost(post.id);
-    });
-    img.addEventListener("click", () => {
-      getPost(post.id);
-    });
-    creator.addEventListener("click", () => {
-      getProfile(post.creator);
-    });
-  });
-};
+//     title.addEventListener("click", () => {
+//       getPost(post.id);
+//     });
+//     img.addEventListener("click", () => {
+//       getPost(post.id);
+//     });
+//     creator.addEventListener("click", () => {
+//       getProfile(post.creator);
+//     });
+//   });
+// };
 
 // showing a detailed page with comments
 const getPost = async (id) => {
@@ -89,7 +88,7 @@ const getPost = async (id) => {
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5 class="please"><a class='user-link' href='#/users/${data.creator}'><span class="user-type"></span>${data.nickname}</a></h5>
+            <h5 class="please"><a class='user-link'><span class="user-type"></span>${data.nickname}</a></h5>
           </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
@@ -149,6 +148,7 @@ const getPost = async (id) => {
       });
     }
     const profileLink = document.querySelector(".user-link");
+    console.log(profileLink)
     profileLink.addEventListener("click", () => {
       getProfile(data.creator);
     });
@@ -179,7 +179,6 @@ const addUpvote = (data) => {
       };
       const response = await fetch(url + "/posts/" + data.id, fetchOptions);
       location.assign("/");
-      console.log("talk to me");
     });
   }
 
@@ -238,8 +237,8 @@ const getProfile = async (id) => {
     <div class="user-profile__header">
         <figure class="profile">
             <img class="u-avatar" src="../${userData.avatarUrl}">
-            <h4 class="profile__username"><span class="user-type"></span>${userData.nickname}</h4>
         </figure>
+        <h4 class="profile__username"><span class="user-type"></span>${userData.nickname}</h4>
     </div>
     <div class="user-profile__btns"></div>
     <div>
@@ -248,7 +247,6 @@ const getProfile = async (id) => {
 </div>`;
 
 if(userData.userType === 2 ){
-  console.log('im the chef');
   const emoji = document.querySelector(".user-type");
   emoji.innerText = `👨‍🍳`;
 };
@@ -362,7 +360,7 @@ const isLoggedIn = () => {
     <div class="user-profile__header">
         <figure class="profile">
             <img class="u-avatar" src="../${myProfile.avatarUrl}">
-            <h4 class="profile__username">${myProfile.nickname}</h4>
+            <h4 class="profile__username user-link">${myProfile.nickname}</h4>
         </figure>
     </div>
     <div class="user-profile__btns"></div>
