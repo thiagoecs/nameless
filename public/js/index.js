@@ -11,7 +11,11 @@ const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
 const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
 
-const addPosts = (posts) => {
+const addPosts =  (posts, id) => {
+  //const response = await fetch(url + "/posts/" + id);
+   // const data = await response.json();
+    
+    
   posts.forEach((post) => {
     const section = document.createElement("section");
     section.className = "movie";
@@ -64,6 +68,14 @@ const addPosts = (posts) => {
       getProfile(post.creator);
     });
   });
+/*
+  const user = await getUserDataById(data.creator);
+      if(user.nickname === data.restaurant){
+        console.log('im the chef');
+        const title = document.querySelector(".please");
+        title.innerText = `👨‍🍳 ${data.restaurant}`;
+      };
+*/
 };
 
 const getPost = async (id) => {
@@ -83,7 +95,7 @@ const getPost = async (id) => {
           <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
+            <h5 class="please"><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
           </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
@@ -109,6 +121,17 @@ const getPost = async (id) => {
       editBtn.addEventListener("click", () => {
         getEditPost(data.id);
       });
+
+
+      //checking if its a restaurant posting
+      
+      const user = await getUserDataById(data.creator);
+      if(user.nickname === data.restaurant){
+        console.log('im the chef');
+        const title = document.querySelector(".please");
+        title.innerText = `👨‍🍳 ${data.restaurant}`;
+      };
+      
 
       //test vote
 
