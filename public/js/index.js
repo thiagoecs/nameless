@@ -49,7 +49,6 @@ const getPost = async (id) => {
       </section>`;
 
       const profileLink = document.querySelector(".user-link");
-      console.log("profile", profileLink);
       profileLink.addEventListener("click", () => {
         getProfile(data.creator);
       });
