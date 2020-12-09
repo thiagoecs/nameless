@@ -171,6 +171,7 @@ const getMe = (req, res) => {
           nickname: user.nickname,
           avatarUrl: user.avatarUrl,
           email: user.email,
+          userType: user.userType
         });
       }
     });
