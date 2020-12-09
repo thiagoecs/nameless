@@ -11,6 +11,21 @@ const getAllUsers = async () => {
   }
 };
 
+const changePassword = async (id,password)=>{
+   try {
+     const [
+       rows,
+     ] = await promisePool.query(
+       "UPDATE users SET password=? WHERE id = ?;",
+       [password,id]
+     );
+     console.log("userModel changepw:", rows);
+     return rows.affectedRows === 1;
+   } catch (e) {
+     console.log(e)
+     return false;
+   }
+}
 const getUser = async (id) => {
   try {
     const [rows] = await promisePool.execute("SELECT * FROM users where id = ?", [id]);
@@ -75,4 +90,5 @@ module.exports = {
   getUserLogin,
   updateUser,
   deleteUser,
+  changePassword
 };

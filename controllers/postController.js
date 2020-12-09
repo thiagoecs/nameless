@@ -123,35 +123,6 @@ const make_thumbnail = async (req, res, next) => {
   }
 };
 
-const addVote = async (req, res) =>{
-  const {
-    params: { id },
-    body: { votes },
-  } = req;
-  try {
-    let votes = await postModel.getVotes(id).votes;
-    votes = votes + 1;
-    await postModel.updateVote(id, votes);
-  }
-  catch (e){
-    return res.status(400).json({ errors: e.message });
-  }
-};
-
-const removeVote = async (req, res) =>{
-  const {
-    params: { id },
-    body: { votes },
-  } = req;
-  try {
-    let votes = await postModel.getVotes(id).votes;
-    votes = votes - 1;
-    await postModel.updateVote(id, votes);
-  }
-  catch (e){
-    return res.status(400).json({ errors: e.message });
-  }
-};
 
 module.exports = {
   home,
@@ -164,6 +135,4 @@ module.exports = {
   postEditPost,
   deletePost,
   make_thumbnail,
-  addVote,
-  removeVote
 };
