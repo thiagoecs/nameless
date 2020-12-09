@@ -134,6 +134,27 @@ const addUpvote = (data) => {
   const votesValue = data.votes;
   const newVotes = votesValue + 1;
   votes.innerText = `Votes: ${newVotes}`;
+  //const uploadForm = document.querySelector("#upload");
+  try {
+    votes.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      //const value = votes.data.votes;
+      const fetchOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+        body: JSON.stringify({newVotes})
+      };
+      const response = await fetch(url + "/posts/" + data.id, fetchOptions);
+      location.assign("/");
+      console.log("talk to me");
+    });
+  }
+catch(e) {
+  console.log(e);
+}
   console.log(newVotes);
 };
 
