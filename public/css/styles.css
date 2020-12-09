@@ -124,15 +124,18 @@ button {
   font-size: 1.4rem;
   color: #255e1ae1;
 }
-.login_header ul li:first-child a {
+.login_header ul li:first-child a,
+.redbox {
   padding: 10px 30px;
   color: white;
   background: #fd8664;
   border-radius: 10px;
+  border: none;
 }
 .login_header ul li:first-child a:hover,
 #back:hover,
-button:hover {
+button:hover,
+.redbox:hover {
   opacity: 0.8;
 }
 .login_header a {
