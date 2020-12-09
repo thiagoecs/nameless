@@ -12,10 +12,8 @@ const searchBar = searchForm.querySelector("#search-bar");
 const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
 const token = document.cookie.split("userToken=")[1];
 
-const addPosts =  (posts, id) => {
-  //const response = await fetch(url + "/posts/" + id);
-   // const data = await response.json();
-    
+const addPosts = (posts) => {
+  
     
   posts.forEach((post) => {
     const section = document.createElement("section");
@@ -25,6 +23,9 @@ const addPosts =  (posts, id) => {
     const postHeader = document.createElement("div");
     postHeader.className = "movie_header";
     const title = document.createElement("h4");
+    const emoji = document.createElement("span");
+
+    emoji.className ="user-type";
 
     title.className = "post-link";
     title.innerText = post.restaurant;
@@ -35,8 +36,14 @@ const addPosts =  (posts, id) => {
     creator.innerText = post.nickname;
 
     postHeader.appendChild(title);
+    postHeader.appendChild(emoji);
     postHeader.appendChild(creator);
     wrapper.appendChild(postHeader);
+
+    if(post.userType === 2 ){
+      console.log('im the chef');
+      emoji.innerText = `👨‍🍳`;
+    }
 
     const img = document.createElement("img");
     img.src = `../${post.sourceFile}`;
@@ -68,15 +75,8 @@ const addPosts =  (posts, id) => {
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });
+
   });
-/*
-  const user = await getUserDataById(data.creator);
-      if(user.nickname === data.restaurant){
-        console.log('im the chef');
-        const title = document.querySelector(".please");
-        title.innerText = `👨‍🍳 ${data.restaurant}`;
-      };
-*/
 };
 
 const getPost = async (id) => {
@@ -93,7 +93,7 @@ const getPost = async (id) => {
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5 class="please"><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
+            <h5 class="please"><a class='user-link' href='#/users/${data.creator}'><span class="user-type"></span>${data.nickname}</a></h5>
           </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
@@ -137,8 +137,8 @@ const getPost = async (id) => {
       const user = await getUserDataById(data.creator);
       if(user.nickname === data.restaurant){
         console.log('im the chef');
-        const title = document.querySelector(".please");
-        title.innerText = `👨‍🍳 ${data.restaurant}`;
+        const title = document.querySelector(".user-type");
+        title.innerText = `👨‍🍳`;
       };
       
 
