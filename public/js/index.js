@@ -1,6 +1,5 @@
 "use strict";
 
-
 // having post view, user view, and search function
 const url = "https://localhost:8000";
 const main = document.querySelector("main");
@@ -99,41 +98,43 @@ const getPost = async (id) => {
           </div>
         </section>`;
 
+    const subHeader = document.querySelector(".sub_header");
+
     if (data.creator === myProfileData.id) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
-      const subHeader = document.querySelector(".sub_header");
       subHeader.appendChild(editBtn);
-      editBtn.addEventListener('click',()=>{
-        getEditPost(data.id)
-      })
+      editBtn.addEventListener("click", () => {
+        getEditPost(data.id);
+      });
 
       //test vote
-      
+
       const voteBtn = document.createElement("button");
       voteBtn.innerText = "Vote Up";
-      const subHeader2 = document.querySelector(".sub_header");
-      subHeader2.appendChild(voteBtn);
-      voteBtn.addEventListener('click',()=>{
-        const votes = document.querySelector(".votes");
-        data.votes = data.votes +1;
-        votes.innerText = `Votes: ${data.votes}`;
-        console.log("vote +1");
-
-
-        //data.votes = addVote(data.id, data.votes)
-        //var results = addVote(data.id, data.votes);
-        //votes.innerText = `Votes: ${data.votes}`;
-      })
-      
+      subHeader.appendChild(voteBtn);
+      voteBtn.addEventListener("click", function handler(e) {
+        addUpvote(data);
+        e.currentTarget.removeEventListener(e.type, handler); // remove listner
+        voteBtn.style.opacity = "0.5";
+      });
     }
-    const profileLink = document.querySelector('.user-link')
-    profileLink.addEventListener('click',()=>{
-      getProfile(data.creator)
-    })
+    const profileLink = document.querySelector(".user-link");
+    profileLink.addEventListener("click", () => {
+      getProfile(data.creator);
+    });
   } catch (e) {
     console.log(e);
   }
+};
+
+// *todo: fetch url to update
+const addUpvote = (data) => {
+  const votes = document.querySelector(".votes");
+  const votesValue = data.votes;
+  const newVotes = votesValue + 1;
+  votes.innerText = `Votes: ${newVotes}`;
+  console.log(newVotes);
 };
 
 const getPosts = async () => {
@@ -148,12 +149,13 @@ const getPosts = async () => {
 
 const getProfile = async (id) => {
   try {
-    const myProfile = await fetch(url + "/me");
-    const myProfileData = await myProfile.json();
-    const user = await fetch(url + "/users/" + id);
-    const userData = await user.json();
+    const myProfileData = await getMyProfile();
+    const userData = await getUserDataById(id);
     console.log(myProfileData, userData);
-    makeBackButton();
+    const backButton = document.querySelector("#back");
+    if (!backButton) {
+      makeBackButton();
+    }
     main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
@@ -168,14 +170,40 @@ const getProfile = async (id) => {
     </div>
 </div>`;
     if (myProfileData.id === userData.id) {
-      const editBtn = document.createElement("button");
-      editBtn.innerText = "Edit Profile";
-      const passwdBtn = document.createElement("button");
-      passwdBtn.innerText = "Change Password";
-      const btnContainer = document.querySelector(".user-profile__btns");
-      btnContainer.appendChild(editBtn);
-      btnContainer.appendChild(passwdBtn);
+      addEditProfileBtn();
     }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const addEditProfileBtn = () => {
+  const editBtn = document.createElement("button");
+  editBtn.innerText = "Edit Profile";
+  const passwdBtn = document.createElement("button");
+  passwdBtn.innerText = "Change Password";
+  const btnContainer = document.querySelector(".user-profile__btns");
+  btnContainer.appendChild(editBtn);
+  btnContainer.appendChild(passwdBtn);
+};
+
+const getMyProfile = async () => {
+  try {
+    const response = await fetch(url + "/me");
+    const myProfile = await response.json();
+    console.log("me:", myProfile);
+    return myProfile;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getUserDataById = async (id) => {
+  try {
+    const response = await fetch(url + "/users/" + id);
+    const user = await response.json();
+    console.log("user:", user);
+    return user;
   } catch (e) {
     console.log(e);
   }
@@ -193,13 +221,12 @@ const makeBackButton = () => {
 
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
-  console.log(document.cookie);
+  //console.log(document.cookie);
   //const token = sessionStorage.getItem("userToken");
   const token = document.cookie;
   if (token) {
     redButton.href = "../html/upload.html";
     redButton.innerText = "Upload";
-    profile.href = `${url}/me`;
     profile.innerText = "Profile";
     profile.href = "#";
     profile.addEventListener("click", () => {
@@ -255,13 +282,12 @@ const getPostDataById = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const post = await response.json();
-    console.log('post:',post)
+    console.log("post:", post);
     return post;
   } catch (e) {
     console.log(e);
   }
 };
-
 
 // search
 searchForm.addEventListener("submit", async (e) => {
@@ -272,11 +298,14 @@ searchForm.addEventListener("submit", async (e) => {
     searchTitle.style.display = "block";
     const response = await fetch(url + "/search?term=" + query);
     const data = await response.json();
+    console.log("data:", data);
     if (data.posts.length == 0) {
       searchTitle.style.marginTop = "10vh";
+    } else {
+      searchTitle.style.marginTop = "2vh";
     }
     const posts = document.querySelectorAll(".movie");
-    searchTitle.innerHTML += `'${query}'`;
+    searchTitle.innerHTML = `Searching for: '${query}'    ||    ${data.posts.length} post(s)`;
     posts.forEach((post) => {
       post.parentNode.removeChild(post);
     });
@@ -287,29 +316,26 @@ searchForm.addEventListener("submit", async (e) => {
 });
 
 //votes
-const addVote = async (id, votes) =>{
+const addVote = async (id, votes) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    data.votes = data.votes +1;
-    var results = data.votes
+    data.votes = data.votes + 1;
+    var results = data.votes;
     console.log("added 1");
     return results;
-  }
-  catch (e){
+  } catch (e) {
     console.log(e);
   }
 };
 
-const removeVote = async (id, votes) =>{
-  
+const removeVote = async (id, votes) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
-    data.votes = data.votes -1;
+    data.votes = data.votes - 1;
     return data.votes;
-  }
-  catch (e){
+  } catch (e) {
     console.log(e);
   }
 };
