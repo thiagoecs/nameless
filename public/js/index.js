@@ -1,7 +1,7 @@
 "use strict";
 
 // having post view, user view, and search function
-const url = "https://localhost:8000";
+const URL_BASE = "https://localhost:8000";
 const main = document.querySelector("main");
 const loginHeader = document.querySelector(".login_header");
 const topHeader = document.querySelector(".top_header");
@@ -10,6 +10,7 @@ const profile = document.querySelector(".profile");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
 const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
+const token = document.cookie.split("userToken=")[1];
 
 const addPosts = (posts) => {
   posts.forEach((post) => {
@@ -68,26 +69,23 @@ const addPosts = (posts) => {
 
 const getPost = async (id) => {
   try {
-    const response = await fetch(url + "/posts/" + id);
-    const data = await response.json();
-    console.log(data)
-    const myProfile = await fetch(url + "/me");
-    const myProfileData = await myProfile.json();
+    const data = await getPostDataById(id);
+    const myProfileData = await getMyProfile();
     const uploadTime = data.createdAt.split("T");
     const date = uploadTime[0];
     const time = uploadTime[1].split(".")[0];
     makeBackButton();
-    document.title = `${data.restaurant} | Food Advisor`
+    document.title = `${data.restaurant} | Food Advisor`;
     main.innerHTML = `
-        <section class="movie">
-          <div id='wrapper' class="wrapper">
+      <section class="movie">
+        <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
             <h5><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
-          </div>
+            </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
-        </div>
+          </div>
           <figure>
           <img src="../${data.sourceFile}">
           </figure>
@@ -96,11 +94,22 @@ const getPost = async (id) => {
           <h5 class="votes">Vote: ${data.votes}</h5>
           </div>
            <p class="post__description">${data.description}</p>
-          <h5 class='comments'>comments: ${data.comments}</h5>
-          </div>
-        </section>`;
-
+            <div class='video__comments'>
+              <h5 class='comments'>comment(s): <span class='comment-num'>${data.comments}</span></h5>
+              <form id='comments-form'>
+              <input class='input-bar comment-bar' type='text' placeholder="Add a comment">
+              <button class="light-border" type="submit">Save</button>
+              </form>
+              <ul class='comments-list'></ul>
+              </div>
+        </div>
+      </section>`;
     const subHeader = document.querySelector(".sub_header");
+    const commentBar = document.querySelector("#comments-form");
+
+    // if (!token) {
+    //   commentBar.style.display = 'none';
+    // }
 
     if (data.creator === myProfileData.id) {
       const editBtn = document.createElement("button");
@@ -141,8 +150,9 @@ const addUpvote = (data) => {
 
 const getPosts = async () => {
   try {
-    const response = await fetch(url + "/posts");
+    const response = await fetch(URL_BASE + "/posts");
     const posts = await response.json();
+    console.log(posts)
     addPosts(posts);
   } catch (e) {
     console.log(e);
@@ -158,7 +168,7 @@ const getProfile = async (id) => {
     if (!backButton) {
       makeBackButton();
     }
-    document.title = `${userData.nickname} | Food Advisor`
+    document.title = `${userData.nickname} | Food Advisor`;
     main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
@@ -175,13 +185,13 @@ const getProfile = async (id) => {
     if (myProfileData.id === userData.id) {
       addEditProfileBtn();
       const editBtn = document.querySelector(".edit-profile");
-      const editPw = document.querySelector('.change-password')
-      editPw.addEventListener('click',()=>{
-        getChangePassword(myProfileData.id)
-      })
-       editBtn.addEventListener("click", () => {
-         getEditProfile(myProfileData);
-       });
+      const editPw = document.querySelector(".change-password");
+      editPw.addEventListener("click", () => {
+        getChangePassword(myProfileData.id);
+      });
+      editBtn.addEventListener("click", () => {
+        getEditProfile(myProfileData);
+      });
     }
   } catch (e) {
     console.log(e);
@@ -190,10 +200,10 @@ const getProfile = async (id) => {
 
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
-  editBtn.className = 'edit-profile'
+  editBtn.className = "edit-profile";
   editBtn.innerText = "Edit Profile";
   const passwdBtn = document.createElement("button");
-  passwdBtn.className = 'change-password'
+  passwdBtn.className = "change-password";
   passwdBtn.innerText = "Change Password";
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);
@@ -202,7 +212,12 @@ const addEditProfileBtn = () => {
 
 const getMyProfile = async () => {
   try {
-    const response = await fetch(url + "/me");
+    const fetchOptions = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const response = await fetch(URL_BASE + "/me", fetchOptions);
     const myProfile = await response.json();
     console.log("me:", myProfile);
     return myProfile;
@@ -213,7 +228,7 @@ const getMyProfile = async () => {
 
 const getUserDataById = async (id) => {
   try {
-    const response = await fetch(url + "/users/" + id);
+    const response = await fetch(URL_BASE + "/users/" + id);
     const user = await response.json();
     console.log("user:", user);
     return user;
@@ -279,10 +294,8 @@ const isLoggedIn = () => {
       editBtn.addEventListener("click", () => {
         getEditProfile(myProfile);
       });
-    });                          
-                        
+    });
   }
-  
 };
 
 // deleting cookie
@@ -313,7 +326,7 @@ const logOut = () => {
 
 const getPostDataById = async (id) => {
   try {
-    const response = await fetch(url + "/posts/" + id);
+    const response = await fetch(URL_BASE + "/posts/" + id);
     const post = await response.json();
     console.log("post:", post);
     return post;
@@ -330,7 +343,7 @@ searchForm.addEventListener("submit", async (e) => {
     document.title = `Searching for: ${query} | Food Advisor`;
     console.log(query);
     searchTitle.style.display = "block";
-    const response = await fetch(url + "/search?term=" + query);
+    const response = await fetch(URL_BASE + "/search?term=" + query);
     const data = await response.json();
     console.log("data:", data);
     if (data.posts.length == 0) {
@@ -339,7 +352,7 @@ searchForm.addEventListener("submit", async (e) => {
       searchTitle.style.marginTop = "2vh";
     }
     const posts = document.querySelectorAll(".movie");
-    searchTitle.innerHTML = `Searching for: '${query}'    ||    ${data.posts.length} post(s)`;
+    searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
     posts.forEach((post) => {
       post.parentNode.removeChild(post);
     });
@@ -352,7 +365,7 @@ searchForm.addEventListener("submit", async (e) => {
 //votes
 const addVote = async (id, votes) => {
   try {
-    const response = await fetch(url + "/posts/" + id);
+    const response = await fetch(URL_BASE + "/posts/" + id);
     const data = await response.json();
     data.votes = data.votes + 1;
     var results = data.votes;
@@ -365,7 +378,7 @@ const addVote = async (id, votes) => {
 
 const removeVote = async (id, votes) => {
   try {
-    const response = await fetch(url + "/posts/" + id);
+    const response = await fetch(URL_BASE + "/posts/" + id);
     const data = await response.json();
     data.votes = data.votes - 1;
     return data.votes;
