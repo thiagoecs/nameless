@@ -129,7 +129,7 @@ const getPost = async (id) => {
       const title = document.querySelector(".user-type");
       title.innerText = `👨‍🍳`;
     }
-    if (data.creator === myProfileData.id) {
+    if (data.creator === myProfileData.id ) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
       subHeader.appendChild(editBtn);
