@@ -12,7 +12,7 @@
     <header class="title_header">
         <h1><a href='../html/index.html'>Food advisor</a></h1>
         <form action="../html/search.html" method="get">
-            <input id="search-bar" type="text" placeholder="Search by ..." name="term">
+            <input id="search-bar" class='input-bar' type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
                     <path
@@ -29,7 +29,8 @@
                 Enjoy!
             </h3>
             <p>
-                Compare pictures of other users with the restaurants picures and choose the best destination to enjoy your meal!
+                Compare pictures of other users with the restaurants picures and choose the best destination to enjoy
+                your meal!
             </p>
             <nav>
                 <ul>
@@ -41,7 +42,7 @@
     <header class="login_header">
         <ul>
             <li>
-                <a class="join" href="../html/join.html">Join</a>
+                <a class="join redbox" href="../html/join.html">Join</a>
             </li>
             <li>
                 <a class="login" href="../html/login.html">Log In</a>
@@ -49,42 +50,47 @@
         </ul>
     </header>
     <main>
-    <div class="form-wrapper">
-        <h2>Join Food Advisor!</h2>
-        <div class="form-container">
-            <!-- TODO: add validators-->
-            <form class="register-form" action="../html/join.html" method="POST">
-                <label for="nickname">Nickname</label>
-                <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname" pattern=".{3,}"
-                    required>
-                <label for="email">Email</label>
-                <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
-                <span class="email-error"></span>
-                <label for="password">Password</label>
-                <input class="input-field" type="password" name="password" id="password" pattern="(?=.*[A-Z]).{8,}" placeholder="Password" required>
-                <label for="password2">Verify password</label>
-                <input class="input-field" type="password" name="password2" id="password2" placeholder="Verify Password" pattern="(?=.*[A-Z]).{8,}"
-                    required>
-                <span class="password-error"></span>
-                <div class='checkbox'>
-                <label for="business">For business?</label>
-                <span class='info'>❓</span>
-                <input class="input-field" type="checkbox" name="business" id="business">
-                </div>
-                <input class="submit" type="submit" value="🍹 Create account">
-            </form>
-            <div class='modal'>
-                <div class='modal-content'>
-                    <span class="close">&times;</span>
-                    <p>This option is for restaurant owners who want to promote their restaurant!</p>
+        <div class="search_filter__header">
+            <h3>Searching for: </h3>
+        </div>
+        <div class="form-wrapper">
+            <h2>Join Food Advisor!</h2>
+            <div class="form-container">
+                <!-- TODO: add validators-->
+                <form class="register-form" action="../html/join.html" method="POST">
+                    <label for="nickname">Nickname</label>
+                    <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname"
+                        pattern=".{3,}" required>
+                    <label for="email">Email</label>
+                    <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
+                    <span class="email-error"></span>
+                    <label for="password">Password</label>
+                    <input class="input-field" type="password" name="password" id="password" pattern="(?=.*[A-Z]).{8,}"
+                        placeholder="Password" required>
+                    <label for="password2">Verify password</label>
+                    <input class="input-field" type="password" name="password2" id="password2"
+                        placeholder="Verify Password" pattern="(?=.*[A-Z]).{8,}" required>
+                    <span class="password-error"></span>
+                    <div class='checkbox'>
+                        <label for="business">For business?</label>
+                        <span class='info'>❓</span>
+                        <input class="input-field" type="checkbox" name="business" id="business">
+                    </div>
+                    <input class="submit" type="submit" value="🍹 Create account">
+                </form>
+                <div class='modal'>
+                    <div class='modal-content'>
+                        <span class="close">&times;</span>
+                        <p>This option is for restaurant owners who want to promote their restaurant!</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </main>
     <footer>
         <span class="footer__text"></span>
     </footer>
     <script src="../js/join.js"></script>
+    <script src='../js/search.js'></script>
 </body>
 </html>

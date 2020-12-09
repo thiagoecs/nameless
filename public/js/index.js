@@ -7,11 +7,12 @@ const loginHeader = document.querySelector(".login_header");
 const topHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
-const searchForm = document.querySelector("form");
-const searchBar = searchForm.querySelector("#search-bar");
-const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
-const token = document.cookie.split("userToken=")[1];
+// const searchForm = document.querySelector("form");
+// const searchBar = searchForm.querySelector("#search-bar");
+// const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
+const token = document.cookie.split("userToken=")[1]; //JWT token
 
+// iterating posts data and displaying each element on main page
 const addPosts = (posts) => {
   posts.forEach((post) => {
     const section = document.createElement("section");
@@ -67,6 +68,7 @@ const addPosts = (posts) => {
   });
 };
 
+// showing a detailed page with comments
 const getPost = async (id) => {
   try {
     const data = await getPostDataById(id);
@@ -81,7 +83,7 @@ const getPost = async (id) => {
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5><a class='user-link' href='#/users/${data.creator}'>${data.nickname}</a></h5>
+            <h5><a class='user-link' href='#/users/${data.creator}'><span class="user-type"></span>${data.nickname}</a></h5>
             </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
@@ -97,19 +99,22 @@ const getPost = async (id) => {
             <div class='video__comments'>
               <h5 class='comments'>comment(s): <span class='comment-num'>${data.comments}</span></h5>
               <form id='comments-form'>
-              <input class='input-bar comment-bar' type='text' placeholder="Add a comment">
-              <button class="light-border" type="submit">Save</button>
+              <input class='input-bar comment-bar' name="comment" type='text' placeholder="Add a comment">
+              <button class="redbox" type="submit">Save</button>
               </form>
               <ul class='comments-list'></ul>
               </div>
         </div>
       </section>`;
     const subHeader = document.querySelector(".sub_header");
-    const commentBar = document.querySelector("#comments-form");
+    const commentBox = document.querySelector("#comments-form");
 
     // if (!token) {
-    //   commentBar.style.display = 'none';
+    //   commentBox.style.display = 'none';
     // }
+    commentBox.addEventListener("submit", (e) => {
+      postComment(commentBox, e);
+    });
 
     if (data.creator === myProfileData.id) {
       const editBtn = document.createElement("button");
@@ -148,21 +153,21 @@ const addUpvote = (data) => {
   data.votes = newVotes;
   console.log("please");
 
-  if(votes){
-  votes.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const fetchOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + sessionStorage.getItem("token"),
-      },
-      body: JSON.stringify({data})
-    };
-    const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-    location.assign("/");
-    console.log("talk to me");
-  });
+  if (votes) {
+    votes.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fetchOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+        body: JSON.stringify({ data }),
+      };
+      const response = await fetch(url + "/posts/" + data.id, fetchOptions);
+      location.assign("/");
+      console.log("talk to me");
+    });
   }
 
   console.log(newVotes);
@@ -188,22 +193,25 @@ votes.addEventListener("submit", async (e) => {
 
 */
 
+// getting posts data and calling addPosts function
 const getPosts = async () => {
   try {
     const response = await fetch(URL_BASE + "/posts");
     const posts = await response.json();
-    console.log(posts)
+    console.log(posts);
     addPosts(posts);
   } catch (e) {
     console.log(e);
   }
 };
 
+// profile page
 const getProfile = async (id) => {
   try {
     const myProfileData = await getMyProfile();
     const userData = await getUserDataById(id);
-    console.log(myProfileData, userData);
+
+    // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
       makeBackButton();
@@ -222,6 +230,7 @@ const getProfile = async (id) => {
     <h4>Post list</h4>
     </div>
 </div>`;
+    // if logged in user is same as an author of the post, it shows edit profile and change password button
     if (myProfileData.id === userData.id) {
       addEditProfileBtn();
       const editBtn = document.querySelector(".edit-profile");
@@ -238,6 +247,7 @@ const getProfile = async (id) => {
   }
 };
 
+// making edit profile and change password button
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
   editBtn.className = "edit-profile";
@@ -250,6 +260,7 @@ const addEditProfileBtn = () => {
   btnContainer.appendChild(passwdBtn);
 };
 
+// getting logged in user information
 const getMyProfile = async () => {
   try {
     const fetchOptions = {
@@ -266,6 +277,7 @@ const getMyProfile = async () => {
   }
 };
 
+// getting specified user info by id number
 const getUserDataById = async (id) => {
   try {
     const response = await fetch(URL_BASE + "/users/" + id);
@@ -290,7 +302,6 @@ const makeBackButton = () => {
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
-  const token = document.cookie;
   if (token) {
     redButton.href = "../html/upload.html";
     redButton.innerText = "Upload";
@@ -376,31 +387,31 @@ const getPostDataById = async (id) => {
 };
 
 // search
-searchForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const query = searchBar.value;
-  if (query !== "") {
-    document.title = `Searching for: ${query} | Food Advisor`;
-    console.log(query);
-    searchTitle.style.display = "block";
-    const response = await fetch(URL_BASE + "/search?term=" + query);
-    const data = await response.json();
-    console.log("data:", data);
-    if (data.posts.length == 0) {
-      searchTitle.style.marginTop = "10vh";
-    } else {
-      searchTitle.style.marginTop = "2vh";
-    }
-    const posts = document.querySelectorAll(".movie");
-    searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
-    posts.forEach((post) => {
-      post.parentNode.removeChild(post);
-    });
-    addPosts(data.posts);
-  } else {
-    location.assign("/");
-  }
-});
+// searchForm.addEventListener("submit", async (e) => {
+//   e.preventDefault();
+//   const query = searchBar.value;
+//   if (query !== "") {
+//     document.title = `Searching for: ${query} | Food Advisor`;
+//     console.log(query);
+//     searchTitle.style.display = "block";
+//     const response = await fetch(URL_BASE + "/search?term=" + query);
+//     const data = await response.json();
+//     console.log("data:", data);
+//     if (data.posts.length == 0) {
+//       searchTitle.style.marginTop = "10vh";
+//     } else {
+//       searchTitle.style.marginTop = "2vh";
+//     }
+//     const posts = document.querySelectorAll(".movie");
+//     searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
+//     posts.forEach((post) => {
+//       post.parentNode.removeChild(post);
+//     });
+//     addPosts(data.posts);
+//   } else {
+//     location.assign("/");
+//   }
+// });
 
 //votes
 const addVote = async (id, votes) => {

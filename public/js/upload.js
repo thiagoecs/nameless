@@ -1,4 +1,5 @@
 "use strict";
+
 const form = document.querySelector("#upload");
 
 form.addEventListener("submit", async (e) => {

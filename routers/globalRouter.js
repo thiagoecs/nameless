@@ -1,4 +1,6 @@
 "use strict";
+//for routes using root route 
+
 const express = require("express");
 const globalRouter = express.Router();
 const routes = require("../routes");

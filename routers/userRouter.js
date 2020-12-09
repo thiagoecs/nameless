@@ -37,4 +37,7 @@ userRouter.post("/:id/change-passwd", changePassword);
 // user profile
 userRouter.route("/:id").get(userDetail).put(uploadAvatar,postEditProfile);
 
+// users' comments
+//userRouter.post('/:id/comment',postAddComment)
+
 module.exports = userRouter;
