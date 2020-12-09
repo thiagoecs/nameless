@@ -230,7 +230,7 @@ const isLoggedIn = () => {
     profile.innerText = "Profile";
     profile.href = "#";
     profile.addEventListener("click", () => {
-      console.log('clicked')
+      console.log("clicked");
       makeBackButton();
       main.innerHTML = `
         <div class="user-profile">
