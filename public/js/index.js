@@ -242,23 +242,33 @@ const makeBackButton = () => {
 
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
-  //console.log(document.cookie);
-  //const token = sessionStorage.getItem("userToken");
+  const btn = document.querySelector(".login");
   const token = document.cookie;
   if (token) {
     redButton.href = "../html/upload.html";
     redButton.innerText = "Upload";
-    profile.innerText = "Profile";
-    profile.href = "#";
-    profile.addEventListener("click", () => {
-      console.log("clicked");
+    btn.innerText = "Profile";
+    btn.removeAttribute("href");
+    btn.classList.add("profile");
+    topHeader.innerHTML += `<li>
+                                <a class="logout" href="#">Log Out</a>
+                              </li>`;
+  }
+  const profile = document.querySelector(".profile");
+  profile.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const myProfile = await getMyProfile();
+    console.log("clicked");
+    const backButton = document.querySelector("#back");
+    if (!backButton) {
       makeBackButton();
-      main.innerHTML = `
+    }
+    main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
         <figure class="profile">
-            <img class="u-avatar" src="../${userData.avatarUrl}">
-            <h4 class="profile__username">${userData.nickname}</h4>
+            <img class="u-avatar" src="../${myProfile.avatarUrl}">
+            <h4 class="profile__username">${myProfile.nickname}</h4>
         </figure>
     </div>
     <div class="user-profile__btns"></div>
@@ -266,11 +276,8 @@ const isLoggedIn = () => {
     <h4>Post list</h4>
     </div>
 </div>`;
-    });
-    topHeader.innerHTML += `<li>
-                                <a class="logout" href="/">Log Out</a>
-                              </li>`;
-  }
+    addEditProfileBtn();
+  });
 };
 
 // deleting cookie
