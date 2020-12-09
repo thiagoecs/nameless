@@ -70,12 +70,14 @@ const getPost = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
+    console.log(data)
     const myProfile = await fetch(url + "/me");
     const myProfileData = await myProfile.json();
     const uploadTime = data.createdAt.split("T");
     const date = uploadTime[0];
     const time = uploadTime[1].split(".")[0];
     makeBackButton();
+    document.title = `${data.restaurant} | Food Advisor`
     main.innerHTML = `
         <section class="movie">
           <div id='wrapper' class="wrapper">
@@ -196,6 +198,7 @@ const getProfile = async (id) => {
     if (!backButton) {
       makeBackButton();
     }
+    document.title = `${userData.nickname} | Food Advisor`
     main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
@@ -211,6 +214,14 @@ const getProfile = async (id) => {
 </div>`;
     if (myProfileData.id === userData.id) {
       addEditProfileBtn();
+      const editBtn = document.querySelector(".edit-profile");
+      const editPw = document.querySelector('.change-password')
+      editPw.addEventListener('click',()=>{
+        getChangePassword(myProfileData.id)
+      })
+       editBtn.addEventListener("click", () => {
+         getEditProfile(myProfileData);
+       });
     }
   } catch (e) {
     console.log(e);
@@ -219,8 +230,10 @@ const getProfile = async (id) => {
 
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
+  editBtn.className = 'edit-profile'
   editBtn.innerText = "Edit Profile";
   const passwdBtn = document.createElement("button");
+  passwdBtn.className = 'change-password'
   passwdBtn.innerText = "Change Password";
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);
@@ -272,17 +285,19 @@ const isLoggedIn = () => {
     topHeader.innerHTML += `<li>
                                 <a class="logout" href="#">Log Out</a>
                               </li>`;
-  }
-  const profile = document.querySelector(".profile");
-  profile.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const myProfile = await getMyProfile();
-    console.log("clicked");
-    const backButton = document.querySelector("#back");
-    if (!backButton) {
-      makeBackButton();
-    }
-    main.innerHTML = `
+
+    const profile = document.querySelector(".profile");
+    profile.style.cursor = "pointer";
+    profile.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const myProfile = await getMyProfile();
+      console.log("clicked");
+      const backButton = document.querySelector("#back");
+      if (!backButton) {
+        makeBackButton();
+      }
+      document.title = `${myProfile.nickname} | Food Advisor`;
+      main.innerHTML = `
         <div class="user-profile">
     <div class="user-profile__header">
         <figure class="profile">
@@ -295,8 +310,19 @@ const isLoggedIn = () => {
     <h4>Post list</h4>
     </div>
 </div>`;
-    addEditProfileBtn();
-  });
+      addEditProfileBtn();
+      const editBtn = document.querySelector(".edit-profile");
+      const editPw = document.querySelector(".change-password");
+      editPw.addEventListener("click", () => {
+        getChangePassword(myProfile.id);
+      });
+      editBtn.addEventListener("click", () => {
+        getEditProfile(myProfile);
+      });
+    });                          
+                        
+  }
+  
 };
 
 // deleting cookie
@@ -341,6 +367,7 @@ searchForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const query = searchBar.value;
   if (query !== "") {
+    document.title = `Searching for: ${query} | Food Advisor`;
     console.log(query);
     searchTitle.style.display = "block";
     const response = await fetch(url + "/search?term=" + query);
