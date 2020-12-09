@@ -1,5 +1,6 @@
 "use strict";
-const head = document.querySelector("head");
+const url = "https://localhost:8000";
+const head_ = document.querySelector("head");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
 const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
@@ -11,7 +12,7 @@ searchForm.addEventListener("submit", async (e) => {
     document.title = `Searching for: ${query} | Food Advisor`;
     console.log(query);
     searchTitle.style.display = "block";
-    const response = await fetch(URL_BASE + "/search?term=" + query);
+    const response = await fetch(url + "/search?term=" + query);
     const data = await response.json();
     console.log("data:", data);
     if (data.posts.length == 0) {
@@ -24,10 +25,10 @@ searchForm.addEventListener("submit", async (e) => {
 
     searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
     if (form) {
-      const style = head.children[4];
-      head.removeChild(style);
+      const style = head_.children[4];
+      head_.removeChild(style);
       form.parentNode.removeChild(form);
-      console.log(head);
+      console.log(head_);
     }
     posts.forEach((post) => {
       post.parentNode.removeChild(post);

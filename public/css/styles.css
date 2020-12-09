@@ -62,6 +62,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   font-size: 13px;
+  align-items: center;
 }
 .title_header nav ul li {
   cursor: pointer;
@@ -114,6 +115,7 @@ button {
 }
 .login_header ul {
   display: flex;
+  align-items: center;
 }
 .login_header ul li {
   margin-right: 30px;

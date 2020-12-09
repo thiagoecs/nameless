@@ -1,5 +1,5 @@
 "use strict";
-
+const URL_BASE = "https://localhost:8000";
 const form = document.querySelector(".register-form");
 const emailError = document.querySelector(".email-error");
 const passwordError = document.querySelector(".password-error");
