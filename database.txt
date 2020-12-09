@@ -39,6 +39,8 @@ CREATE TABLE `userTypes` (
   `id` INT PRIMARY KEY NOT NULL,
   `name` VARCHAR(255) NOT NULL );
 
+INSERT INTO `userTypes` (`id`, `name`) VALUES ('1', 'normal'), ('2', 'business'), ('3', 'admin')
+
 alter table `files` add column `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT;
 
 alter table `comments` add column `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT;
