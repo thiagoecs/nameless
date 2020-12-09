@@ -6,6 +6,7 @@ const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
 const htmlFilePath = "../public/html";
+const { validationResult } = require("express-validator");
 const maxAge = 60 * 60 * 1000; // maximum storage period in millisecond
 
 // error handler
@@ -67,6 +68,11 @@ const changePassword = async (req, res) => {
 };
 // sending join request
 const postJoin = async (req, res, next) => {
+   const errors = validationResult(req);
+   console.log(errors)
+   if (!errors.isEmpty()) {
+     return res.status(400).json({ errors: errors.array() });
+   }
   // same as const nickname = req.body.nickname ...
   const { nickname, email, password2, business } = req.body;
   console.log("business:", req.body);

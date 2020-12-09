@@ -70,6 +70,7 @@ const getPost = async (id) => {
   try {
     const response = await fetch(url + "/posts/" + id);
     const data = await response.json();
+    console.log(data)
     const myProfile = await fetch(url + "/me");
     const myProfileData = await myProfile.json();
     const uploadTime = data.createdAt.split("T");

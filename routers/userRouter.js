@@ -1,6 +1,6 @@
 'use strict';
 const express = require("express");
-const { verifyToken, loggedUser,uploadAvatar } = require("../middlewares");
+const { loggedUser,uploadAvatar } = require("../middlewares");
 const userRouter = express.Router();
 const {body} = require('express-validator');
 const routes = require("../routes");
