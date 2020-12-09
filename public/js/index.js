@@ -11,8 +11,6 @@ const token = document.cookie.split("userToken=")[1]; //JWT token
 
 // iterating posts data and displaying each element on main page
 const addPosts = (posts) => {
-  
-    
   posts.forEach((post) => {
     const section = document.createElement("section");
     section.className = "movie";
@@ -23,7 +21,7 @@ const addPosts = (posts) => {
     const title = document.createElement("h4");
     const emoji = document.createElement("span");
 
-    emoji.className ="user-type";
+    emoji.className = "user-type";
 
     title.className = "post-link";
     title.innerText = post.restaurant;
@@ -34,12 +32,12 @@ const addPosts = (posts) => {
     creator.innerText = post.nickname;
 
     postHeader.appendChild(title);
-    postHeader.appendChild(emoji);
+    creator.appendChild(emoji);
     postHeader.appendChild(creator);
     wrapper.appendChild(postHeader);
 
-    if(post.userType === 2 ){
-      console.log('im the chef');
+    if (post.userType === 2) {
+      console.log("im the chef");
       emoji.innerText = `👨‍🍳`;
     }
 
@@ -73,7 +71,6 @@ const addPosts = (posts) => {
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });
-
   });
 };
 
@@ -124,7 +121,14 @@ const getPost = async (id) => {
     commentBox.addEventListener("submit", (e) => {
       postComment(commentBox, e);
     });
-
+    //checking if its a restaurant posting
+    const user = await getUserDataById(data.creator);
+    console.log(user);
+    if (user.userType === 2) {
+      console.log("im the chef");
+      const title = document.querySelector(".user-type");
+      title.innerText = `👨‍🍳`;
+    }
     if (data.creator === myProfileData.id) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
@@ -132,17 +136,6 @@ const getPost = async (id) => {
       editBtn.addEventListener("click", () => {
         getEditPost(data.id);
       });
-
-
-      //checking if its a restaurant posting
-      
-      const user = await getUserDataById(data.creator);
-      if(user.nickname === data.restaurant){
-        console.log('im the chef');
-        const title = document.querySelector(".user-type");
-        title.innerText = `👨‍🍳`;
-      };
-      
 
       //test vote
 
