@@ -201,6 +201,24 @@ const isLoggedIn = () => {
     redButton.innerText = "Upload";
     profile.href = `${url}/me`;
     profile.innerText = "Profile";
+    profile.href = "#";
+    profile.addEventListener("click", () => {
+      console.log("clicked");
+      makeBackButton();
+      main.innerHTML = `
+        <div class="user-profile">
+    <div class="user-profile__header">
+        <figure class="profile">
+            <img class="u-avatar" src="../${userData.avatarUrl}">
+            <h4 class="profile__username">${userData.nickname}</h4>
+        </figure>
+    </div>
+    <div class="user-profile__btns"></div>
+    <div>
+    <h4>Post list</h4>
+    </div>
+</div>`;
+    });
     topHeader.innerHTML += `<li>
                                 <a class="logout" href="/">Log Out</a>
                               </li>`;
