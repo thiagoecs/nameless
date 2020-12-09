@@ -119,7 +119,6 @@ const deletePost = async (req, res) => {
   res.status(201).json({ message: "deleted successfully" });
 };
 
-//functions with postModel
 
 const make_thumbnail = async (req, res, next) => {
   try {
