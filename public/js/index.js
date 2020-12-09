@@ -9,70 +9,6 @@ const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
 const token = document.cookie.split("userToken=")[1]; //JWT token
 
-// iterating posts data and displaying each element on main page
-// const addPosts = (posts) => {
-//   posts.forEach((post) => {
-//     const section = document.createElement("section");
-//     section.className = "movie";
-//     const wrapper = document.createElement("div");
-//     wrapper.className = "wrapper";
-//     const postHeader = document.createElement("div");
-//     postHeader.className = "movie_header";
-//     const title = document.createElement("h4");
-//     const emoji = document.createElement("span");
-
-//     emoji.className = "user-type";
-
-//     title.className = "post-link";
-//     title.innerText = post.restaurant;
-
-//     const creator = document.createElement("h5");
-
-//     creator.className = "user-link";
-//     creator.innerText = post.nickname;
-
-//     postHeader.appendChild(title);
-//     creator.appendChild(emoji);
-//     postHeader.appendChild(creator);
-//     wrapper.appendChild(postHeader);
-
-//     if (post.userType === 2) {
-//       emoji.innerText = `👨‍🍳`;
-//     }
-
-//     const img = document.createElement("img");
-//     img.src = `../${post.sourceFile}`;
-//     const figure = document.createElement("figure").appendChild(img);
-
-//     const views = document.createElement("h5");
-//     views.classList.add("views");
-//     views.innerText = `views: ${post.views}`;
-//     const comments = document.createElement("h5");
-//     comments.classList.add("comments");
-//     comments.innerText = `comments: ${post.comments}`;
-//     const votes = document.createElement("h5");
-//     votes.classList.add("votes");
-//     votes.innerText = `votes: ${post.votes}`;
-
-//     wrapper.appendChild(figure);
-//     wrapper.appendChild(views);
-//     wrapper.appendChild(comments);
-//     wrapper.appendChild(votes);
-//     section.appendChild(wrapper);
-//     main.appendChild(section);
-
-//     title.addEventListener("click", () => {
-//       getPost(post.id);
-//     });
-//     img.addEventListener("click", () => {
-//       getPost(post.id);
-//     });
-//     creator.addEventListener("click", () => {
-//       getProfile(post.creator);
-//     });
-//   });
-// };
-
 // showing a detailed page with comments
 const getPost = async (id) => {
   try {
@@ -88,7 +24,7 @@ const getPost = async (id) => {
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5 class="please"><a class='user-link'><span class="user-type"></span>${data.nickname}</a></h5>
+            <h5 class="user-link"><span class="user-type"></span>${data.nickname}</h5>
           </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
@@ -111,6 +47,12 @@ const getPost = async (id) => {
               </div>
         </div>
       </section>`;
+
+      const profileLink = document.querySelector(".user-link");
+      console.log("profile", profileLink);
+      profileLink.addEventListener("click", () => {
+        getProfile(data.creator);
+      });
     const subHeader = document.querySelector(".sub_header");
     const commentBox = document.querySelector("#comments-form");
 
@@ -120,11 +62,10 @@ const getPost = async (id) => {
     commentBox.addEventListener("submit", (e) => {
       postComment(commentBox, e);
     });
+
     //checking if its a restaurant posting
-    const user = await getUserDataById(data.creator);
-    console.log(user);
+    const user = await getUserDataById(data.creator);  
     if (user.userType === 2) {
-      console.log("im the chef");
       const title = document.querySelector(".user-type");
       title.innerText = `👨‍🍳`;
     }
@@ -147,11 +88,7 @@ const getPost = async (id) => {
         voteBtn.style.opacity = "0.5";
       });
     }
-    const profileLink = document.querySelector(".user-link");
-    console.log(profileLink)
-    profileLink.addEventListener("click", () => {
-      getProfile(data.creator);
-    });
+    
   } catch (e) {
     console.log(e);
   }
@@ -164,7 +101,6 @@ const addUpvote = (data) => {
   const newVotes = votesValue + 1;
   votes.innerText = `Votes: ${newVotes}`;
   data.votes = newVotes;
-  console.log("please");
 
   if (votes) {
     votes.addEventListener("submit", async (e) => {
