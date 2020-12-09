@@ -185,7 +185,7 @@ const userDetail = async (req, res) => {
   } = req;
   const user = await userModel.getUser(id);
   if (user) {
-    res.status(200).json({ id: user.id, nickname: user.nickname, avatarUrl: user.avatarUrl });
+    res.status(200).json({ id: user.id, nickname: user.nickname, avatarUrl: user.avatarUrl, userType: user.userType });
   } else {
     res.redirect(routes.home);
   }

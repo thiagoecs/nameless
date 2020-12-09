@@ -136,7 +136,6 @@ const getPost = async (id) => {
       
       const user = await getUserDataById(data.creator);
       if(user.nickname === data.restaurant){
-        console.log('im the chef');
         const title = document.querySelector(".user-type");
         title.innerText = `👨‍🍳`;
       };
@@ -226,7 +225,10 @@ const getProfile = async (id) => {
   try {
     const myProfileData = await getMyProfile();
     const userData = await getUserDataById(id);
-    console.log(myProfileData, userData);
+
+    //const type = await getUserDataByType(type);
+
+    console.log("getProfile"+myProfileData, userData);
     const backButton = document.querySelector("#back");
     if (!backButton) {
       makeBackButton();
@@ -237,7 +239,7 @@ const getProfile = async (id) => {
     <div class="user-profile__header">
         <figure class="profile">
             <img class="u-avatar" src="../${userData.avatarUrl}">
-            <h4 class="profile__username">${userData.nickname}</h4>
+            <h4 class="profile__username"><span class="user-type"></span>${userData.nickname}</h4>
         </figure>
     </div>
     <div class="user-profile__btns"></div>
@@ -245,6 +247,13 @@ const getProfile = async (id) => {
     <h4>Post list</h4>
     </div>
 </div>`;
+
+if(userData.userType === 2 ){
+  console.log('im the chef');
+  const emoji = document.querySelector(".user-type");
+  emoji.innerText = `👨‍🍳`;
+};
+
     if (myProfileData.id === userData.id) {
       addEditProfileBtn();
       const editBtn = document.querySelector(".edit-profile");
@@ -292,6 +301,17 @@ const getMyProfile = async () => {
 const getUserDataById = async (id) => {
   try {
     const response = await fetch(URL_BASE + "/users/" + id);
+    const user = await response.json();
+    console.log("user:", user);
+    return user;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getUserDataByType = async (userType) => {
+  try {
+    const response = await fetch(URL_BASE + "/users/" + userType);
     const user = await response.json();
     console.log("user:", user);
     return user;
