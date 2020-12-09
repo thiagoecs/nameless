@@ -121,7 +121,7 @@ const logout = (req, res) => {
 };
 
 // getting current user's info and sending JSON
-const userHome = (req, res) => {
+const getMe = (req, res) => {
   const clientToken = req.cookies.userToken;
   // find token and verify it
   if (clientToken) {
@@ -142,12 +142,8 @@ const userHome = (req, res) => {
     res.json({ user: undefined });
   }
 };
-// get my profile
-const getMe = async (req, res) => {
-  res.sendFile(path.join(__dirname, htmlFilePath + "/myProfile.html"));
-};
 
-const userDetailJSON = async (req, res) => {
+const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
@@ -159,10 +155,10 @@ const userDetailJSON = async (req, res) => {
   }
 };
 
-// show users' info
-const userDetail = async (req, res) => {
-  res.sendFile(path.join(__dirname, htmlFilePath + "/userDetail.html"));
-};
+// // show users' info
+// const userDetail = async (req, res) => {
+//   res.sendFile(path.join(__dirname, htmlFilePath + "/userDetail.html"));
+// };
 
 // edit profile
 const getEditProfile = (req, res) => {
@@ -194,8 +190,7 @@ module.exports = {
   postLogin,
   getLogin,
   logout,
-  userHome,
-  userDetailJSON,
+  
   userDetail,
   getEditProfile,
   postEditProfile,

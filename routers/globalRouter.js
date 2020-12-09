@@ -32,6 +32,6 @@ globalRouter.get(routes.logout, logout);
 globalRouter.get(routes.search, search);
 
 // my profile
-globalRouter.get(routes.me, verifyToken,loggedUser, getMe);
+globalRouter.get(routes.me,  getMe);
 
 module.exports = globalRouter;
