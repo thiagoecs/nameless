@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 const head = document.querySelector("head");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
@@ -20,17 +20,17 @@ searchForm.addEventListener("submit", async (e) => {
       searchTitle.style.marginTop = "2vh";
     }
     const posts = document.querySelectorAll(".movie");
-    const form = document.querySelector('.form-wrapper')
-    
+    const form = document.querySelector(".form-wrapper");
+
     searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
-    if(form) {
-        const style = head.children[4]
-        head.removeChild(style);
-        form.parentNode.removeChild(form);
-        console.log(head);
-     }
+    if (form) {
+      const style = head.children[4];
+      head.removeChild(style);
+      form.parentNode.removeChild(form);
+      console.log(head);
+    }
     posts.forEach((post) => {
-      post.parentNode.removeChild(post); 
+      post.parentNode.removeChild(post);
     });
     addPosts(data.posts);
   } else {

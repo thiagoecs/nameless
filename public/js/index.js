@@ -7,9 +7,6 @@ const loginHeader = document.querySelector(".login_header");
 const topHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
-// const searchForm = document.querySelector("form");
-// const searchBar = searchForm.querySelector("#search-bar");
-// const searchTitle = document.querySelector(".search_filter__header").querySelector("h3");
 const token = document.cookie.split("userToken=")[1]; //JWT token
 
 // iterating posts data and displaying each element on main page
@@ -385,33 +382,6 @@ const getPostDataById = async (id) => {
     console.log(e);
   }
 };
-
-// search
-// searchForm.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-//   const query = searchBar.value;
-//   if (query !== "") {
-//     document.title = `Searching for: ${query} | Food Advisor`;
-//     console.log(query);
-//     searchTitle.style.display = "block";
-//     const response = await fetch(URL_BASE + "/search?term=" + query);
-//     const data = await response.json();
-//     console.log("data:", data);
-//     if (data.posts.length == 0) {
-//       searchTitle.style.marginTop = "10vh";
-//     } else {
-//       searchTitle.style.marginTop = "2vh";
-//     }
-//     const posts = document.querySelectorAll(".movie");
-//     searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
-//     posts.forEach((post) => {
-//       post.parentNode.removeChild(post);
-//     });
-//     addPosts(data.posts);
-//   } else {
-//     location.assign("/");
-//   }
-// });
 
 //votes
 const addVote = async (id, votes) => {
