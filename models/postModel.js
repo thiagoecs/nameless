@@ -36,8 +36,8 @@ const searchPosts = async (query) => {
     const [
       rows,
     ] = await promisePool.execute(
-      "SELECT posts.*, files.sourceFile, users.nickname FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id WHERE posts.restaurant LIKE ?",
-      ['%'+query+'%']
+      "SELECT posts.*, files.sourceFile, users.nickname FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id WHERE posts.restaurant LIKE ? ORDER BY posts.createdAt DESC",
+      ["%" + query + "%"]
     );
     return rows;
   } catch (e) {
@@ -89,23 +89,6 @@ const updatePost = async (id,title,description) =>{
   }
 };
 
-const updateFiles = async (id, file) => {
-  try {
-    //TODO: check the database info
-    const [
-      rows,
-    ] = await promisePool.execute(
-      "UPDATE files SET sourceFile=? WHERE postId= ?;",
-      [file,id]
-    );
-    console.log("postModel updateFile:", rows);
-    return rows.affectedRows === 1;
-  } catch (e) {
-    console.log(e);
-    return false;
-  }
-};
-
 const deletePost = async (id) => {
   try {
       //TODO: check the database info
@@ -126,6 +109,23 @@ const deleteFiles = async (id) => {
   }
 };
 
+const getVotes = async (id) => {
+  try {
+    const [rows] = await promisePool.execute("SELECT votes FROM posts WHERE id = ?", [id]);
+    return rows;
+  } catch (e) {
+    return errorJson(e.message);
+  }
+};
+
+const updateVote = async (id,votes) => {
+  try {
+    const [rows] = await promisePool.execute('UPDATE posts SET votes = ? WHERE id = ?;', [votes,id]);
+    return rows;
+  } catch (e) {
+    return errorJson(e.message);
+  }
+};
 
 
 module.exports = {
@@ -135,7 +135,8 @@ module.exports = {
   updatePost,
   deletePost,
   insertFiles,
-  updateFiles,
   deleteFiles,
-  searchPosts
+  searchPosts,
+  getVotes,
+  updateVote
 };

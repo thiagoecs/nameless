@@ -1,8 +1,8 @@
 "use strict";
 const routes = require("../routes");
 const postModel = require("../models/postModel");
-const path = require('path')
-const htmlFilePath = '../public/html'
+const path = require("path");
+const htmlFilePath = "../public/html";
 
 //const {validationResult } = require('express-validator');
 //const {makeThumbnail} = require('../utils/resize');
@@ -11,7 +11,7 @@ const htmlFilePath = '../public/html'
 
 // main page
 const home = async (req, res) => {
- res.sendFile(path.join(__dirname,htmlFilePath+'/index.html'))
+  res.sendFile(path.join(__dirname, htmlFilePath + "/index.html"));
 };
 
 // show search results and query word
@@ -20,18 +20,17 @@ const search = async (req, res) => {
   try {
     const posts = await postModel.searchPosts(searchingBy);
     console.log(posts);
-    res.json({searchingBy, posts})
+    res.json({ searchingBy, posts });
   } catch (e) {
     console.log(e);
   }
 };
 
-
 // get posts' information
-const postHome =async (req, res) => {
-  const posts = await postModel.getAllPosts()
-  res.json(posts)
-}
+const postHome = async (req, res) => {
+  const posts = await postModel.getAllPosts();
+  res.json(posts);
+};
 
 // post detail
 const postDetail = async (req, res) => {
@@ -39,7 +38,7 @@ const postDetail = async (req, res) => {
   try {
     const post = await postModel.getPostById(id);
     //res.send(post)
-    res.json(post)
+    res.json(post);
   } catch (err) {
     console.log(err);
     res.redirect(routes.home);
@@ -55,6 +54,7 @@ const postUpload = async (req, res) => {
     body: { title, description },
     file: { path },
   } = req;
+  console.log(title, description, path);
   const creator = res.locals.loggedUser.id;
   const newPost = await postModel.insertPost(title, description, creator);
   const newFile = await postModel.insertFiles(newPost, path);
@@ -82,13 +82,11 @@ const getEditPost = async (req, res) => {
 const postEditPost = async (req, res) => {
   const {
     params: { id },
-    body: { title, description },
-    file: { path },
+    body: { restaurant, description },
   } = req;
   try {
-    await postModel.updatePost(id, title, description);
-    await postModel.updateFiles(id, path);
-    res.redirect(routes.postDetail(id));
+    await postModel.updatePost(id, restaurant, description);
+    res.status(200).json({ ok });
   } catch (err) {
     res.redirect(routes.home);
   }
@@ -98,18 +96,13 @@ const deletePost = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const post = await postModel.getPostById(id);
   try {
-    if (post.creator !== res.locals.loggedUser.id) {
-      throw Error();
-    } else {
-      await postModel.deletePost(id);
-      await postModel.deleteFiles(id);
-    }
+    await postModel.deletePost(id);
+    await postModel.deleteFiles(id);
   } catch (error) {
     console.log(error);
   }
-  res.redirect(routes.home);
+  res.status(201).json({message: 'deleted successfully'})
 };
 
 //functions with postModel
@@ -130,6 +123,36 @@ const make_thumbnail = async (req, res, next) => {
   }
 };
 
+const addVote = async (req, res) =>{
+  const {
+    params: { id },
+    body: { votes },
+  } = req;
+  try {
+    let votes = await postModel.getVotes(id).votes;
+    votes = votes + 1;
+    await postModel.updateVote(id, votes);
+  }
+  catch (e){
+    return res.status(400).json({ errors: e.message });
+  }
+};
+
+const removeVote = async (req, res) =>{
+  const {
+    params: { id },
+    body: { votes },
+  } = req;
+  try {
+    let votes = await postModel.getVotes(id).votes;
+    votes = votes - 1;
+    await postModel.updateVote(id, votes);
+  }
+  catch (e){
+    return res.status(400).json({ errors: e.message });
+  }
+};
+
 module.exports = {
   home,
   search,
@@ -141,4 +164,6 @@ module.exports = {
   postEditPost,
   deletePost,
   make_thumbnail,
+  addVote,
+  removeVote
 };
