@@ -11,6 +11,8 @@ const token = document.cookie.split("userToken=")[1]; //JWT token
 
 // iterating posts data and displaying each element on main page
 const addPosts = (posts) => {
+  
+    
   posts.forEach((post) => {
     const section = document.createElement("section");
     section.className = "movie";
@@ -19,6 +21,9 @@ const addPosts = (posts) => {
     const postHeader = document.createElement("div");
     postHeader.className = "movie_header";
     const title = document.createElement("h4");
+    const emoji = document.createElement("span");
+
+    emoji.className ="user-type";
 
     title.className = "post-link";
     title.innerText = post.restaurant;
@@ -29,8 +34,14 @@ const addPosts = (posts) => {
     creator.innerText = post.nickname;
 
     postHeader.appendChild(title);
+    postHeader.appendChild(emoji);
     postHeader.appendChild(creator);
     wrapper.appendChild(postHeader);
+
+    if(post.userType === 2 ){
+      console.log('im the chef');
+      emoji.innerText = `👨‍🍳`;
+    }
 
     const img = document.createElement("img");
     img.src = `../${post.sourceFile}`;
@@ -62,6 +73,7 @@ const addPosts = (posts) => {
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });
+
   });
 };
 
@@ -80,8 +92,8 @@ const getPost = async (id) => {
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
-            <h5><a class='user-link' href='#/users/${data.creator}'><span class="user-type"></span>${data.nickname}</a></h5>
-            </div>
+            <h5 class="please"><a class='user-link' href='#/users/${data.creator}'><span class="user-type"></span>${data.nickname}</a></h5>
+          </div>
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
           </div>
@@ -120,6 +132,17 @@ const getPost = async (id) => {
       editBtn.addEventListener("click", () => {
         getEditPost(data.id);
       });
+
+
+      //checking if its a restaurant posting
+      
+      const user = await getUserDataById(data.creator);
+      if(user.nickname === data.restaurant){
+        console.log('im the chef');
+        const title = document.querySelector(".user-type");
+        title.innerText = `👨‍🍳`;
+      };
+      
 
       //test vote
 
