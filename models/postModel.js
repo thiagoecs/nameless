@@ -7,7 +7,7 @@ const getAllPosts = async () => {
     const [rows] = await promisePool
       //TODO: check the database info
       .execute(
-        "SELECT posts.*, files.sourceFile, users.nickname FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id ORDER BY posts.createdAt DESC"
+        "SELECT posts.*, files.sourceFile, users.nickname,users.userType FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id ORDER BY posts.createdAt DESC"
       );
     return rows;
   } catch (e) {

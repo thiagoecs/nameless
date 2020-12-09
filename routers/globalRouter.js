@@ -45,6 +45,6 @@ globalRouter.get(routes.logout, logout);
 globalRouter.get(routes.search, search);
 
 // my profile
-globalRouter.get(routes.me,  getMe);
+globalRouter.get('/me', passport.authenticate("jwt", { session: false }), getMe);
 
 module.exports = globalRouter;

@@ -89,7 +89,7 @@ button {
   top: 0;
   box-shadow: 0 1px 6px 0 rgb(0 0 0 / 18%), 0 1px 2px 0 rgb(0 0 0 / 11%);
 }
-#search-bar {
+.input-bar {
   background: transparent;
   padding: 0.3em;
   padding-left: 0;
@@ -99,7 +99,7 @@ button {
   border-bottom: 1.5px solid #3c972ad0;
   width: 80%;
 }
-#search-bar:focus {
+.input-bar:focus {
   outline: none;
   color: rgba(26, 63, 18, 0.863);
 }
@@ -131,7 +131,8 @@ button {
   border-radius: 10px;
 }
 .login_header ul li:first-child a:hover,
-#back:hover,button:hover {
+#back:hover,
+button:hover {
   opacity: 0.8;
 }
 .login_header a {
@@ -257,4 +258,18 @@ p {
   font-weight: 600;
   font-size: 0.9rem;
   color: rgb(245, 65, 20);
+}
+
+.video__comments {
+  text-align: center;
+}
+#comments-form {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+  width: 70vh;
+}
+.comment-bar {
+  font-size: 1.1rem;
+  margin-right: 1.1rem;
 }
