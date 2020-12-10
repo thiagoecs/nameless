@@ -196,7 +196,7 @@ const getProfile = async (id) => {
     </div>
     <div class="user-profile__btns"></div>
     <div>
-    <h4>Post list</h4>
+    <h4 class="postList">Post list</h4>
     </div>
 </div>`;
 
@@ -225,10 +225,10 @@ const getProfile = async (id) => {
 // making edit profile and change password button
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
-  editBtn.className = "edit-profile";
+  editBtn.className = "editProf";
   editBtn.innerText = "Edit Profile";
   const passwdBtn = document.createElement("button");
-  passwdBtn.className = "change-password";
+  passwdBtn.className = "changePass";
   passwdBtn.innerText = "Change Password";
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);

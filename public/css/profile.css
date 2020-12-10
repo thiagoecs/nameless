@@ -20,16 +20,15 @@
     border-radius: 50%;
     box-shadow: none;
     min-width: 100%;
-    
+    margin: 6rem 1rem 1rem 0rem;    
 }
 .editProf, .changePass {
     border: none;
     background: #fd8664;
     width: auto;
-    margin: auto;
-    padding: 1rem;
+    padding: 0.7rem;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 1rem 1rem 1rem 0rem;
     cursor: pointer;
     border-radius: 16px;

@@ -33,7 +33,7 @@ const isLoggedIn = () => {
     </div>
     <div class="user-profile__btns"></div>
     <div>
-    <h4>Post list</h4>
+    <h4 class="postList">Post list</h4>
     </div>
 </div>`;
 
@@ -42,8 +42,8 @@ const isLoggedIn = () => {
       emoji.innerText = `👨‍🍳`;
     }
       addEditProfileBtn();
-      const editBtn = document.querySelector(".edit-profile");
-      const editPw = document.querySelector(".change-password");
+      const editBtn = document.querySelector(".editProf");
+      const editPw = document.querySelector(".changePass");
       editPw.addEventListener("click", () => {
         getChangePassword(myProfile.id);
       });
