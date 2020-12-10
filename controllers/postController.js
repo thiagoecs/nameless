@@ -88,11 +88,11 @@ const postUpload = async (req, res) => {
     body: { title, description },
     file: { path },
   } = req;
-  console.log(title, description, path);
+console.log(req.file)
   const creator = res.locals.loggedUser.id;
   const newPost = await postModel.insertPost(title, description, creator);
   const newFile = await postModel.insertFiles(newPost, path);
-  res.redirect(routes.postDetail(newPost));
+  res.status(201).json({message:'file uploaded'});
 };
 
 // edit post

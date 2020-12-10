@@ -29,8 +29,7 @@ const getPost = async (id) => {
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
           </div>
-          <figure>
-          <img src="../${data.sourceFile}">
+          <figure>          
           </figure>
           <div class="view-votes">
           <h5 class="views">views: ${data.views}</h5>
@@ -47,6 +46,16 @@ const getPost = async (id) => {
               </div>
         </div>
       </section>`;
+    const ext = data.sourceFile.split(".")[1].toLowerCase();
+    console.log(ext);
+    const figure = document.querySelector("figure");
+    if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
+      figure.innerHTML = `<img src='../${data.sourceFile}'>`;
+    } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
+      figure.innerHTML = `<video controls=true width="460" height="350">
+       <source src='../${data.sourceFile}'></source>
+       </video>`;
+    }
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach((comment) => {
       const line = document.createElement("hr");
@@ -64,9 +73,9 @@ const getPost = async (id) => {
     const subHeader = document.querySelector(".sub_header");
     const commentBox = document.querySelector("#comments-form");
 
-    // if (!token) {
-    //   commentBox.style.display = 'none';
-    // }
+    if (!token) {
+      commentBox.style.display = "none";
+    }
     commentBox.addEventListener("submit", async (e) => {
       e.preventDefault();
       postComment(data, commentBox);
@@ -79,7 +88,7 @@ const getPost = async (id) => {
       title.innerText = `👨‍🍳`;
     }
     //if owner or admin, buttons to edit will apear
-    if (data.creator === myProfileData.id || myProfileData.userType === 3 ) {
+    if (data.creator === myProfileData.id || myProfileData.userType === 3) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
       subHeader.appendChild(editBtn);
@@ -170,7 +179,7 @@ const getProfile = async (id) => {
 
     //const type = await getUserDataByType(type);
     console.log(myProfileData);
-    console.log("getProfile"+myProfileData, userData);
+    console.log("getProfile" + myProfileData, userData);
     // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
@@ -276,56 +285,6 @@ const makeBackButton = () => {
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
-// checking if users are logged in or not and changing header
-const isLoggedIn = () => {
-  const btn = document.querySelector(".login");
-  if (token) {
-    redButton.href = "../html/upload.html";
-    redButton.innerText = "Upload";
-    btn.innerText = "Profile";
-    btn.removeAttribute("href");
-    btn.classList.add("profile");
-    topHeader.innerHTML += `<li>
-                                <a class="logout" href="#">Log Out</a>
-                              </li>`;
-
-    const profile = document.querySelector(".profile");
-    profile.style.cursor = "pointer";
-    profile.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const myProfile = await getMyProfile();
-      console.log("clicked");
-      const backButton = document.querySelector("#back");
-      if (!backButton) {
-        makeBackButton();
-      }
-      document.title = `${myProfile.nickname} | Food Advisor`;
-      main.innerHTML = `
-        <div class="user-profile">
-    <div class="user-profile__header">
-        <figure class="profile">
-            <img class="u-avatar" src="../${myProfile.avatarUrl}">
-            <h4 class="profile__username user-link">${myProfile.nickname}</h4>
-        </figure>
-    </div>
-    <div class="user-profile__btns"></div>
-    <div>
-    <h4>Post list</h4>
-    </div>
-</div>`;
-      addEditProfileBtn();
-      const editBtn = document.querySelector(".edit-profile");
-      const editPw = document.querySelector(".change-password");
-      editPw.addEventListener("click", () => {
-        getChangePassword(myProfile.id);
-      });
-      editBtn.addEventListener("click", () => {
-        getEditProfile(myProfile);
-      });
-    });
-  }
-};
-
 // deleting cookie
 const deleteCookie = (name) => {
   const expireDate = new Date();
@@ -388,6 +347,6 @@ const removeVote = async (id, votes) => {
   }
 };
 
-isLoggedIn();
+//isLoggedIn();
 getPosts();
 logOut();
