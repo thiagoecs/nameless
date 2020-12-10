@@ -5,12 +5,30 @@ const userModel = require("./models/userModel");
 const routes = require("./routes");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const path = require("path");
 
-const multerFiles = multer({dest:'uploads/files'})
-// const multerVideo = multer({ dest: "uploads/posts/videos/" });
-// const multerImage = multer({dest: "uploads/posts/images/"});
-// const multerAudio = multer({ dest: "uploads/posts/audios/" });
-const multerAvatar = multer({ dest: "uploads/avatars/" });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase(); // extension of a file
+    if (ext === ".png" || ext === ".jpg" || ext === ".gif" || ext === ".jpeg") {
+      cb(null, "uploads/files/images");
+    } else if (ext === ".avi" || ext === ".mp4" || ext === ".wmv" || ext == ".mpg") {
+      cb(null, "uploads/files/video");
+    }else cb(null,'uploads/files')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const imageFilter = (req,file,cb)=>{
+  const ext = path.extname(file.originalname)
+  if (ext !== '.png'&& ext === ".jpg" && ext === ".gif" && ext === ".jpeg"){
+    return cb(res.end('only images are allowed'),null)
+  }cb(null,true)
+}
+const multerFiles = multer({ storage: storage });
+
+const multerAvatar = multer({ dest: "uploads/avatars/" , fileFilter:imageFilter});
 
 // saving local variables for frontend files
 const localsMiddleware = (req, res, next) => {
@@ -73,9 +91,13 @@ const onlyPublic = (req, res, next) => {
   }
 };
 
-// const uploadVideo = multerVideo.single("videoFile");
-// const uploadImg = multerImage.single("imgFile");
-// const uploadAudio = multerAudio.single("audioFile");
-const uploadFiles = multerFiles.single('file');
+const uploadFiles = multerFiles.single("file");
 const uploadAvatar = multerAvatar.single("avatar");
-module.exports = { localsMiddleware, verifyToken, onlyPublic, loggedUser, uploadFiles,uploadAvatar };
+module.exports = {
+  localsMiddleware,
+  verifyToken,
+  onlyPublic,
+  loggedUser,
+  uploadFiles,
+  uploadAvatar,
+};

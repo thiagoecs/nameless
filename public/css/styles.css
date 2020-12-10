@@ -62,6 +62,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   font-size: 13px;
+  align-items: center;
 }
 .title_header nav ul li {
   cursor: pointer;
@@ -89,7 +90,7 @@ button {
   top: 0;
   box-shadow: 0 1px 6px 0 rgb(0 0 0 / 18%), 0 1px 2px 0 rgb(0 0 0 / 11%);
 }
-#search-bar {
+.input-bar {
   background: transparent;
   padding: 0.3em;
   padding-left: 0;
@@ -99,7 +100,7 @@ button {
   border-bottom: 1.5px solid #3c972ad0;
   width: 80%;
 }
-#search-bar:focus {
+.input-bar:focus {
   outline: none;
   color: rgba(26, 63, 18, 0.863);
 }
@@ -114,6 +115,7 @@ button {
 }
 .login_header ul {
   display: flex;
+  align-items: center;
 }
 .login_header ul li {
   margin-right: 30px;
@@ -124,14 +126,18 @@ button {
   font-size: 1.4rem;
   color: #255e1ae1;
 }
-.login_header ul li:first-child a {
+.login_header ul li:first-child a,
+.redbox {
   padding: 10px 30px;
   color: white;
   background: #fd8664;
   border-radius: 10px;
+  border: none;
 }
 .login_header ul li:first-child a:hover,
-#back:hover,button:hover {
+#back:hover,
+button:hover,
+.redbox:hover {
   opacity: 0.8;
 }
 .login_header a {
@@ -191,7 +197,7 @@ main .movie {
   height: 91vh;
 }
 #wrapper {
-  margin-top: 30vh;
+  margin-top: 10vh;
 }
 main .movie .wrapper {
   width: 75%;
