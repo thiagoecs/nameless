@@ -197,7 +197,7 @@ main .movie {
   height: 91vh;
 }
 #wrapper {
-  margin-top: 30vh;
+  margin-top: 10vh;
 }
 main .movie .wrapper {
   width: 75%;
@@ -264,15 +264,21 @@ p {
   font-size: 0.9rem;
   color: rgb(245, 65, 20);
 }
-
-.video__comments {
+#detail{
+  height: 100%;
+}
+.post__comments {
   text-align: center;
+}
+.comments{
+  margin-bottom: 1.5rem;
 }
 #comments-form {
   display: flex;
   justify-content: center;
   margin: 1rem 0;
   width: 70vh;
+  margin: 1rem 0 1.5rem 0;
 }
 .comment-bar {
   font-size: 1.1rem;

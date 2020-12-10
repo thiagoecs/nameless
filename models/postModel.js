@@ -4,17 +4,24 @@ const promisePool = pool.promise();
 
 const getAllPosts = async () => {
   try {
-    const [rows] = await promisePool
-      //TODO: check the database info
-      .execute(
-        "SELECT posts.*, files.sourceFile, users.nickname,users.userType FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id ORDER BY posts.createdAt DESC"
-      );
+    const [rows] = await promisePool.execute(
+      "SELECT posts.*, files.sourceFile, users.nickname, users.userType FROM posts LEFT JOIN files ON posts.id = files.postId INNER JOIN users ON posts.creator = users.id ORDER BY posts.createdAt DESC"
+    );
     return rows;
   } catch (e) {
     console.error("postModel: ", e.message);
   }
 };
-
+const getComments = async(id)=>{
+  try {
+    const [rows] = await promisePool.execute(
+      "SELECT * FROM comments WHERE post = ?;",[id]
+    );
+    return rows;
+  } catch (e) {
+    console.error("postModel: ", e.message);
+  }
+}
 const getPostById = async (id) => {
   try {
     //TODO: check the database info
@@ -36,7 +43,7 @@ const addViews = async (id, views) => {
       views,
       id,
     ]);
-    console.log(rows.affectedRows)
+    console.log(rows.affectedRows);
     return rows.affectedRows === 1;
   } catch (e) {
     console.log(e);
@@ -87,6 +94,23 @@ const insertFiles = async (id, file) => {
     console.error("postModel insertFiles:", e);
   }
 };
+
+const insertComment = async (text, post, creator) => {
+  try {
+    //TODO: check the database info ***** need to edit later *****
+    const [
+      rows,
+    ] = await promisePool.execute(
+      "INSERT INTO comments (text, post,creator) VALUES (?, ?, ?);",
+      [text, post, creator]
+    );
+    console.log("postModel insertcomment:", rows);
+    return rows.insertId;
+  } catch (e) {
+    console.error("postModel insertcomment:", e);
+  }
+};
+
 const updatePost = async (id, title, description) => {
   try {
     const [
@@ -147,6 +171,7 @@ module.exports = {
   getAllPosts,
   getPostById,
   insertPost,
+  insertComment,
   updatePost,
   deletePost,
   insertFiles,
@@ -155,4 +180,5 @@ module.exports = {
   getVotes,
   updateVote,
   addViews,
+  getComments,
 };

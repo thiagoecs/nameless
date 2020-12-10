@@ -20,7 +20,7 @@ const getPost = async (id) => {
     makeBackButton();
     document.title = `${data.restaurant} | Food Advisor`;
     main.innerHTML = `
-      <section class="movie">
+      <section class="movie" id="detail">
         <div id='wrapper' class="wrapper">
             <div class="movie_header">
             <h4>${data.restaurant}</h4>
@@ -37,33 +37,43 @@ const getPost = async (id) => {
           <h5 class="votes">Vote: ${data.votes}</h5>
           </div>
            <p class="post__description">${data.description}</p>
-            <div class='video__comments'>
-              <h5 class='comments'>comment(s): <span class='comment-num'>${data.comments}</span></h5>
+            <div class='post__comments'>
               <form id='comments-form'>
               <input class='input-bar comment-bar' name="comment" type='text' placeholder="Add a comment">
               <button class="redbox" type="submit">Save</button>
               </form>
+              <h5 class='comments'>comment(s): <span class='comment-num'>${data.comments.length}</span></h5>
               <ul class='comments-list'></ul>
               </div>
         </div>
       </section>`;
-
-      const profileLink = document.querySelector(".user-link");
-      profileLink.addEventListener("click", () => {
-        getProfile(data.creator);
-      });
+    const commentsList = document.querySelector(".comments-list");
+    data.comments.forEach((comment) => {
+      const line = document.createElement("hr");
+      const text = document.createElement("li");
+      const textSpan = document.createElement("span");
+      textSpan.innerText = comment.text;
+      text.appendChild(textSpan);
+      text.appendChild(line);
+      commentsList.appendChild(text);
+    });
+    const profileLink = document.querySelector(".user-link");
+    profileLink.addEventListener("click", () => {
+      getProfile(data.creator);
+    });
     const subHeader = document.querySelector(".sub_header");
     const commentBox = document.querySelector("#comments-form");
 
     // if (!token) {
     //   commentBox.style.display = 'none';
     // }
-    commentBox.addEventListener("submit", (e) => {
-      postComment(commentBox, e);
+    commentBox.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      postComment(data, commentBox);
     });
 
     //checking if its a restaurant posting
-    const user = await getUserDataById(data.creator);  
+    const user = await getUserDataById(data.creator);
     if (user.userType === 2) {
       const title = document.querySelector(".user-type");
       title.innerText = `👨‍🍳`;
@@ -87,7 +97,6 @@ const getPost = async (id) => {
         voteBtn.style.opacity = "0.5";
       });
     }
-    
   } catch (e) {
     console.log(e);
   }
@@ -160,7 +169,7 @@ const getProfile = async (id) => {
 
     //const type = await getUserDataByType(type);
 
-    console.log("getProfile"+myProfileData, userData);
+    console.log("getProfile" + myProfileData, userData);
     // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
@@ -181,10 +190,10 @@ const getProfile = async (id) => {
     </div>
 </div>`;
 
-if(userData.userType === 2 ){
-  const emoji = document.querySelector(".user-type");
-  emoji.innerText = `👨‍🍳`;
-};
+    if (userData.userType === 2) {
+      const emoji = document.querySelector(".user-type");
+      emoji.innerText = `👨‍🍳`;
+    }
 
     // if logged in user is same as an author of the post, it shows edit profile and change password button
     if (myProfileData.id === userData.id) {

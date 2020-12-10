@@ -10,7 +10,8 @@ const {
   getEditPost,
   deletePost,
   postEditPost,
-  addViews
+  addViews,
+  postAddComment,
 } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 
@@ -29,5 +30,6 @@ postRouter.get("/:id/edit", verifyToken, getEditPost);
 postRouter.post("/:id/edit", verifyToken, loggedUser, uploadFiles, postEditPost);
 
 postRouter.get("/:id/delete", verifyToken, deletePost);
+postRouter.post("/:id/comment", verifyToken, postAddComment);
 
 module.exports = postRouter;

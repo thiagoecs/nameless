@@ -13,6 +13,21 @@ const home = async (req, res) => {
   res.sendFile(path.join(__dirname, htmlFilePath + "/index.html"));
 };
 
+const postAddComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { comment },
+  } = req;
+  try {
+    const user = await postModel.getPostById(id);
+    const userId = user.creator;
+    const newComment = await postModel.insertComment(comment, id, userId);
+    res.status(201).json({ newComment });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
+  }
+};
 // show search results and query word
 const search = async (req, res) => {
   const searchingBy = req.query.term;
@@ -27,18 +42,22 @@ const search = async (req, res) => {
 
 // get posts' information
 const postHome = async (req, res) => {
-  const posts = await postModel.getAllPosts();
+  let posts = await postModel.getAllPosts();
+  for (let post of posts) {
+    const comments = await postModel.getComments(post.id);
+    post["comments"] = comments;
+  }
   res.json(posts);
 };
 
 const addViews = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id)
+  console.log(id);
   try {
     const post = await postModel.getPostById(id);
-    const views = post.views
+    const views = post.views;
     const newViews = views + 1;
-    console.log('views',views)
+    console.log("views", views);
     await postModel.addViews(id, newViews);
     next();
   } catch (err) {
@@ -49,12 +68,13 @@ const addViews = async (req, res, next) => {
 const postDetail = async (req, res) => {
   const id = req.params.id;
   try {
-    const post = await postModel.getPostById(id);
-    //res.send(post)
+    let post = await postModel.getPostById(id);
+    const comments = await postModel.getComments(id);
+    post["comments"] = comments;
     res.json(post);
   } catch (err) {
     console.log(err);
-    res.redirect(routes.home);
+    res.status(400).json(err)
   }
 };
 
@@ -119,23 +139,6 @@ const deletePost = async (req, res) => {
   res.status(201).json({ message: "deleted successfully" });
 };
 
-
-const make_thumbnail = async (req, res, next) => {
-  try {
-    const ready = await makeThumbnail(
-      { width: 160, height: 160 },
-      req.file.path,
-      "./thumbnails/" + req.file.filename
-    );
-    if (ready) {
-      console.log("make_thumbnail", ready);
-      next();
-    }
-  } catch (e) {
-    return res.status(400).json({ errors: e.message });
-  }
-};
-
 module.exports = {
   home,
   search,
@@ -146,6 +149,6 @@ module.exports = {
   getEditPost,
   postEditPost,
   deletePost,
-  make_thumbnail,
   addViews,
+  postAddComment,
 };

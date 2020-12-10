@@ -39,7 +39,7 @@ const addPosts = (posts) => {
     views.innerText = `views: ${post.views}`;
     const comments = document.createElement("h5");
     comments.classList.add("comments");
-    comments.innerText = `comments: ${post.comments}`;
+    comments.innerText = `comments: ${post.comments.length}`;
     const votes = document.createElement("h5");
     votes.classList.add("votes");
     votes.innerText = `votes: ${post.votes}`;
