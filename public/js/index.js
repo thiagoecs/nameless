@@ -78,7 +78,8 @@ const getPost = async (id) => {
       const title = document.querySelector(".user-type");
       title.innerText = `👨‍🍳`;
     }
-    if (data.creator === myProfileData.id) {
+    //if owner or admin, buttons to edit will apear
+    if (data.creator === myProfileData.id || myProfileData.userType === 3 ) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
       subHeader.appendChild(editBtn);
@@ -168,8 +169,8 @@ const getProfile = async (id) => {
     const userData = await getUserDataById(id);
 
     //const type = await getUserDataByType(type);
-
-    console.log("getProfile" + myProfileData, userData);
+    console.log(myProfileData);
+    console.log("getProfile"+myProfileData, userData);
     // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
