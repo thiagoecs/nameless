@@ -3,13 +3,13 @@
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
   if (token) {
-    redButton.href = "../html/upload.html";
+    redButton.href = "/app/html/upload.html";
     redButton.innerText = "Upload";
     btn.innerText = "Profile";
     btn.removeAttribute("href");
     btn.classList.add("profile");
     topHeader.innerHTML += `<li>
-                                <a class="logout" href="#">Log Out</a>
+                                <a class="logout" href="/app/">Log Out</a>
                               </li>`;
 
     const profile = document.querySelector(".profile");
@@ -27,7 +27,7 @@ const isLoggedIn = () => {
         <div class="user-profile">
     <div class="user-profile__header">
         <figure class="profile">
-            <img class="u-avatar" src="../${myProfile.avatarUrl}">
+            <img class="u-avatar" src="/app/${myProfile.avatarUrl}">
             <h4 class="profile__username user-link"><span class="user-type"></span>${myProfile.nickname}</h4>
         </figure>
     </div>
@@ -84,7 +84,7 @@ if (logOut) {
       // remove token
       deleteCookie("userToken");
       alert("See you :p 🍽");
-      location.assign(URL_BASE);
+      location.assign(URL_BASE+'/');
     } catch (e) {
       console.log(e);
     }

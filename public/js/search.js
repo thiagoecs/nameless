@@ -33,6 +33,6 @@ searchForm.addEventListener("submit", async (e) => {
     });
     addPosts(data.posts);
   } else {
-    location.assign(URL_BASE);
+    location.assign(URL_BASE + "/");
   }
 });

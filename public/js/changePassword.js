@@ -2,7 +2,7 @@
 
 const getChangePassword = (id) => {
   document.title = "Change password | Food Advisor";
-  head.innerHTML += `<link rel="stylesheet" type="text/css" href="../css/form.css" />`;
+  head.innerHTML += `<link rel="stylesheet" type="text/css" href="/app/css/form.css" />`;
   main.innerHTML = `
 <div class="form-wrapper">
     <h2>Change password</h2>
@@ -40,14 +40,14 @@ const putChangePassword = (id) => {
         body: JSON.stringify({ newPassword, newPassword1 }),
       };
       try {
-        const response = await fetch(url + "/users/" + id + "/change-passwd", fetchOptions);
+        const response = await fetch(URL_BASE + "/users/" + id + "/change-passwd", fetchOptions);
         const data = await response.json();
         if (data.errors) {
           passwordError.innerText = data.errors.password;
           
         } else {
           alert("Password has been changed successfully!");
-          location.assign("/");
+          location.assign(URL_BASE+"/");
         }
       } catch (err) {
         console.log(err);

@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 const main = document.querySelector("main");
 const loginHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
 const nickname = document.querySelector(".profile__username");
 const avatar = document.querySelector(".u-avatar");
-const postList = document.querySelector('.post-model')
-
+const postList = document.querySelector(".post-model");
 
 const getCookie = (name) => {
   if (document.cookie) {
@@ -25,9 +24,8 @@ const getMyProfile = async () => {
     };
     const response = await fetch(URL_BASE + "/users", options);
     const profile = await response.json();
-    nickname.innerText = profile.nickname
-    avatar.src = profile.avatarUrl
-
+    nickname.innerText = profile.nickname;
+    avatar.src = "/app/" + profile.avatarUrl;
   } catch (e) {
     console.log(e.message);
   }

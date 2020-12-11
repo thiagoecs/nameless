@@ -34,17 +34,17 @@ const addPosts = (posts) => {
     // img.src = `../${post.sourceFile}`;
     //const figure = document.createElement("figure");
     //.appendChild(img);
-    const filename = post.sourceFile.split(".")[1]
-    const ext = filename? filename.toLowerCase() : undefined;
+    const filename = post.sourceFile.split(".")[1];
+    const ext = filename ? filename.toLowerCase() : undefined;
     const figure = document.createElement("figure");
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
-      figure.innerHTML = `<img src='../${post.sourceFile}'>`;
+      figure.innerHTML = `<img src='/app/${post.sourceFile}'>`;
     } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
       figure.innerHTML = `<video controls=true width="460" height="350">
-       <source src='../${post.sourceFile}'></source>
+       <source src='/app/${post.sourceFile}'></source>
        </video>`;
-    }else{
-      figure.innerHTML=''
+    } else {
+      figure.innerHTML = "";
     }
     const views = document.createElement("h5");
     views.classList.add("views");

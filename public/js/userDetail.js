@@ -1,13 +1,13 @@
-const url = "https://localhost:8000";
+"use strict";
 const main = document.querySelector("main");
 const loginHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
-const nickname = document.querySelector(".profile__username")
+const nickname = document.querySelector(".profile__username");
 
 const getCookie = (name) => {
   if (document.cookie) {
-    const value = document.cookie.split(name + "=")[1]
+    const value = document.cookie.split(name + "=")[1];
     return value;
   }
 };
@@ -19,7 +19,7 @@ const getProfile = async () => {
         Authorization: "Bearer " + token,
       },
     };
-    const response = await fetch(url + "/users", options);
+    const response = await fetch(URL_BASE + "/users", options);
     const cats = await response.json();
     console.log(cats);
   } catch (e) {

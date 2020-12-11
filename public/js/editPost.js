@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 const head = document.querySelector("head");
 
 const getEditPost = async (id) => {
   const postData = await getPostDataById(id);
-  head.innerHTML += `<link rel="stylesheet" type="text/css" href="../css/form.css" />`;
+  head.innerHTML += `<link rel="stylesheet" type="text/css" href="/app/css/form.css" />`;
   main.innerHTML = `
   <div class="form-wrapper">
     <h2>Edit Post</h2>
@@ -21,7 +21,7 @@ const getEditPost = async (id) => {
 </div>
 `;
   putEditPost(postData);
-  deletePost(postData)
+  deletePost(postData);
 };
 
 const putEditPost = (data) => {
@@ -39,8 +39,11 @@ const putEditPost = (data) => {
         },
         body: JSON.stringify({ restaurant, description }),
       };
-      const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-      location.assign("/");
+      const res = await fetch(URL_BASE + "/posts/" + data.id, fetchOptions);
+      if (res.status === 201) {
+        alert("The post has been deleted successfully!");
+        location.assign(URL_BASE + "/");
+      }
     });
   }
 };
@@ -49,7 +52,7 @@ const deletePost = (data) => {
   const deleteBtn = document.querySelector(".delete");
   if (deleteBtn) {
     deleteBtn.addEventListener("click", async (e) => {
-        e.preventDefault()
+      e.preventDefault();
       const fetchOptions = {
         method: "DELETE",
         //   headers: {
@@ -57,11 +60,13 @@ const deletePost = (data) => {
         //   },
       };
       try {
-       const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-       alert("The post has been deleted successfully!");
-        location.assign(URL_BASE)
-      }catch(e){
-          console.log(e)
+        const res = await fetch(URL_BASE + "/posts/" + data.id, fetchOptions);
+        if (res.status === 201) {
+          alert("The post has been deleted successfully!");
+          location.assign(URL_BASE + "/");
+        }
+      } catch (e) {
+        console.log(e);
       }
     });
   }

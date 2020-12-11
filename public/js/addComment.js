@@ -10,7 +10,7 @@ const postComment = async (data, form) => {
   };
 
   try {
-    const res = await fetch(url + "/posts/" + data.id + "/comment", {
+    const res = await fetch(URL_BASE + "/posts/" + data.id + "/comment", {
       method: "POST",
       body: JSON.stringify({ comment: text }),
       headers: { "Content-Type": "application/json" },
@@ -25,7 +25,6 @@ const postComment = async (data, form) => {
       li.appendChild(line);
       list.appendChild(li);
       increaseNumber();
-
     }
   } catch (e) {
     console.log(e);

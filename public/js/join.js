@@ -1,5 +1,4 @@
 "use strict";
-const URL_BASE = "https://10.114.32.39/app";
 const form = document.querySelector(".register-form");
 const emailError = document.querySelector(".email-error");
 const passwordError = document.querySelector(".password-error");
@@ -40,7 +39,7 @@ form.addEventListener("submit", async (e) => {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
-      location.assign(URL_BASE);
+      location.assign(URL_BASE+'/');
     }
   } catch (err) {
     console.log(err);

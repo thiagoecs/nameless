@@ -25,7 +25,7 @@ form.addEventListener("submit", async (e) => {
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
       //sessionStorage.setItem("userToken", data.accessToken, { maxAge: maxAge * 2 });
-      location.assign(URL_BASE);
+      location.assign(URL_BASE+'/');
     } else {
       alert(data.message);
     }
