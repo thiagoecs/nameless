@@ -52,10 +52,10 @@ const getPost = async (id) => {
     
     const figure = document.querySelector("figure");
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
-      figure.innerHTML = `<img src='../${data.sourceFile}'>`;
+      figure.innerHTML = `<img src='/app/${data.sourceFile}'>`;
     } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
       figure.innerHTML = `<video controls=true width="460" height="350">
-       <source src='../${data.sourceFile}'></source>
+       <source src='/app/${data.sourceFile}'></source>
        </video>`;
     }
     const commentsList = document.querySelector(".comments-list");
@@ -296,7 +296,7 @@ const makeBackButton = () => {
   const back = document.createElement("a");
   back.id = "back";
   back.innerText = "← Back";
-  back.href = `../html/index.html`;
+  back.href = URL_BASE;
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
