@@ -1,4 +1,5 @@
 "use strict";
+const URL_BASE = "https://10.114.32.39/app";
 const head_ = document.querySelector("head");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
