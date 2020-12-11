@@ -89,12 +89,14 @@ const logOut = () => {
         });
 
         const data = await res.json();
+        console.log(data)
         // remove token
         const expireDate = new Date();
         expireDate.setDate(expireDate.getDate() - 1);
         document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
+        console.log(document.cookie)
         //deleteCookie("userToken");
-        alert("See you :p 🍽");
+        //alert("See you :p 🍽");
         location.assign(URL_BASE + "/");
       } catch (e) {
         console.log(e);
