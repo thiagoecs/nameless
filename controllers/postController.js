@@ -122,7 +122,7 @@ const postEditPost = async (req, res) => {
     await postModel.updatePost(id, restaurant, description);
     res.status(200).json({ ok });
   } catch (err) {
-    res.redirect(routes.home);
+    res.status(400).json(err);
   }
 };
 

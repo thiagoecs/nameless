@@ -67,12 +67,12 @@ const addPosts = (posts) => {
     title.addEventListener("click", () => {
       getPost(post.id);
     });
-    const img = document.querySelector("img");
-    if (img) {
-      img.addEventListener("click", () => {
-        getPost(post.id);
-      });
-    }
+    // const img = document.querySelector("img");
+    // if (img) {
+    //   img.addEventListener("click", () => {
+    //     getPost(post.id);
+    //   });
+    // }
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });
