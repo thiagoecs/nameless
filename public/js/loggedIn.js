@@ -76,21 +76,19 @@ const deleteCookie = (name) => {
 };
 
 // log out
-  const logOut = document.querySelector(".logout");
-  if (logOut) {
-    logOut.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-        // remove token
-        deleteCookie("userToken");
-        alert("See you :p 🍽");
-        location.assign(URL_BASE);
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  }
-
+const logOut = document.querySelector(".logout");
+if (logOut) {
+  logOut.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      // remove token
+      deleteCookie("userToken");
+      alert("See you :p 🍽");
+      location.assign(URL_BASE);
+    } catch (e) {
+      console.log(e);
+    }
+  });
+}
 
 isLoggedIn();
-logOut();

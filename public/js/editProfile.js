@@ -2,7 +2,7 @@
 
 const getEditProfile = (data) => {
   document.title = "Update profile | Food Advisor";
-  head.innerHTML += `<link rel="stylesheet" type="text/css" href="../css/form.css" />`;
+  head.innerHTML += `<link rel="stylesheet" type="text/css" href="/css/form.css" />`;
   main.innerHTML = `
 <div class="form-wrapper">
     <h2>Edit profile</h2>
@@ -35,7 +35,7 @@ const putEditProfile = (data) => {
       const fetchOptions = {
         method: "PUT",
         headers: {
-          // Authorization: "Bearer " + sessionStorage.getItem("token"),
+         // Authorization: "Bearer " + token,
         },
         body: formData,
       };
