@@ -1,4 +1,5 @@
 "use strict";
+const URL_BASE = "https://10.114.32.39/app";
 const form = document.querySelector(".register-form");
 const emailError = document.querySelector(".email-error");
 const passwordError = document.querySelector(".password-error");
@@ -27,7 +28,7 @@ form.addEventListener("submit", async (e) => {
   const business = form.business.checked;
   try {
     // receiving json data from backend when submit login request
-    const res = await fetch("/app/join", {
+    const res = await fetch(`${URL_BASE}/join`, {
       method: "POST",
       body: JSON.stringify({ nickname, email, password, password2,business }),
       headers: { "Content-Type": "application/json" },
@@ -39,7 +40,7 @@ form.addEventListener("submit", async (e) => {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
-      location.assign("/");
+      location.assign(URL_BASE);
     }
   } catch (err) {
     console.log(err);

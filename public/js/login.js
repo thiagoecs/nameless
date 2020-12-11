@@ -18,14 +18,14 @@ form.addEventListener("submit", async (e) => {
   };
   try {
     // receiving json data from backend when submit login request
-    const res = await fetch("/app/login", fetchOptions);
+    const res = await fetch(`${URL_BASE}/login`, fetchOptions);
     const data = await res.json();
     if (data.errors) {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
       //sessionStorage.setItem("userToken", data.accessToken, { maxAge: maxAge * 2 });
-      location.assign("/");
+      location.assign(URL_BASE);
     } else {
       alert(data.message);
     }
