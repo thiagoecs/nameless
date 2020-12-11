@@ -84,6 +84,11 @@ const logOut = () => {
     logOut.addEventListener("click", async (e) => {
       e.preventDefault();
       try {
+        const res = await fetch(`${URL_BASE}/logout`, {
+          method: "GET",
+        });
+
+        const data = await res.json();
         // remove token
         const expireDate = new Date();
         expireDate.setDate(expireDate.getDate() - 1);
