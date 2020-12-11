@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
   };
   try {
     // receiving json data from backend when submit login request
-    const res = await fetch("/login", fetchOptions);
+    const res = await fetch("/app/login", fetchOptions);
     const data = await res.json();
     if (data.errors) {
       emailError.innerText = data.errors.email;

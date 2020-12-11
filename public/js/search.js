@@ -1,5 +1,5 @@
 "use strict";
-const url = "https://localhost:8000";
+const url = "https://10.114.32.39/app";
 const head_ = document.querySelector("head");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
