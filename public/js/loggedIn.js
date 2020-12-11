@@ -81,27 +81,27 @@ const logOut = () => {
   const logOut = document.querySelector(".logout");
   // if (logOut) {
   //   console.log(logOut);
-    logOut.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-        const res = await fetch(`${URL_BASE}/logout`, {
-          method: "GET",
-        });
+  logOut.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${URL_BASE}/logout`, {
+        method: "GET",
+      });
 
-        const data = await res.json();
-        console.log(data)
-        // remove token
-        const expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() - 1);
-        document.cookie = 'userToken' + `=;expires=${expireDate.toGMTString()}`;
-        console.log(document.cookie)
-        //deleteCookie("userToken");
-        //alert("See you :p 🍽");
-       // location.assign(URL_BASE + "/");
-      } catch (e) {
-        console.log(e);
-      }
-     });
+      const data = await res.json();
+      console.log(data);
+      // remove token
+      const expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() - 1);
+      document.cookie = document.cookie + `;expires=${expireDate.toGMTString()}`;
+      console.log(document.cookie);
+      //deleteCookie("userToken");
+      //alert("See you :p 🍽");
+      // location.assign(URL_BASE + "/");
+    } catch (e) {
+      console.log(e);
+    }
+  });
   //}
 };
 isLoggedIn();
