@@ -76,7 +76,6 @@ const deleteCookie = (name) => {
 };
 
 // log out
-const logOut = () => {
   const logOut = document.querySelector(".logout");
   if (logOut) {
     logOut.addEventListener("click", async (e) => {
@@ -85,13 +84,13 @@ const logOut = () => {
         // remove token
         deleteCookie("userToken");
         alert("See you :p 🍽");
-        location.assign("/");
+        location.assign(URL_BASE);
       } catch (e) {
         console.log(e);
       }
     });
   }
-};
+
 
 isLoggedIn();
 logOut();

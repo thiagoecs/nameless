@@ -1,5 +1,4 @@
 "use strict";
-const url = "https://10.114.32.39/app";
 const head_ = document.querySelector("head");
 const searchForm = document.querySelector("form");
 const searchBar = searchForm.querySelector("#search-bar");
@@ -12,7 +11,7 @@ searchForm.addEventListener("submit", async (e) => {
     document.title = `Searching for: ${query} | Food Advisor`;
     console.log(query);
     searchTitle.style.display = "block";
-    const response = await fetch(url + "/search?term=" + query);
+    const response = await fetch(URL_BASE + "/search?term=" + query);
     const data = await response.json();
     console.log("data:", data);
     if (data.posts.length == 0) {
@@ -34,6 +33,6 @@ searchForm.addEventListener("submit", async (e) => {
     });
     addPosts(data.posts);
   } else {
-    location.assign("/");
+    location.assign(URL_BASE);
   }
 });

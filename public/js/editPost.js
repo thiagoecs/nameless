@@ -58,7 +58,8 @@ const deletePost = (data) => {
       };
       try {
        const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-        location.assign('/')
+       alert("The post has been deleted successfully!");
+        location.assign(URL_BASE)
       }catch(e){
           console.log(e)
       }
