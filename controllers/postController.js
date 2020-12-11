@@ -96,22 +96,22 @@ console.log(req.file)
 };
 
 // edit post
-// const getEditPost = async (req, res) => {
-//   const {
-//     params: { id },
-//   } = req;
-//   try {
-//     const post = await postModel.getPostById(id);
-//     if (post.creator !== res.locals.loggedUser.id) {
-//       throw Error();
-//     } else {
-//       res.render("editPost", { pageTitle: "Edit post", post });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     res.redirect(routes.home);
-//   }
-// };
+const getEditPost = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const post = await postModel.getPostById(id);
+    if (post.creator !== res.locals.loggedUser.id) {
+      throw Error();
+    } else {
+      res.render("editPost", { pageTitle: "Edit post", post });
+    }
+  } catch (err) {
+    console.log(err);
+    res.redirect(routes.home);
+  }
+};
 
 const postEditPost = async (req, res) => {
   const {
