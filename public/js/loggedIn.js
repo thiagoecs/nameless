@@ -79,20 +79,23 @@ const deleteCookie = (name) => {
 // log out
 const logOut = () => {
   const logOut = document.querySelector(".logout");
-  if (logOut) {
-    console.log(logOut);
+  // if (logOut) {
+  //   console.log(logOut);
     logOut.addEventListener("click", async (e) => {
       e.preventDefault();
       try {
         // remove token
-        deleteCookie("userToken");
+        const expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() - 1);
+        document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
+        //deleteCookie("userToken");
         alert("See you :p 🍽");
         location.assign(URL_BASE + "/");
       } catch (e) {
         console.log(e);
       }
-    });
-  }
+     });
+  //}
 };
 isLoggedIn();
 logOut();
