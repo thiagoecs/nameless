@@ -39,6 +39,9 @@ const addPosts = (posts) => {
     const figure = document.createElement("figure");
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
       figure.innerHTML = `<img src='/app/${post.sourceFile}'>`;
+      img.addEventListener("click", () => {
+        getPost(post.id);
+      });
     } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
       figure.innerHTML = `<video controls=true width="460" height="350">
        <source src='/app/${post.sourceFile}'></source>
@@ -65,9 +68,6 @@ const addPosts = (posts) => {
     main_.appendChild(section);
 
     title.addEventListener("click", () => {
-      getPost(post.id);
-    });
-    img.addEventListener("click", () => {
       getPost(post.id);
     });
     creator.addEventListener("click", () => {

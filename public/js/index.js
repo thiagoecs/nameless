@@ -223,8 +223,8 @@ const getProfile = async (id) => {
     // if logged in user is same as an author of the post, it shows edit profile and change password button
     if (myProfileData.id === userData.id) {
       addEditProfileBtn();
-      const editBtn = document.querySelector(".edit-profile");
-      const editPw = document.querySelector(".change-password");
+      const editBtn = document.querySelector(".editProf");
+      const editPw = document.querySelector(".changePass");
       editPw.addEventListener("click", () => {
         getChangePassword(myProfileData.id);
       });
