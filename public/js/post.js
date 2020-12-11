@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 const main_ = document.querySelector("main");
 const addPosts = (posts) => {
   posts.forEach((post) => {
@@ -30,16 +30,29 @@ const addPosts = (posts) => {
       emoji.innerText = `👨‍🍳`;
     }
 
-    const img = document.createElement("img");
-    img.src = `../${post.sourceFile}`;
-    const figure = document.createElement("figure").appendChild(img);
-
+    // const img = document.createElement("img");
+    // img.src = `../${post.sourceFile}`;
+    //const figure = document.createElement("figure");
+    //.appendChild(img);
+    const filename = post.sourceFile.split(".")[1]
+    const ext = filename? filename.toLowerCase() : undefined;
+    const figure = document.createElement("figure");
+    if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
+      figure.innerHTML = `<img src='../${post.sourceFile}'>`;
+    } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
+      figure.innerHTML = `<video controls=true width="460" height="350">
+       <source src='../${post.sourceFile}'></source>
+       </video>`;
+    }else{
+      figure.innerHTML=''
+    }
     const views = document.createElement("h5");
     views.classList.add("views");
     views.innerText = `views: ${post.views}`;
     const comments = document.createElement("h5");
     comments.classList.add("comments");
-    comments.innerText = `comments: ${post.comments.length}`;
+    const commentNum = post.comments;
+    comments.innerText = `comments: ${commentNum ? `${commentNum.length}` : 0}`;
     const votes = document.createElement("h5");
     votes.classList.add("votes");
     votes.innerText = `votes: ${post.votes}`;
@@ -54,9 +67,9 @@ const addPosts = (posts) => {
     title.addEventListener("click", () => {
       getPost(post.id);
     });
-    img.addEventListener("click", () => {
-      getPost(post.id);
-    });
+    // img.addEventListener("click", () => {
+    //   getPost(post.id);
+    // });
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });

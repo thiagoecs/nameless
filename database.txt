@@ -19,11 +19,13 @@ CREATE TABLE `posts` (
 );
 
 CREATE TABLE `files` (
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `postId` int,
   `sourceFile` text
 );
 
 CREATE TABLE `comments` (
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `text` varchar(255),
   `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,
   `post` int,
@@ -58,3 +60,25 @@ ALTER TABLE `posts` ADD FOREIGN KEY (`foodType`) REFERENCES `foodTypes` (`foodTy
 ALTER TABLE `files` ADD FOREIGN KEY (`postId`) REFERENCES `posts` (`id`);
 
 
+INSERT INTO foodTypes (
+    foodTypeId,foodType
+)
+VALUES
+    (1,'American'),
+    (2,'British'),
+    (3,'Chinese'),
+    (4,'Finnish'),
+    (5,'French'),
+    (6,'German'),
+    (7,'Greek'),
+    (8,'Indian'),
+    (9,'Italian'),
+    (10,'Japanese'),
+    (11,'Korean'),	
+    (12,'Mexican'),
+    (13,'Nepalese'),
+    (14,'Russian'),
+    (15,'Spanish'),	
+    (16,'Thai'),
+    (17,'Turkish'),
+    (18,'Vietnamese');

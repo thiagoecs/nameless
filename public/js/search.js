@@ -22,7 +22,6 @@ searchForm.addEventListener("submit", async (e) => {
     }
     const posts = document.querySelectorAll(".movie");
     const form = document.querySelector(".form-wrapper");
-
     searchTitle.innerHTML = `Searching for: '${query}'    |    ${data.posts.length} post(s)`;
     if (form) {
       const style = head_.children[4];

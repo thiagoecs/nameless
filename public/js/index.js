@@ -17,7 +17,11 @@ const getPost = async (id) => {
     const uploadTime = data.createdAt.split("T");
     const date = uploadTime[0];
     const time = uploadTime[1].split(".")[0];
-    makeBackButton();
+    const backButton = document.querySelector("#back");
+    if (!backButton) {
+      makeBackButton();
+    }
+
     document.title = `${data.restaurant} | Food Advisor`;
     main.innerHTML = `
       <section class="movie" id="detail">
@@ -29,8 +33,7 @@ const getPost = async (id) => {
           <div class="sub_header">
             <h6 style="font-size: 0.8rem;">Uploaded at: ${date} ${time}</h6>
           </div>
-          <figure>
-          <img src="../${data.sourceFile}">
+          <figure>          
           </figure>
           <div class="view-votes">
           <h5 class="views">views: ${data.views}</h5>
@@ -47,6 +50,16 @@ const getPost = async (id) => {
               </div>
         </div>
       </section>`;
+    const ext = data.sourceFile.split(".")[1].toLowerCase();
+    
+    const figure = document.querySelector("figure");
+    if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
+      figure.innerHTML = `<img src='../${data.sourceFile}'>`;
+    } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
+      figure.innerHTML = `<video controls=true width="460" height="350">
+       <source src='../${data.sourceFile}'></source>
+       </video>`;
+    }
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach((comment) => {
       const line = document.createElement("hr");
@@ -64,9 +77,9 @@ const getPost = async (id) => {
     const subHeader = document.querySelector(".sub_header");
     const commentBox = document.querySelector("#comments-form");
 
-    // if (!token) {
-    //   commentBox.style.display = 'none';
-    // }
+    if (!token) {
+      commentBox.style.display = "none";
+    }
     commentBox.addEventListener("submit", async (e) => {
       e.preventDefault();
       postComment(data, commentBox);
@@ -79,7 +92,7 @@ const getPost = async (id) => {
       title.innerText = `👨‍🍳`;
     }
     //if owner or admin, buttons to edit will apear
-    if (data.creator === myProfileData.id || myProfileData.userType === 3 ) {
+    if (data.creator === myProfileData.id || myProfileData.userType === 3) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";
       subHeader.appendChild(editBtn);
@@ -87,16 +100,16 @@ const getPost = async (id) => {
         getEditPost(data.id);
       });
 
-      //test vote
+      // //test vote
 
-      const voteBtn = document.createElement("button");
-      voteBtn.innerText = "Vote Up";
-      subHeader.appendChild(voteBtn);
-      voteBtn.addEventListener("click", function handler(e) {
-        addUpvote(data);
-        e.currentTarget.removeEventListener(e.type, handler); // remove listner
-        voteBtn.style.opacity = "0.5";
-      });
+      // const voteBtn = document.createElement("button");
+      // voteBtn.innerText = "Vote Up";
+      // subHeader.appendChild(voteBtn);
+      // voteBtn.addEventListener("click", function handler(e) {
+      //   addUpvote(data);
+      //   e.currentTarget.removeEventListener(e.type, handler); // remove listner
+      //   voteBtn.style.opacity = "0.5";
+      // });
     }
   } catch (e) {
     console.log(e);
@@ -104,31 +117,31 @@ const getPost = async (id) => {
 };
 
 // *todo: fetch url to update
-const addUpvote = (data) => {
-  const votes = document.querySelector(".votes");
-  const votesValue = data.votes;
-  const newVotes = votesValue + 1;
-  votes.innerText = `Votes: ${newVotes}`;
-  data.votes = newVotes;
+// const addUpvote = (data) => {
+//   const votes = document.querySelector(".votes");
+//   const votesValue = data.votes;
+//   const newVotes = votesValue + 1;
+//   votes.innerText = `Votes: ${newVotes}`;
+//   data.votes = newVotes;
 
-  if (votes) {
-    votes.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fetchOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: "Bearer " + sessionStorage.getItem("token"),
-        },
-        body: JSON.stringify({ data }),
-      };
-      const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-      location.assign("/");
-    });
-  }
+//   if (votes) {
+//     votes.addEventListener("submit", async (e) => {
+//       e.preventDefault();
+//       const fetchOptions = {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//           // Authorization: "Bearer " + sessionStorage.getItem("token"),
+//         },
+//         body: JSON.stringify({ data }),
+//       };
+//       const response = await fetch(url + "/posts/" + data.id, fetchOptions);
+//       location.assign("/");
+//     });
+//   }
 
-  console.log(newVotes);
-};
+//   console.log(newVotes);
+// };
 /*
 const votes = document.querySelector(".votes");
 //testing
@@ -168,9 +181,6 @@ const getProfile = async (id) => {
     const myProfileData = await getMyProfile();
     const userData = await getUserDataById(id);
 
-    //const type = await getUserDataByType(type);
-    console.log(myProfileData);
-    console.log("getProfile"+myProfileData, userData);
     // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
@@ -187,7 +197,8 @@ const getProfile = async (id) => {
     </div>
     <div class="user-profile__btns"></div>
     <div>
-    <h4>Post list</h4>
+    <h4 class="postList">Post list</h4>
+    <ul class='post-list'></ul>
     </div>
 </div>`;
 
@@ -195,6 +206,21 @@ const getProfile = async (id) => {
       const emoji = document.querySelector(".user-type");
       emoji.innerText = `👨‍🍳`;
     }
+
+    const postList = document.querySelector(".post-list");
+    userData.posts.forEach((post) => {
+      const line = document.createElement("hr");
+      const title = document.createElement("li");
+      const titleSpan = document.createElement("span");
+      titleSpan.innerText = post.restaurant;
+      title.appendChild(titleSpan);
+      title.appendChild(line);
+      postList.appendChild(title);
+
+      titleSpan.addEventListener("click", () => {
+        getPost(post.id);
+      });
+    });
 
     // if logged in user is same as an author of the post, it shows edit profile and change password button
     if (myProfileData.id === userData.id) {
@@ -216,10 +242,10 @@ const getProfile = async (id) => {
 // making edit profile and change password button
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
-  editBtn.className = "edit-profile";
+  editBtn.className = "editProf";
   editBtn.innerText = "Edit Profile";
   const passwdBtn = document.createElement("button");
-  passwdBtn.className = "change-password";
+  passwdBtn.className = "changePass";
   passwdBtn.innerText = "Change Password";
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);
@@ -276,81 +302,8 @@ const makeBackButton = () => {
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
-// checking if users are logged in or not and changing header
-const isLoggedIn = () => {
-  const btn = document.querySelector(".login");
-  if (token) {
-    redButton.href = "../html/upload.html";
-    redButton.innerText = "Upload";
-    btn.innerText = "Profile";
-    btn.removeAttribute("href");
-    btn.classList.add("profile");
-    topHeader.innerHTML += `<li>
-                                <a class="logout" href="#">Log Out</a>
-                              </li>`;
-
-    const profile = document.querySelector(".profile");
-    profile.style.cursor = "pointer";
-    profile.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const myProfile = await getMyProfile();
-      console.log("clicked");
-      const backButton = document.querySelector("#back");
-      if (!backButton) {
-        makeBackButton();
-      }
-      document.title = `${myProfile.nickname} | Food Advisor`;
-      main.innerHTML = `
-        <div class="user-profile">
-    <div class="user-profile__header">
-        <figure class="profile">
-            <img class="u-avatar" src="../${myProfile.avatarUrl}">
-            <h4 class="profile__username user-link">${myProfile.nickname}</h4>
-        </figure>
-    </div>
-    <div class="user-profile__btns"></div>
-    <div>
-    <h4>Post list</h4>
-    </div>
-</div>`;
-      addEditProfileBtn();
-      const editBtn = document.querySelector(".edit-profile");
-      const editPw = document.querySelector(".change-password");
-      editPw.addEventListener("click", () => {
-        getChangePassword(myProfile.id);
-      });
-      editBtn.addEventListener("click", () => {
-        getEditProfile(myProfile);
-      });
-    });
-  }
-};
-
 // deleting cookie
-const deleteCookie = (name) => {
-  const expireDate = new Date();
-  // making expire date to yesterday
-  expireDate.setDate(expireDate.getDate() - 1);
-  document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
-};
 
-// log out
-const logOut = () => {
-  const logOut = document.querySelector(".logout");
-  if (logOut) {
-    logOut.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-        // remove token
-        deleteCookie("userToken");
-        alert("See you :p 🍽");
-        location.assign("/");
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  }
-};
 
 const getPostDataById = async (id) => {
   try {
@@ -388,6 +341,6 @@ const removeVote = async (id, votes) => {
   }
 };
 
-isLoggedIn();
+//isLoggedIn();
 getPosts();
-logOut();
+

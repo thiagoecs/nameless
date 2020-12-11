@@ -150,3 +150,28 @@ label,
   text-decoration: none;
   cursor: pointer;
 }
+@media only screen and (max-width: 600px) {
+  .form-wrapper{
+    width:100%;
+  }
+  .form-wrapper h2{
+    margin-top: 14vh;
+  }
+  .form-container,#upload {
+    width: initial;
+    min-width: 0;
+  }
+  .form-container label{
+    font-size: 2.2vh;
+  }
+  input{
+    width:auto;
+  }
+  .filetype{
+    width: auto;
+  }
+  .submit{
+    font-size:2vh;
+    width:100%;
+  }
+}

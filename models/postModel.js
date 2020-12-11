@@ -22,6 +22,23 @@ const getComments = async(id)=>{
     console.error("postModel: ", e.message);
   }
 }
+
+const getPostsByUserId = async (id) => {
+  try {
+    //TODO: check the database info
+    console.log("userid", id);
+    const [
+      rows,
+    ] = await promisePool.execute(
+      "SELECT * FROM posts WHERE posts.creator= ?",
+      [id]
+    );
+    return rows;
+  } catch (e) {
+    console.error("getPostsByUserId: ", e.message);
+  }
+};
+
 const getPostById = async (id) => {
   try {
     //TODO: check the database info
@@ -181,4 +198,5 @@ module.exports = {
   updateVote,
   addViews,
   getComments,
+  getPostsByUserId,
 };
