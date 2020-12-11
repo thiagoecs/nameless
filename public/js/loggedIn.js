@@ -97,7 +97,7 @@ const logOut = () => {
         console.log(document.cookie)
         //deleteCookie("userToken");
         //alert("See you :p 🍽");
-        location.assign(URL_BASE + "/");
+       // location.assign(URL_BASE + "/");
       } catch (e) {
         console.log(e);
       }
