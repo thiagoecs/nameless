@@ -8,16 +8,7 @@ const postComment = async (data, form) => {
   const increaseNumber = () => {
     commentNum.innerHTML = parseInt(commentNum.innerHTML, 10) + 1;
   };
-  const addComment = (comment) => {
-    const li = document.createElement("li");
-    const span = document.createElement("span");
-    const line = document.createElement("hr");
-    span.innerHTML = comment;
-    li.appendChild(span);
-    li.appendChild(line);
-    list.appendChild(li);
-    increaseNumber();
-  };
+
   try {
     const res = await fetch(url + "/posts/" + data.id + "/comment", {
       method: "POST",
@@ -26,7 +17,15 @@ const postComment = async (data, form) => {
     });
     console.log(res);
     if (res.status === 201) {
-      addComment(text);
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      const line = document.createElement("hr");
+      span.innerHTML = text;
+      li.appendChild(span);
+      li.appendChild(line);
+      list.appendChild(li);
+      increaseNumber();
+
     }
   } catch (e) {
     console.log(e);

@@ -5,6 +5,7 @@ const path = require("path");
 const routes = require("../routes");
 const passport = require("../utils/passport");
 const userModel = require("../models/userModel");
+const postModel = require("../models/postModel");
 const htmlFilePath = "../public/html";
 const { validationResult } = require("express-validator");
 const maxAge = 60 * 60 * 1000; // maximum storage period in millisecond
@@ -68,11 +69,11 @@ const changePassword = async (req, res) => {
 };
 // sending join request
 const postJoin = async (req, res, next) => {
-   const errors = validationResult(req);
-   console.log(errors)
-   if (!errors.isEmpty()) {
-     return res.status(400).json({ errors: errors.array() });
-   }
+  const errors = validationResult(req);
+  console.log(errors);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   // same as const nickname = req.body.nickname ...
   const { nickname, email, password2, business } = req.body;
   console.log("business:", req.body);
@@ -166,13 +167,10 @@ const getMe = (req, res) => {
       } else {
         // if there is a valid token, find data from database and save it as local variable
         let user = await userModel.getUser(decodedToken.user);
-        res.status(201).json({
-          id: user.id,
-          nickname: user.nickname,
-          avatarUrl: user.avatarUrl,
-          email: user.email,
-          userType: user.userType
-        });
+        const posts = await postModel.getPostsByUserId(decodedToken.user);
+        delete user.password;
+        user["posts"] = posts;
+        res.json(user);
       }
     });
   } else {
@@ -184,11 +182,14 @@ const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const user = await userModel.getUser(id);
+  let user = await userModel.getUser(id);
+  const posts = await postModel.getPostsByUserId(id);
+  delete user.password;
+  user["posts"] = posts;
   if (user) {
-    res.status(200).json({ id: user.id, nickname: user.nickname, userType: user.userType,avatarUrl: user.avatarUrl });
+    res.status(200).json(user);
   } else {
-    res.redirect(routes.home);
+    res.json({user:undefined})
   }
 };
 
@@ -219,7 +220,7 @@ const postEditProfile = async (req, res) => {
       }
     }
     await userModel.updateUser(id, nickname, email, path);
-    res.status(201).json({ message:'ok' });
+    res.status(201).json({ message: "ok" });
   } catch (err) {
     console.log(err);
     res.status(400).json({ errors: "some error" });

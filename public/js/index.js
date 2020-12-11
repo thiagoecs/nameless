@@ -17,7 +17,11 @@ const getPost = async (id) => {
     const uploadTime = data.createdAt.split("T");
     const date = uploadTime[0];
     const time = uploadTime[1].split(".")[0];
-    makeBackButton();
+    const backButton = document.querySelector("#back");
+    if (!backButton) {
+      makeBackButton();
+    }
+
     document.title = `${data.restaurant} | Food Advisor`;
     main.innerHTML = `
       <section class="movie" id="detail">
@@ -47,7 +51,7 @@ const getPost = async (id) => {
         </div>
       </section>`;
     const ext = data.sourceFile.split(".")[1].toLowerCase();
-    console.log(ext);
+    
     const figure = document.querySelector("figure");
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
       figure.innerHTML = `<img src='../${data.sourceFile}'>`;
@@ -96,16 +100,16 @@ const getPost = async (id) => {
         getEditPost(data.id);
       });
 
-      //test vote
+      // //test vote
 
-      const voteBtn = document.createElement("button");
-      voteBtn.innerText = "Vote Up";
-      subHeader.appendChild(voteBtn);
-      voteBtn.addEventListener("click", function handler(e) {
-        addUpvote(data);
-        e.currentTarget.removeEventListener(e.type, handler); // remove listner
-        voteBtn.style.opacity = "0.5";
-      });
+      // const voteBtn = document.createElement("button");
+      // voteBtn.innerText = "Vote Up";
+      // subHeader.appendChild(voteBtn);
+      // voteBtn.addEventListener("click", function handler(e) {
+      //   addUpvote(data);
+      //   e.currentTarget.removeEventListener(e.type, handler); // remove listner
+      //   voteBtn.style.opacity = "0.5";
+      // });
     }
   } catch (e) {
     console.log(e);
@@ -113,31 +117,31 @@ const getPost = async (id) => {
 };
 
 // *todo: fetch url to update
-const addUpvote = (data) => {
-  const votes = document.querySelector(".votes");
-  const votesValue = data.votes;
-  const newVotes = votesValue + 1;
-  votes.innerText = `Votes: ${newVotes}`;
-  data.votes = newVotes;
+// const addUpvote = (data) => {
+//   const votes = document.querySelector(".votes");
+//   const votesValue = data.votes;
+//   const newVotes = votesValue + 1;
+//   votes.innerText = `Votes: ${newVotes}`;
+//   data.votes = newVotes;
 
-  if (votes) {
-    votes.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fetchOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: "Bearer " + sessionStorage.getItem("token"),
-        },
-        body: JSON.stringify({ data }),
-      };
-      const response = await fetch(url + "/posts/" + data.id, fetchOptions);
-      location.assign("/");
-    });
-  }
+//   if (votes) {
+//     votes.addEventListener("submit", async (e) => {
+//       e.preventDefault();
+//       const fetchOptions = {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//           // Authorization: "Bearer " + sessionStorage.getItem("token"),
+//         },
+//         body: JSON.stringify({ data }),
+//       };
+//       const response = await fetch(url + "/posts/" + data.id, fetchOptions);
+//       location.assign("/");
+//     });
+//   }
 
-  console.log(newVotes);
-};
+//   console.log(newVotes);
+// };
 /*
 const votes = document.querySelector(".votes");
 //testing
@@ -177,9 +181,6 @@ const getProfile = async (id) => {
     const myProfileData = await getMyProfile();
     const userData = await getUserDataById(id);
 
-    //const type = await getUserDataByType(type);
-    console.log(myProfileData);
-    console.log("getProfile" + myProfileData, userData);
     // making back button
     const backButton = document.querySelector("#back");
     if (!backButton) {
@@ -196,7 +197,8 @@ const getProfile = async (id) => {
     </div>
     <div class="user-profile__btns"></div>
     <div>
-    <h4>Post list</h4>
+    <h4 class="postList">Post list</h4>
+    <ul class='post-list'></ul>
     </div>
 </div>`;
 
@@ -204,6 +206,21 @@ const getProfile = async (id) => {
       const emoji = document.querySelector(".user-type");
       emoji.innerText = `👨‍🍳`;
     }
+
+    const postList = document.querySelector(".post-list");
+    userData.posts.forEach((post) => {
+      const line = document.createElement("hr");
+      const title = document.createElement("li");
+      const titleSpan = document.createElement("span");
+      titleSpan.innerText = post.restaurant;
+      title.appendChild(titleSpan);
+      title.appendChild(line);
+      postList.appendChild(title);
+
+      titleSpan.addEventListener("click", () => {
+        getPost(post.id);
+      });
+    });
 
     // if logged in user is same as an author of the post, it shows edit profile and change password button
     if (myProfileData.id === userData.id) {
@@ -225,10 +242,10 @@ const getProfile = async (id) => {
 // making edit profile and change password button
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
-  editBtn.className = "edit-profile";
+  editBtn.className = "editProf";
   editBtn.innerText = "Edit Profile";
   const passwdBtn = document.createElement("button");
-  passwdBtn.className = "change-password";
+  passwdBtn.className = "changePass";
   passwdBtn.innerText = "Change Password";
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);
@@ -286,30 +303,7 @@ const makeBackButton = () => {
 };
 
 // deleting cookie
-const deleteCookie = (name) => {
-  const expireDate = new Date();
-  // making expire date to yesterday
-  expireDate.setDate(expireDate.getDate() - 1);
-  document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
-};
 
-// log out
-const logOut = () => {
-  const logOut = document.querySelector(".logout");
-  if (logOut) {
-    logOut.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-        // remove token
-        deleteCookie("userToken");
-        alert("See you :p 🍽");
-        location.assign("/");
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  }
-};
 
 const getPostDataById = async (id) => {
   try {
@@ -349,4 +343,4 @@ const removeVote = async (id, votes) => {
 
 //isLoggedIn();
 getPosts();
-logOut();
+
