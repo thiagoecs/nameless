@@ -40,13 +40,13 @@ const putEditProfile = (data) => {
         body: formData,
       };
       try {
-        const response = await fetch(url + "/users/" + data.id, fetchOptions);
+        const response = await fetch(URL_BASE + "/users/" + data.id, fetchOptions);
         const userData = await response.json();
         if (userData.errors) {
           emailError.innerText = userData.errors.email;
         } else {
           alert("Profile has been changed successfully!");
-          location.assign("/");
+          location.assign(URL_BASE);
         }
       } catch (e) {
         console.log(e);
