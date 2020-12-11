@@ -1,4 +1,4 @@
-const url = "https://localhost:8000";
+'use strict';
 const main = document.querySelector("main");
 const loginHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
@@ -23,7 +23,7 @@ const getMyProfile = async () => {
         Authorization: "Bearer " + token,
       },
     };
-    const response = await fetch(url + "/users", options);
+    const response = await fetch(URL_BASE + "/users", options);
     const profile = await response.json();
     nickname.innerText = profile.nickname
     avatar.src = profile.avatarUrl

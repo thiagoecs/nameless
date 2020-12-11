@@ -2,7 +2,7 @@
 
 const getEditProfile = (data) => {
   document.title = "Update profile | Food Advisor";
-  head.innerHTML += `<link rel="stylesheet" type="text/css" href="/css/form.css" />`;
+  head.innerHTML += `<link rel="stylesheet" type="text/css" href="${URL_BASE}/css/form.css" />`;
   main.innerHTML = `
 <div class="form-wrapper">
     <h2>Edit profile</h2>
