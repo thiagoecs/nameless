@@ -3,13 +3,13 @@
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
   if (token) {
-    redButton.href = "/app/html/upload.html";
+    redButton.href = `${URL_BASE}/posts/upload`;
     redButton.innerText = "Upload";
     btn.innerText = "Profile";
     btn.removeAttribute("href");
     btn.classList.add("profile");
     topHeader.innerHTML += `<li>
-                                <a class="logout" href="/app/">Log Out</a>
+                                <a class="logout" href="#">Log Out</a>
                               </li>`;
 
     const profile = document.querySelector(".profile");
@@ -78,6 +78,7 @@ const deleteCookie = (name) => {
 // log out
 const logOut = document.querySelector(".logout");
 if (logOut) {
+  console.log(logOut)
   logOut.addEventListener("click", async (e) => {
     e.preventDefault();
     try {
