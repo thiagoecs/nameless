@@ -131,6 +131,10 @@ const deletePost = async (req, res) => {
     params: { id },
   } = req;
   try {
+    const comments = await postModel.getComments(id)
+    if(comments){
+      await postModel.deleteComments(id)
+    }
     await postModel.deleteFiles(id);
     await postModel.deletePost(id);
   } catch (error) {

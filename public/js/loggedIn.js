@@ -79,8 +79,7 @@ const deleteCookie = (name) => {
 // log out
 const logOut = () => {
   const logOut = document.querySelector(".logout");
-  // if (logOut) {
-  //   console.log(logOut);
+  if (logOut) {
   logOut.addEventListener("click", async (e) => {
     e.preventDefault();
     try {
@@ -103,7 +102,7 @@ const logOut = () => {
       console.log(e);
     }
   });
-  //}
+  }
 };
 isLoggedIn();
 logOut();

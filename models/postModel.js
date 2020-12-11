@@ -153,6 +153,15 @@ const deletePost = async (id) => {
     console.error("postModel deletePost:", e);
   }
 };
+const deleteComments = async (id) => {
+  try {
+    //TODO: check the database info
+    const [rows] = await promisePool.execute("DELETE FROM comments WHERE post = ?", [id]);
+    return rows;
+  } catch (e) {
+    console.error("postModel deletePost:", e);
+  }
+};
 const deleteFiles = async (id) => {
   try {
     //TODO: check the database info
@@ -199,4 +208,5 @@ module.exports = {
   addViews,
   getComments,
   getPostsByUserId,
+  deleteComments,
 };
