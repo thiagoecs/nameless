@@ -151,6 +151,7 @@ const getLogin = (req, res) => {
 // make users logged out and remove users' token cookie and redirect to main page
 const logout = (req, res) => {
   req.logout();
+  res.clearCookie('userToken')
   res.status(200).json({ message: "logged out" });
 };
 
