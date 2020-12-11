@@ -1,6 +1,13 @@
 main {
   display: flex;
   height: 100%;
+  position:relative;
+  flex-direction: column;
+}
+.movie {
+  position:relative;
+  width:100%;
+
 }
 span {
   margin-right: 5px;
@@ -48,7 +55,7 @@ span {
 .file-button {
   font-weight: 500;
   padding: 10px 19px;
-  width: fit-content;
+  width: 100%;
   background: #5faa51;
   color: white;
   cursor: pointer;
@@ -149,4 +156,31 @@ label,
   color: #396631;
   text-decoration: none;
   cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .form-wrapper{
+    width:100%;
+  }
+  .form-wrapper h2{
+    margin-top: 14vh;
+  }
+  .form-container,#upload {
+    width: initial;
+    min-width: 0;
+  }
+  .form-container form {
+    min-width: 0;
+  }
+  .form-container label{
+    font-size: 2.2vh;
+  }
+  input{
+    width:auto;
+  }
+  .filetype{
+    width: auto;
+  }
+  .submit{
+    font-size:2vh;
+  }
 }
