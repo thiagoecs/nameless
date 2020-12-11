@@ -1,7 +1,5 @@
 "use strict";
-
 // having post view, user view, and search function
-const URL_BASE = "https://10.114.32.39/app";
 const main = document.querySelector("main");
 const loginHeader = document.querySelector(".login_header");
 const topHeader = document.querySelector(".top_header");
