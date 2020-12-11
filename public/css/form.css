@@ -161,6 +161,9 @@ label,
     width: initial;
     min-width: 0;
   }
+  .form-container form {
+    min-width: 0;
+  }
   .form-container label{
     font-size: 2.2vh;
   }
