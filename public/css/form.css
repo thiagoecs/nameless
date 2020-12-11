@@ -1,6 +1,13 @@
 main {
   display: flex;
   height: 100%;
+  position:relative;
+  flex-direction: column;
+}
+.movie {
+  position:relative;
+  width:100%;
+
 }
 span {
   margin-right: 5px;
@@ -48,7 +55,7 @@ span {
 .file-button {
   font-weight: 500;
   padding: 10px 19px;
-  width: fit-content;
+  width: 100%;
   background: #5faa51;
   color: white;
   cursor: pointer;
