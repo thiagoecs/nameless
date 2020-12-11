@@ -93,7 +93,7 @@ const logOut = () => {
         // remove token
         const expireDate = new Date();
         expireDate.setDate(expireDate.getDate() - 1);
-        document.cookie = name + `=;expires=${expireDate.toGMTString()}`;
+        document.cookie = 'userToken' + `=;expires=${expireDate.toGMTString()}`;
         console.log(document.cookie)
         //deleteCookie("userToken");
         //alert("See you :p 🍽");
