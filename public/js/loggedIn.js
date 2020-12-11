@@ -10,7 +10,7 @@ const isLoggedIn = () => {
     btn.removeAttribute("href");
     btn.classList.add("profile");
     topHeader.innerHTML += `<li>
-                                <a class="logout" href="#">Log Out</a>
+                                <a class="logout">Log Out</a>
                               </li>`;
 
     const profile = document.querySelector(".profile");

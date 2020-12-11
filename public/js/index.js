@@ -296,7 +296,7 @@ const makeBackButton = () => {
   const back = document.createElement("a");
   back.id = "back";
   back.innerText = "← Back";
-  back.href = URL_BASE;
+  back.href = URL_BASE+'/';
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
