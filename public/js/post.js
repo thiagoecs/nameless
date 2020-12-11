@@ -67,9 +67,9 @@ const addPosts = (posts) => {
     title.addEventListener("click", () => {
       getPost(post.id);
     });
-    // img.addEventListener("click", () => {
-    //   getPost(post.id);
-    // });
+    img.addEventListener("click", () => {
+      getPost(post.id);
+    });
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });

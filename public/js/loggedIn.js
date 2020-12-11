@@ -2,7 +2,7 @@
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
-  const redButton = document.querySelector('.redbox')
+  //const redButton = document.querySelector('.redbox')
   if (token) {
     redButton.href = `${URL_BASE}/posts/upload`;
     redButton.innerText = "Upload";
@@ -10,7 +10,7 @@ const isLoggedIn = () => {
     btn.removeAttribute("href");
     btn.classList.add("profile");
     topHeader.innerHTML += `<li>
-                                <a class="logout">Log Out</a>
+                                <a class="logout" href="#">Log Out</a>
                               </li>`;
 
     const profile = document.querySelector(".profile");
@@ -77,20 +77,22 @@ const deleteCookie = (name) => {
 };
 
 // log out
-const logOut = document.querySelector(".logout");
-if (logOut) {
-  console.log(logOut)
-  logOut.addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      // remove token
-      deleteCookie("userToken");
-      alert("See you :p 🍽");
-      location.assign(URL_BASE+'/');
-    } catch (e) {
-      console.log(e);
-    }
-  });
-}
-
+const logOut = () => {
+  const logOut = document.querySelector(".logout");
+  if (logOut) {
+    console.log(logOut);
+    logOut.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        // remove token
+        deleteCookie("userToken");
+        alert("See you :p 🍽");
+        location.assign(URL_BASE + "/");
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
+};
 isLoggedIn();
+logOut();

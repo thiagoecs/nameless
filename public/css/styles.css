@@ -13,6 +13,9 @@ input,
 button {
   font-family: "DM Sans", sans-serif;
 }
+li{
+  cursor: pointer;
+}
 .title_header {
   padding: 8.5vh 0 15px 60px;
   position: fixed;
@@ -315,6 +318,7 @@ p {
     width: 100%;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
   }
   main .movie .wrapper .movie_header, .upload_time, .view-votes {
     width: 100%;

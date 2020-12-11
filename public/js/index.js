@@ -49,7 +49,7 @@ const getPost = async (id) => {
         </div>
       </section>`;
     const ext = data.sourceFile.split(".")[1].toLowerCase();
-    
+
     const figure = document.querySelector("figure");
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
       figure.innerHTML = `<img src='/app/${data.sourceFile}'>`;
@@ -189,7 +189,7 @@ const getProfile = async (id) => {
         <div class="user-profile">
     <div class="user-profile__header">
         <figure class="profile">
-            <img class="u-avatar" src="../${userData.avatarUrl}">
+            <img class="u-avatar" src="/app/${userData.avatarUrl}">
         </figure>
         <h4 class="profile__username"><span class="user-type"></span>${userData.nickname}</h4>
     </div>
@@ -296,12 +296,11 @@ const makeBackButton = () => {
   const back = document.createElement("a");
   back.id = "back";
   back.innerText = "← Back";
-  back.href = URL_BASE+'/';
+  back.href = URL_BASE + "/";
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
 // deleting cookie
-
 
 const getPostDataById = async (id) => {
   try {
@@ -341,4 +340,3 @@ const removeVote = async (id, votes) => {
 
 //isLoggedIn();
 getPosts();
-
