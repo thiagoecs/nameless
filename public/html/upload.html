@@ -13,7 +13,7 @@
 <body>
     <header class="title_header">
         <h1><a href='https://10.114.32.39/app/'>Food advisor</a></h1>
-        <form action="https://10.114.32.39/app/search" method="get">
+        <form method="get">
             <input id="search-bar" class='input-bar' type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@
     </header>
     <header class="login_header">
         <ul class="top_header">
-    
+
         </ul>
     </header>
     <main>
@@ -54,7 +54,7 @@
         <div class="form-wrapper">
             <h2>Upload Post</h2>
             <div class="form-container">
-                <form action="https://10.114.32.39/app/upload" method="POST" enctype="multipart/form-data" id="upload">
+                <form method="POST" enctype="multipart/form-data" id="upload">
                     <label><span>*</span>Add files (image, video files available)</label>
                     <label class="file-button" for="file">Add file</label>
                     <input class="filetype" type="file" name="file" id="file" accept="video/*,image/*" required />
@@ -72,9 +72,9 @@
     <footer>
         <span class="footer__text"></span>
     </footer>
+    <script src='js/search.js'></script>
     <script src="js/index.js"></script>
     <script src="js/upload.js"></script>
-    <script src='js/search.js'></script>
     <script src='js/loggedIn.js'></script>
 </body>
 </html>

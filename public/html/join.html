@@ -11,7 +11,7 @@
 <body>
     <header class="title_header">
         <h1><a href='https://10.114.32.39/app/'>Food advisor</a></h1>
-        <form action="https://10.114.32.39/app/search" method="get">
+        <form method="get">
             <input id="search-bar" class='input-bar' type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@
             <h2>Join Food Advisor!</h2>
             <div class="form-container">
                 <!-- TODO: add validators-->
-                <form class="register-form" action="https://10.114.32.39/app/join" method="POST">
+                <form class="register-form" method="POST">
                     <label for="nickname">Nickname</label>
                     <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname"
                         pattern=".{3,}" required>
@@ -90,9 +90,8 @@
     <footer>
         <span class="footer__text"></span>
     </footer>
+    <script src='js/search.js'></script>
     <script src='js/post.js'></script>
     <script src="js/join.js"></script>
-    <script src='js/search.js'></script>
-    
 </body>
 </html>
