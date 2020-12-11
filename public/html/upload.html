@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css" />
     <link rel="stylesheet" type="text/css" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/form.css" />
+    <link rel="stylesheet" href="../css/profile.css" />
     <title>Upload | Food Advisor</title>
 
 </head>
@@ -13,7 +14,7 @@
     <header class="title_header">
         <h1><a href='../html/index.html'>Food advisor</a></h1>
         <form action="../html/search.html" method="get">
-            <input id="search-bar" type="text" placeholder="Search by ..." name="term">
+            <input id="search-bar"  class='input-bar' type="text" placeholder="Search by ..." name="term">
             <button class="search-button" type="submit">
                 <svg id="search-icon" class="search-icon" viewBox="0 0 24 24">
                     <path
@@ -41,9 +42,9 @@
         </div>
     </header>
     <header class="login_header">
-        <ul>
+        <ul class="top_header">
             <li>
-                <a class="join" href="../html/join.html">Join</a>
+                <a class="join redbox" href="../html/join.html">Join</a>
             </li>
             <li>
                 <a class="login" href="../html/login.html">Log In</a>
@@ -51,6 +52,9 @@
         </ul>
     </header>
     <main>
+        <div class="search_filter__header">
+            <h3>Searching for: </h3>
+        </div>
     <div class="form-wrapper">
         <h2>Upload Post</h2>
         <div class="form-container">
@@ -66,11 +70,14 @@
             </form>
         </div>
     </div>
-    <link rel="stylesheet" href="../css/form.css" />
+    
     </main>
     <footer>
         <span class="footer__text"></span>
     </footer>
+    <script src="../js/index.js"></script>
     <script src="../js/upload.js"></script>
+    <script src='../js/search.js'></script>
+    <script src='../js/loggedIn.js'></script>
 </body>
 </html>

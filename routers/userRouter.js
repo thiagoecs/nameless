@@ -1,12 +1,10 @@
 'use strict';
 const express = require("express");
-const { verifyToken, loggedUser,uploadAvatar } = require("../middlewares");
+const { loggedUser,uploadAvatar } = require("../middlewares");
 const userRouter = express.Router();
 const {body} = require('express-validator');
 const routes = require("../routes");
 const {
-  userHome,
-  userDetailJSON,
   userDetail,
   getEditProfile,
   postEditProfile,
@@ -34,9 +32,12 @@ userRouter.post('/',[
 userRouter.get("/edit-profile",getEditProfile);
 userRouter.post("/edit-profile",loggedUser,uploadAvatar, postEditProfile)
 // change password
-userRouter.get("/change-passwd", changePassword);
+userRouter.post("/:id/change-passwd", changePassword);
 
 // user profile
-userRouter.get("/:id",userDetail);
+userRouter.route("/:id").get(userDetail).put(uploadAvatar,postEditProfile);
+
+// users' comments
+//userRouter.post('/:id/comment',postAddComment)
 
 module.exports = userRouter;

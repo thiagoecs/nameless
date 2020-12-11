@@ -1,4 +1,5 @@
 "use strict";
+
 const form = document.querySelector(".login-form");
 const emailError = document.querySelector(".email-error");
 const passwordError = document.querySelector(".password-error");
