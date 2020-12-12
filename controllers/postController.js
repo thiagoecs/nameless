@@ -86,9 +86,9 @@ const getUpload = (req, res) =>
 const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    //file: { path },
+    file: { path },
   } = req;
-console.log(req.file)
+console.log(req.id)
   const creator = res.locals.loggedUser.id;
   const newPost = await postModel.insertPost(title, description, creator);
   const newFile = await postModel.insertFiles(newPost, path);

@@ -21,7 +21,7 @@ postRouter.get(routes.home, postHome);
 
 // upload a post
 postRouter.route(routes.upload).get(verifyToken, getUpload)
-.post(loggedUser, uploadFiles, postUpload);
+.post(loggedUser, passport.authenticate("jwt", { session: false }),uploadFiles, postUpload);
 
 // post detail page
 postRouter.route("/:id").get(addViews,postDetail).put(postEditPost).delete(deletePost);

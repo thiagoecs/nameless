@@ -9,15 +9,15 @@ form.addEventListener("submit", async (e) => {
   try {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
-    console.log(formData);
+  
     // receiving json data from backend when submit login request
     const res = await fetch("/app/posts/upload", {
       method: "POST",
       headers: { 'Authorization': "Bearer" + token },
-      body: formData,
+      body: formData, id: myId
     });
     const data = await res.json();
-    console.log(data);
+    console.log('data',data);
     if (data) {
       console.log(data);
       // location.assign(URL_BASE + "/");
