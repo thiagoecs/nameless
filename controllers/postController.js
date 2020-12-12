@@ -4,9 +4,6 @@ const postModel = require("../models/postModel");
 const path = require("path");
 const htmlFilePath = "../public/html";
 const { validationResult } = require("express-validator");
-//const {makeThumbnail} = require('../utils/resize');
-//const imageMeta = require('../utils/imageMeta');
-//const { getCoordinates } = require('../utils/imageMeta');
 
 // main page
 const home = async (req, res) => {

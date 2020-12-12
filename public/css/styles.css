@@ -16,6 +16,9 @@ button {
 li{
   cursor: pointer;
 }
+hr{
+  border-style: solid;
+}
 .title_header {
   padding: 8.5vh 0 15px 60px;
   position: fixed;

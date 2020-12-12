@@ -31,12 +31,11 @@ const putEditPost = (data) => {
       e.preventDefault();
       const restaurant = uploadForm.title.value;
       const description = uploadForm.description.value;
-      console.log(token)
       const fetchOptions = {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({ restaurant, description }),
       };
@@ -56,9 +55,9 @@ const deletePost = (data) => {
       e.preventDefault();
       const fetchOptions = {
         method: "DELETE",
-        //   headers: {
-        //     Authorization: "Bearer " + sessionStorage.getItem("token"),
-        //   },
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       };
       try {
         const res = await fetch(URL_BASE + "/posts/" + data.id, fetchOptions);
