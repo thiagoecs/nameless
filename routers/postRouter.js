@@ -20,7 +20,7 @@ postRouter.get(routes.home, postHome);
 
 // upload a post
 
-postRouter.get("/upload", verifyToken, getUpload);
+postRouter.get(routes.upload, verifyToken, getUpload);
 postRouter.post("/upload", verifyToken, loggedUser, uploadFiles, postUpload);
 
 // post detail page

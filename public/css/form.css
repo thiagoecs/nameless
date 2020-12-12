@@ -52,7 +52,7 @@ span {
   padding-left: 0.5rem;
 }
 
-.filetype::file-selector-button {
+.file-button {
   font-weight: 500;
   padding: 10px 19px;
   width: 100%;
