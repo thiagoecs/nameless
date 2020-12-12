@@ -5,7 +5,7 @@ const form = document.querySelector("#upload");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const myProfile = await getMyProfile();
-  const myId = myProfile.id;
+  
   try {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
@@ -14,13 +14,13 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("/app/posts/upload", {
       method: "POST",
       headers: { 'Authorization': "Bearer" + token },
-      body: formData, id: myId
+      body: formData
     });
     const data = await res.json();
-    console.log('data',data);
+    
     if (data) {
       console.log(data);
-      // location.assign(URL_BASE + "/");
+      location.assign(URL_BASE + "/");
     }
   } catch (err) {
     console.log(err);
