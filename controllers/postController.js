@@ -74,7 +74,7 @@ const postDetail = async (req, res) => {
     res.json(post);
   } catch (err) {
     console.log(err);
-    res.status(400).json(err)
+    res.status(400).json(err);
   }
 };
 
@@ -88,11 +88,11 @@ const postUpload = async (req, res) => {
     body: { title, description },
     file: { path },
   } = req;
-console.log(req.id)
+  console.log(req.id);
   const creator = res.locals.loggedUser.id;
   const newPost = await postModel.insertPost(title, description, creator);
   const newFile = await postModel.insertFiles(newPost, path);
-  res.status(201).json({message:'file uploaded'});
+  res.status(201).json({ message: "file uploaded" });
 };
 
 // edit post
@@ -120,9 +120,9 @@ const postEditPost = async (req, res) => {
   } = req;
   try {
     await postModel.updatePost(id, restaurant, description);
-    res.status(200).json({ ok });
+    res.status(200).json(ok);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(400).json(err);
   }
 };
@@ -132,9 +132,9 @@ const deletePost = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const comments = await postModel.getComments(id)
-    if(comments){
-      await postModel.deleteComments(id)
+    const comments = await postModel.getComments(id);
+    if (comments) {
+      await postModel.deleteComments(id);
     }
     await postModel.deleteFiles(id);
     await postModel.deletePost(id);
