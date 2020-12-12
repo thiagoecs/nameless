@@ -1,5 +1,6 @@
 // getting logged in user information
 const getMyProfile = async () => {
+  const token = document.cookie.split("userToken=")[1]; //JWT token
   try {
     const fetchOptions = {
       headers: {
@@ -13,4 +14,4 @@ const getMyProfile = async () => {
   } catch (e) {
     console.log(e);
   }
-};
+};;
