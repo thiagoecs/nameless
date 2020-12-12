@@ -86,7 +86,7 @@ const getUpload = (req, res) =>
 const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    file: { path },
+    //file: { path },
   } = req;
 console.log(req.file)
   const creator = res.locals.loggedUser.id;
