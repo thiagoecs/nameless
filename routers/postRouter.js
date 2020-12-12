@@ -20,7 +20,7 @@ const routes = require("../routes");
 postRouter.get(routes.home, postHome);
 
 // upload a post
-postRouter.route(routes.upload).get(passport.authenticate("jwt", { session: false }), getUpload)
+postRouter.route(routes.upload).get(verifyToken, getUpload)
 .post(passport.authenticate("jwt", { session: false }), loggedUser, uploadFiles, postUpload);
 
 // post detail page
