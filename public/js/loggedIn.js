@@ -3,7 +3,7 @@
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
   const token = document.cookie.split("userToken=")[1]; //JWT token
-  //const redButton = document.querySelector('.redbox')
+  const redButton = document.querySelector('.redbox')
   if (token) {
     redButton.href = `${URL_BASE}/posts/upload`;
     redButton.innerText = "Upload";
