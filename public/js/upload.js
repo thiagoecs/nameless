@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
     const formData = new FormData(form);
   
     // receiving json data from backend when submit login request
-    const res = await fetch("/app/posts/upload", {
+    const res = await fetch(URL_BASE+"/posts/upload", {
       method: "POST",
       headers: { 'Authorization': "Bearer" + token },
       body: formData
