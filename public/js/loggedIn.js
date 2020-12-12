@@ -2,6 +2,7 @@
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
   const btn = document.querySelector(".login");
+  const token = document.cookie.split("userToken=")[1]; //JWT token
   //const redButton = document.querySelector('.redbox')
   if (token) {
     redButton.href = `${URL_BASE}/posts/upload`;
@@ -67,7 +68,7 @@ const isLoggedIn = () => {
       });
     });
   }
-};
+};;
 
 const deleteCookie = (name) => {
   const expireDate = new Date();
