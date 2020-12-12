@@ -341,11 +341,11 @@ p {
   }
 
   main .movie .wrapper .movie_header h4 {
-    font-size: calc(10px + 5.5vw);
+    font-size: calc(15px + 3.5vw);
     font-weight: 600;
   }
   main .movie .wrapper .movie_header h5 {
-    font-size: calc(10px + 2.5vw);
+    font-size: calc(10px + 1.4vw);
     font-weight: 600;
   }
   img{
@@ -364,7 +364,7 @@ p {
   }
   main .movie {
     height: auto;
-    width: 100vw;
+    
   }
   .post__comments{
     width:inherit;
@@ -376,7 +376,7 @@ p {
     margin-bottom: 0px;
   }
   .title_header h1 {
-    font-size: calc(10px + 8.5vw);
+    font-size: calc(35px + 5vw);
     width: 60%;
     margin-top: -30px;
     margin-bottom: 50px;
