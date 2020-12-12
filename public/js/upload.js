@@ -4,7 +4,8 @@ const form = document.querySelector("#upload");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const myId = await getMyProfile().id;
+  const myProfile = await getMyProfile();
+  const myId = myProfile.id
   try {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
@@ -16,6 +17,7 @@ form.addEventListener("submit", async (e) => {
       body: formData+myId,
     });
     const data = await res.json();
+    console.log(data)
     if (data) {
       console.log(data)
      // location.assign(URL_BASE + "/");
