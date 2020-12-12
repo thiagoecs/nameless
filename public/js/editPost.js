@@ -35,13 +35,13 @@ const putEditPost = (data) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: "Bearer " + sessionStorage.getItem("token"),
+          Authorization: "Bearer " + token
         },
         body: JSON.stringify({ restaurant, description }),
       };
       const res = await fetch(URL_BASE + "/posts/" + data.id, fetchOptions);
       if (res.status === 201) {
-        alert("The post has been deleted successfully!");
+        alert("The post has been editted successfully!");
         location.assign(URL_BASE + "/");
       }
     });
