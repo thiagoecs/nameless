@@ -301,17 +301,18 @@ p {
   main {
     margin-left: 0;
   }
+
   .title_header {
     position: relative;
     top: 4rem;
     left: 0;
     width: 100%;
-    height: 70%;
+    height: inherit;
     display: flex;
     flex-direction: column;
     margin-bottom: -0.5rem;
-
   }
+
   .login_header {
     width: 100%;
     height: 4rem;
@@ -321,12 +322,16 @@ p {
     left: 0%;
     top: 0;
   }
+.search_filter__header{
+  margin-top: 20px;
+}
   main .movie .wrapper {
     width: 100%;
     flex-direction: column;
     justify-content: center;
     min-width: 100px;
   }
+
   main .movie .wrapper .movie_header, .upload_time, .view-votes {
     width: 100%;
     display: flex;
@@ -334,12 +339,13 @@ p {
     align-items: flex-end;
     margin-bottom: 20px;
   }
+
   main .movie .wrapper .movie_header h4 {
-    font-size: 10vw;
+    font-size: calc(10px + 5.5vw);
     font-weight: 600;
   }
   main .movie .wrapper .movie_header h5 {
-    font-size: 5vw;
+    font-size: calc(10px + 2.5vw);
     font-weight: 600;
   }
   img{
@@ -357,26 +363,38 @@ p {
     max-width: fit-content;
   }
   main .movie {
-    height: 30rem;
+    height: auto;
+    width: 100vw;
+  }
+  .post__comments{
+    width:inherit;
   }
   #search-bar {
     padding: 0.3em;
     padding-left: 0;
-    font-size: 5vw;
+    font-size: 1.2rem;
     margin-bottom: 0px;
   }
   .title_header h1 {
-    font-size: 10vw;
+    font-size: calc(10px + 8.5vw);
     width: 60%;
     margin-top: -30px;
     margin-bottom: 50px;
+  }
+  .bottom{
+    margin-top:2rem;
+  }
+  .search-button{
+    margin-top:20px;
   }
 }
 @media only screen and (max-width: 450px) {
   main .movie {
     height: 23rem;
   }
-
+  h1 a {
+    font-size: 8vw;
+  }
 }
 @media only screen and (max-width: 350px) {
   main .movie {

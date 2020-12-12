@@ -1,60 +1,60 @@
-.user-profile{
-    margin: 15vh auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width:100%;
+.user-profile {
+  margin: 15vh auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
-.user-profile__header{
+.user-profile__header {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.profile{
-    flex-direction: column;
+.profile {
+  flex-direction: column;
 }
 .u-avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    box-shadow: none;
-    min-width: 100%;
-    margin: 2rem 1rem 1rem 0rem;    
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  min-width: 100%;
+  margin: 2rem 1rem 1rem 0rem;
 }
-.editProf, .changePass {
-    border: none;
-    background: #fd8664;
-    width: auto;
-    padding: 0.85rem;
-    color: white;
-    font-size: 1.1rem;
-    margin: 1rem 1rem 1rem 0rem;
-    cursor: pointer;
-    border-radius: 16px;
-    font-weight: 600;
+.editProf,
+.changePass {
+  border: none;
+  background: #fd8664;
+  width: auto;
+  padding: 0.85rem;
+  color: white;
+  font-size: 1.1rem;
+  margin: 1rem 1rem 1rem 0rem;
+  cursor: pointer;
+  border-radius: 16px;
+  font-weight: 600;
 }
-.changePass{
-    margin-right: 0;
+.changePass {
+  margin-right: 0;
 }
 .postList {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-    font-weight: 600;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  font-weight: 600;
 }
-a{
-    display: inline-block;
+a {
+  display: inline-block;
 }
-.profile__username{
+.profile__username {
   margin: 1.4rem auto;
   font-size: 1.5rem;
-  font-weight:600;
+  font-weight: 600;
   width: fit-content;
 }
 
 @media only screen and (max-width: 600px) {
-.u-avatar{
-    margin:auto;
-}
-
+  .u-avatar {
+    margin: auto;
+  }
 }
