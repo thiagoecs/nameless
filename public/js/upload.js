@@ -1,10 +1,10 @@
 "use strict";
 
 const form = document.querySelector("#upload");
-const myId = await getMyProfile().id;
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  const myId = await getMyProfile().id;
   try {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
