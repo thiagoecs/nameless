@@ -31,6 +31,7 @@ const putEditPost = (data) => {
       e.preventDefault();
       const restaurant = uploadForm.title.value;
       const description = uploadForm.description.value;
+      console.log(token)
       const fetchOptions = {
         method: "PUT",
         headers: {
