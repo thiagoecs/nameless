@@ -120,7 +120,7 @@ const postEditPost = async (req, res) => {
   } = req;
   try {
     await postModel.updatePost(id, restaurant, description);
-    res.status(200).json(ok);
+    res.status(200).json({message:'done'});
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
