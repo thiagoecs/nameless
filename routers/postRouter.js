@@ -1,7 +1,6 @@
 "use strict";
-// for routes using root route
+// for routes using posts route
 const express = require("express");
-const routes = require("../routes");
 const postRouter = express.Router();
 const {
   postHome,
@@ -15,13 +14,13 @@ const {
   postAddComment,
 } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
+const routes = require("../routes");
 
 postRouter.get(routes.home, postHome);
 
 // upload a post
-
-postRouter.get(routes.upload, verifyToken, getUpload);
-postRouter.post("/upload", verifyToken, loggedUser, uploadFiles, postUpload);
+postRouter.route(routes.upload).get(passport.authenticate("jwt", { session: false }), getUpload)
+.post(passport.authenticate("jwt", { session: false }), loggedUser, uploadFiles, postUpload);
 
 // post detail page
 postRouter.route("/:id").get(addViews,postDetail).put(postEditPost).delete(deletePost);
