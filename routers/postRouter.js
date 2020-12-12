@@ -13,7 +13,7 @@ postRouter.get(routes.home, postHome);
 // upload a post
 postRouter
   .route(routes.upload)
-  .get(passport.authenticate("jwt", { session: false }), verifyToken, getUpload)
+  .get( verifyToken, getUpload)
   .post(passport.authenticate("jwt", { session: false }), loggedUser, uploadFiles, postUpload);
 
 // post detail page
