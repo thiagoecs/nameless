@@ -1,30 +1,27 @@
 "use strict";
 // for routes using posts route
 const express = require("express");
-const passport = require('passport')
+const passport = require("passport");
 const postRouter = express.Router();
-const {
-  postHome,
-  postDetail,
-  getUpload,
-  postUpload,
-  getEditPost,
-  deletePost,
-  postEditPost,
-  addViews,
-  postAddComment,
-} = require("../controllers/postController");
+const { postHome, postDetail, getUpload, postUpload, getEditPost, deletePost, postEditPost, addViews, postAddComment } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 const routes = require("../routes");
 
+// getting all posts' data
 postRouter.get(routes.home, postHome);
 
 // upload a post
-postRouter.route(routes.upload).get(verifyToken, getUpload)
-.post(loggedUser,uploadFiles, postUpload);
+postRouter
+  .route(routes.upload)
+  .get(passport.authenticate("jwt", { session: false }), verifyToken, getUpload)
+  .post(passport.authenticate("jwt", { session: false }), loggedUser, uploadFiles, postUpload);
 
 // post detail page
-postRouter.route("/:id").get(addViews,postDetail).put(passport.authenticate("jwt", { session: false }),postEditPost).delete(deletePost);
+postRouter
+  .route("/:id")
+  .get(addViews, postDetail)
+  .put(passport.authenticate("jwt", { session: false }), postEditPost)
+  .delete(deletePost);
 
 // edit a post
 postRouter.get("/:id/edit", verifyToken, getEditPost);
