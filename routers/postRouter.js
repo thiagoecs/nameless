@@ -1,6 +1,7 @@
 "use strict";
 // for routes using posts route
 const express = require("express");
+const passport = require('passport')
 const postRouter = express.Router();
 const {
   postHome,
