@@ -1,4 +1,5 @@
 "use strict";
+// for routes using root route
 const express = require("express");
 const routes = require("../routes");
 const postRouter = express.Router();
@@ -15,7 +16,7 @@ const {
 } = require("../controllers/postController");
 const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
 
-postRouter.get("/", postHome);
+postRouter.get(routes.home, postHome);
 
 // upload a post
 

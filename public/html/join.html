@@ -58,13 +58,13 @@
             <div class="form-container">
                 <!-- TODO: add validators-->
                 <form class="register-form" method="POST">
-                    <label for="nickname">Nickname</label>
+                    <label for="nickname">Nickname (min. 3 characters)</label>
                     <input class="input-field" type="text" name="nickname" id="nickname" placeholder="Nickname"
                         pattern=".{3,}" required>
                     <label for="email">Email</label>
                     <input class="input-field" type="email" name="email" id="email" placeholder="Email" required>
                     <span class="email-error"></span>
-                    <label for="password">Password</label>
+                    <label for="password">Password (min. 8 characters, at least with one capital letter)</label>
                     <input class="input-field" type="password" name="password" id="password" pattern="(?=.*[A-Z]).{8,}"
                         placeholder="Password" required>
                     <label for="password2">Verify password</label>

@@ -1,26 +1,26 @@
 "use strict";
-//for routes using root route 
+// for routes using root route
 
 const express = require("express");
 const globalRouter = express.Router();
-const routes = require("../routes");
-const { onlyPublic, verifyToken,loggedUser } = require("../middlewares");
-const { home, search } = require("../controllers/postController");
 const { body } = require("express-validator");
+const passport = require("passport");
+const { home, search } = require("../controllers/postController");
 const {
   getJoin,
   postJoin,
   getLogin,
   postLogin,
   logout,
-  getMe
+  getMe,
 } = require("../controllers/userController");
-const passport = require('passport')
+const { onlyPublic } = require("../middlewares");
+const routes = require("../routes");
 
 // main page
 globalRouter.get(routes.home, home);
 
-// Register and make newly registered account logged in
+// Registering and then making a newly registered account logged in
 globalRouter.get(routes.join, onlyPublic, getJoin);
 globalRouter.post(
   "/join",
@@ -47,6 +47,6 @@ globalRouter.get(routes.logout, logout);
 globalRouter.get(routes.search, search);
 
 // my profile
-globalRouter.get('/me', passport.authenticate("jwt", { session: false }), getMe);
+globalRouter.get(routes.me, passport.authenticate("jwt", { session: false }), getMe);
 
 module.exports = globalRouter;
