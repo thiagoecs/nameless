@@ -8,14 +8,14 @@ For restaurant owners, they can upload pictures, promote their restaurants.
 
 For customer users, they can tell their personal experiences, find restaurants to go, and compare to other users' experiences.
 
-## What's been done so far :
+## Features available :
 
-- pages
-- [x] home
-- [x] join
-- [x] login
-- [x] posts
-- [] posts detail
-- [] search
-- [] upload
-- [] user detail
+- Sign up
+- Log in
+- Log out
+- Upload
+- Search
+- View count on posts
+- Comments on posts
+- View user profile and all their posts
+
