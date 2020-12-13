@@ -1,5 +1,6 @@
 "use strict";
-const main_ = document.querySelector("main");
+// making a list of posts for main page
+//const main = document.querySelector("main");
 const addPosts = (posts) => {
   posts.forEach((post) => {
     const section = document.createElement("section");
@@ -62,7 +63,7 @@ const addPosts = (posts) => {
     wrapper.appendChild(comments);
     wrapper.appendChild(votes);
     section.appendChild(wrapper);
-    main_.appendChild(section);
+    main.appendChild(section);
 
     title.addEventListener("click", () => {
       getPost(post.id);
