@@ -5,13 +5,13 @@ const express = require("express");
 const globalRouter = express.Router();
 const { body } = require("express-validator");
 const passport = require("passport");
-const { home, search } = require("../controllers/postController");
+const {main, search } = require("../controllers/postController");
 const { getJoin, postJoin, getLogin, postLogin, logout, getMe } = require("../controllers/userController");
 const { onlyPublic } = require("../middlewares");
 const routes = require("../routes");
 
 // main page
-globalRouter.get(routes.home, home);
+globalRouter.get(routes.home, main);
 
 // Registering and then making a newly registered account logged in
 globalRouter.get(routes.join, onlyPublic, getJoin);

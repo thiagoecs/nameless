@@ -1,23 +1,38 @@
 "use strict";
-const routes = require("../routes");
 const postModel = require("../models/postModel");
 const path = require("path");
 const htmlFilePath = "../public/html";
 const { validationResult } = require("express-validator");
 
 // main page
-const home = async (req, res) => {
+const main = async (req, res) => {
   res.sendFile(path.join(__dirname, htmlFilePath + "/index.html"));
 };
 
+// get posts' information
+const postRoot = async (req, res) => {
+  // getting post data from database
+  let posts = await postModel.getAllPosts();
+  // finding comments on each posts
+  for (let post of posts) {
+    const comments = await postModel.getComments(post.id);
+    // inserting comments value into the post object
+    post["comments"] = comments;
+  }
+  res.json(posts);
+};
+
+// adding comments
 const postAddComment = async (req, res) => {
+  //getting post id and comment text from request
   const {
     params: { id },
     body: { comment },
   } = req;
   try {
     const user = await postModel.getPostById(id);
-    const userId = user.creator;
+    const userId = user.creator; // extracting user id
+    // inserting data into comments table
     const newComment = await postModel.insertComment(comment, id, userId);
     res.status(201).json({ newComment });
   } catch (error) {
@@ -25,115 +40,119 @@ const postAddComment = async (req, res) => {
     res.status(400).json({ error });
   }
 };
-// show search results and query word
+
+// show search results and keyword
 const search = async (req, res) => {
-  const searchingBy = req.query.term;
+  // getting a keyword from input field
+  const keyword = req.query.term;
   try {
-    const posts = await postModel.searchPosts(searchingBy);
-    console.log(posts);
-    res.json({ searchingBy, posts });
+    // finding data from database by keyword
+    const posts = await postModel.searchPosts(keyword);
+    res.json({ searchingBy: keyword, posts });
   } catch (e) {
     console.log(e);
   }
 };
 
-// get posts' information
-const postHome = async (req, res) => {
-  let posts = await postModel.getAllPosts();
-  for (let post of posts) {
-    const comments = await postModel.getComments(post.id);
-    post["comments"] = comments;
-  }
-  res.json(posts);
-};
-
+// adding a number of views when an user clicks the post
 const addViews = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
   try {
+    // getting post's data and then a number of views
     const post = await postModel.getPostById(id);
     const views = post.views;
+    // adding 1 and views
     const newViews = views + 1;
-    console.log("views", views);
+    // update post's data with a new number of views
     await postModel.addViews(id, newViews);
     next();
   } catch (err) {
     console.log(err);
   }
 };
-// post detail
+
+// getting single post's data
 const postDetail = async (req, res) => {
   const id = req.params.id;
   try {
     let post = await postModel.getPostById(id);
+    // finding comments on the post
     const comments = await postModel.getComments(id);
+    // inserting comments value into the post object
     post["comments"] = comments;
     res.json(post);
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 };
 
 // upload page
-const getUpload = (req, res) =>
-  res.sendFile(path.join(__dirname, htmlFilePath + "/upload.html"));
+const getUpload = (req, res) => res.sendFile(path.join(__dirname, htmlFilePath + "/upload.html"));
 
-// send upload request
+// sending upload request
 const postUpload = async (req, res) => {
-  const {
-    body: { title, description },
-    file: { path },
-  } = req;
-  console.log(req.id);
-  const creator = res.locals.loggedUser.id;
-  const newPost = await postModel.insertPost(title, description, creator);
-  const newFile = await postModel.insertFiles(newPost, path);
-  res.status(201).json({ message: "file uploaded" });
-};
-
-// edit post
-const getEditPost = async (req, res) => {
-  const {
-    params: { id },
-  } = req;
   try {
-    const post = await postModel.getPostById(id);
-    if (post.creator !== res.locals.loggedUser.id) {
-      throw Error();
-    } else {
-      res.render("editPost", { pageTitle: "Edit post", post });
-    }
-  } catch (err) {
-    console.log(err);
-    res.redirect(routes.home);
-  }
-};
-
-const postEditPost = async (req, res) => {
-  const {
-    params: { id },
-    body: { restaurant, description },
-  } = req;
-  try {
-    await postModel.updatePost(id, restaurant, description);
-    res.status(201).json({message:'done'});
-  } catch (err) {
-    console.log(err);
+    // getting title, description, and file path from the form
+    const {
+      body: { title, description },
+      file: { path },
+    } = req;
+    // getting currently logged in user's id
+    const creator = res.locals.loggedUser.id;
+    // inserting new post's data
+    const newPost = await postModel.insertPost(title, description, creator);
+    // inserting path of the post's image or video into files table
+    await postModel.insertFiles(newPost, path);
+    res.status(201).json({ message: "file uploaded" });
+  } catch (e) {
     res.status(400).json(err);
   }
 };
 
-const deletePost = async (req, res) => {
-  const {
-    params: { id },
-  } = req;
+// edit post
+// const getEditPost = async (req, res) => {
+//   const {
+//     params: { id },
+//   } = req;
+//   try {
+//     const post = await postModel.getPostById(id);
+//     if (post.creator !== res.locals.loggedUser.id) {
+//       throw Error();
+//     } else {
+//       res.render("editPost", { pageTitle: "Edit post", post });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     res.redirect(routes.home);
+//   }
+// };
+
+// send request of editting the post 
+const editPost = async (req, res) => {
+  // getting title (restaurant's name) and description from the form
+  const {  params: { id },  body: { restaurant, description }  } = req;
   try {
+    // updating restaurant's name and description
+    await postModel.updatePost(id, restaurant, description);
+    res.status(201).json({ message: "post updated" });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+// deleting posts
+const deletePost = async (req, res) => {
+  //getting post's id
+  const {  params: { id } } = req;
+  try {
+    // If there're comments on the post, delete them first
     const comments = await postModel.getComments(id);
     if (comments) {
       await postModel.deleteComments(id);
     }
+    // deleting a file path which the deleted post has
     await postModel.deleteFiles(id);
+    // and finally deleting post's data
     await postModel.deletePost(id);
   } catch (error) {
     console.log(error);
@@ -142,14 +161,14 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-  home,
+  main,
   search,
-  postHome,
+  postRoot,
   postDetail,
   getUpload,
   postUpload,
-  getEditPost,
-  postEditPost,
+  //getEditPost,
+  editPost,
   deletePost,
   addViews,
   postAddComment,

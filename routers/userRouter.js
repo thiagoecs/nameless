@@ -4,7 +4,7 @@ const { loggedUser, uploadAvatar } = require("../middlewares");
 const userRouter = express.Router();
 const { body } = require("express-validator");
 const routes = require("../routes");
-const { userDetail, getEditProfile, postEditProfile, changePassword, postJoin } = require("../controllers/userController");
+const { userDetail,  postEditProfile, changePassword, postJoin } = require("../controllers/userController");
 const passport = require("../utils/passport");
 
 userRouter.post("/",[
