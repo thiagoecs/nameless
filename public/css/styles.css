@@ -214,7 +214,8 @@ main .movie .wrapper {
   justify-content: center;
 }
 main .movie .wrapper .movie_header,
-.sub_header{
+.sub_header,
+.view-votes {
   width: 95%;
   display: flex;
   justify-content: space-between;
@@ -244,17 +245,15 @@ img {
   min-width: 100px;
   object-fit: scale-down;
   max-width: fit-content;
-  max-height: 410px;
 }
-
-.view-comments {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-  width: 100%;
+.view-votes {
+  margin: 0.7rem 0 5rem 1rem;
   font-size: 0.8rem;
+  justify-content: flex-start;
 }
-
+.view-votes h5:first-child {
+  margin-right: 2.5rem;
+}
 .post-link,
 .user-link {
   cursor: pointer;
@@ -277,7 +276,9 @@ p {
 .post__comments {
   text-align: center;
 }
-
+.comments {
+  margin-bottom: 1.5rem;
+}
 #comments-form {
   display: flex;
   justify-content: center;
@@ -288,6 +289,13 @@ p {
 .comment-bar {
   font-size: 1.1rem;
   margin-right: 1.1rem;
+}
+.info-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
 @media only screen and (max-width: 800px) {
@@ -327,7 +335,7 @@ p {
 
   main .movie .wrapper .movie_header,
   .upload_time,
-  .view-comments {
+  .view-votes {
     width: 100%;
     display: flex;
     justify-content: space-between;

@@ -49,7 +49,7 @@ const addPosts = (posts) => {
       figure.innerHTML = "";
     }
     const infoContainer = document.createElement("div");
-    infoContainer.classList.add("view-comments");
+    infoContainer.classList.add("info-container");
     // views and comments info
     const views = document.createElement("h5");
     views.classList.add("views");
