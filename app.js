@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("./utils/passport");
-const { loggedUser } = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");
 const postRouter = require("./routers/postRouter");
 const userRouter = require("./routers/userRouter");
@@ -20,6 +19,7 @@ app.use(bodyParser.json());
 
 // load directory that has source files (css files...)
 app.use(express.static("./public"));
+// a folder for avatar images, images and videos from posts
 app.use("/uploads", express.static("uploads"));
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
@@ -31,7 +31,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(passport.initialize());
 
-//app.get("*", loggedUser);
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
 app.use(routes.users, userRouter);
