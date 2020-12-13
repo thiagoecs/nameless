@@ -1,6 +1,8 @@
 # Nameless Project
 
-Web application for sharing information about restaurants.
+Made by Nameless team (mingg1, thiagoecs and arttuSop)
+
+Web application for sharing media about restaurants.
 
 For restaurant owners, they can upload pictures, promote their restaurants.
 
