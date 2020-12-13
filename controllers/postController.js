@@ -94,15 +94,14 @@ const postUpload = async (req, res) => {
   try {
     // getting title, description, and file path from the form
     const {
-      body: { title, description },
+      body: { title, description,creator },
       file: { path },
     } = req;
     // getting currently logged in user's id
-    const creator = res.locals.loggedUser.id;
-    // inserting new post's data
+     // inserting new post's data
     const newPost = await postModel.insertPost(title, description, creator);
     // inserting path of the post's image or video into files table
-    const file = await postModel.insertFiles(newPost, path);
+     await postModel.insertFiles(newPost, path);
     res.status(201).json({ message: "file uploaded" });
   } catch (err) {
     console.log(err);
