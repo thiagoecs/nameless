@@ -92,6 +92,7 @@ const getUpload = (req, res) => res.sendFile(path.join(__dirname, htmlFilePath +
 // sending upload request
 const postUpload = async (req, res) => {
   try {
+    console.log(req.body)
     // getting title, description, and file path from the form
     const {
       body: { title, description,creator },
