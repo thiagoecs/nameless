@@ -20,7 +20,7 @@ form.addEventListener("submit", async (e) => {
     
     if (data) {
       console.log(data)
-      //location.assign(URL_BASE + "/");
+      location.assign(URL_BASE + "/");
     }
   } catch (err) {
     console.log(err);
