@@ -15,11 +15,14 @@ userRouter.post("/",[
 
 // edit profile
 //userRouter.get("/edit-profile", getEditProfile);
-userRouter.post("/edit-profile", loggedUser, uploadAvatar, postEditProfile);
+//userRouter.post("/edit-profile", passport.authenticate("jwt", { session: false }), loggedUser, uploadAvatar, postEditProfile);
 // change password
-userRouter.post("/:id/change-passwd", changePassword);
+userRouter.post("/:id/change-passwd", passport.authenticate("jwt", { session: false }), changePassword);
 
 // user profile
-userRouter.route("/:id").get(userDetail).put(uploadAvatar, postEditProfile);
+userRouter
+  .route("/:id")
+  .get(userDetail)
+  .put(passport.authenticate("jwt", { session: false }), uploadAvatar, postEditProfile);
 
 module.exports = userRouter;

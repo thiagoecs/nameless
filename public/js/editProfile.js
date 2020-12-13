@@ -23,9 +23,10 @@ const getEditProfile = (data) => {
     </div>
 </div>
 `;
-  putEditProfile(data);
+  putProfile(data);
 };
-const putEditProfile = (data) => {
+
+const putProfile = (data) => {
   const form = document.querySelector(".edit-form");
   const emailError = document.querySelector(".email-error");
   if (form) {
@@ -34,9 +35,7 @@ const putEditProfile = (data) => {
       const formData = new FormData(form);
       const fetchOptions = {
         method: "PUT",
-        headers: {
-         // Authorization: "Bearer " + token,
-        },
+        headers: { Authorization: "Bearer " + token },
         body: formData,
       };
       try {
@@ -46,7 +45,7 @@ const putEditProfile = (data) => {
           emailError.innerText = userData.errors.email;
         } else {
           alert("Profile has been changed successfully!");
-          location.assign(URL_BASE);
+          location.assign(URL_BASE + "/");
         }
       } catch (e) {
         console.log(e);

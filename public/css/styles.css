@@ -13,11 +13,14 @@ input,
 button {
   font-family: "DM Sans", sans-serif;
 }
-li{
+li {
   cursor: pointer;
 }
-hr{
-  border-style: solid;
+hr {
+  border: solid white 1px;
+  margin: 0.5rem 0;
+  border-width: initial;
+  width: 50vw;
 }
 .title_header {
   padding: 8.5vh 0 15px 60px;
@@ -160,7 +163,7 @@ button:hover,
 }
 .search_filter__header h3 {
   display: none;
-  margin-left:2.3vh;
+  margin-left: 2.3vh;
   font-size: 2.5vh;
 }
 main section:nth-child(2) {
@@ -195,14 +198,7 @@ main .movie .wrapper {
   margin-top: 9vh;
 }
 main .movie {
-  background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.1) 5%,
-          transparent,
-          transparent,
-          transparent,
-          transparent
-  );
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 5%, transparent, transparent, transparent, transparent);
   height: 91vh;
 }
 #wrapper {
@@ -246,8 +242,7 @@ img {
   min-width: 450px;
   max-width: 580px;
   height: 400px;
-  box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06),
-  inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 80px 80px -80px #000, 0 0 12px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   height: 100%;
   width: 100%;
   min-width: 100px;
@@ -279,13 +274,13 @@ p {
   font-size: 0.9rem;
   color: rgb(245, 65, 20);
 }
-#detail{
+#detail {
   height: 100%;
 }
 .post__comments {
   text-align: center;
 }
-.comments{
+.comments {
   margin-bottom: 1.5rem;
 }
 #comments-form {
@@ -325,9 +320,9 @@ p {
     left: 0%;
     top: 0;
   }
-.search_filter__header{
-  margin-top: 20px;
-}
+  .search_filter__header {
+    margin-top: 20px;
+  }
   main .movie .wrapper {
     width: 100%;
     flex-direction: column;
@@ -335,7 +330,9 @@ p {
     min-width: 100px;
   }
 
-  main .movie .wrapper .movie_header, .upload_time, .view-votes {
+  main .movie .wrapper .movie_header,
+  .upload_time,
+  .view-votes {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -351,8 +348,8 @@ p {
     font-size: calc(10px + 1.4vw);
     font-weight: 600;
   }
-  img{
-    min-width:0;
+  img {
+    min-width: 0;
   }
 
   .wrapper {
@@ -367,10 +364,9 @@ p {
   }
   main .movie {
     height: auto;
-    
   }
-  .post__comments{
-    width:inherit;
+  .post__comments {
+    width: inherit;
   }
   #search-bar {
     padding: 0.3em;
@@ -384,11 +380,11 @@ p {
     margin-top: -30px;
     margin-bottom: 50px;
   }
-  .bottom{
-    margin-top:2rem;
+  .bottom {
+    margin-top: 2rem;
   }
-  .search-button{
-    margin-top:20px;
+  .search-button {
+    margin-top: 20px;
   }
 }
 @media only screen and (max-width: 450px) {
@@ -404,6 +400,6 @@ p {
     height: 23rem;
   }
   .title_header {
-    height: 80%
+    height: 80%;
   }
 }

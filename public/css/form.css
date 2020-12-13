@@ -1,13 +1,12 @@
 main {
   display: flex;
   height: 100%;
-  position:relative;
+  position: relative;
   flex-direction: column;
 }
 .movie {
-  position:relative;
-  width:100%;
-
+  position: relative;
+  width: 100%;
 }
 span {
   margin-right: 5px;
@@ -16,6 +15,7 @@ span {
 }
 .form-wrapper {
   margin: auto;
+  margin-top: 5vh;
 }
 .form-wrapper h2 {
   font-size: 26px;
@@ -159,29 +159,30 @@ label,
   cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
-  .form-wrapper{
-    width:100%;
+  .form-wrapper {
+    width: 100%;
   }
-  .form-wrapper h2{
+  .form-wrapper h2 {
     margin-top: 14vh;
   }
-  .form-container,#upload {
+  .form-container,
+  #upload {
     width: initial;
     min-width: 0;
   }
   .form-container form {
     min-width: 0;
   }
-  .form-container label{
+  .form-container label {
     font-size: 2.2vh;
   }
-  input{
-    width:auto;
-  }
-  .filetype{
+  input {
     width: auto;
   }
-  .submit{
-    font-size:2vh;
+  .filetype {
+    width: auto;
+  }
+  .submit {
+    font-size: 2vh;
   }
 }
