@@ -72,11 +72,10 @@ const postAddComment = async (req, res) => {
   //getting post id and comment text from request
   const {
     params: { id },
-    body: { comment },
+    body: { comment,userId },
   } = req;
   try {
     const user = await postModel.getPostById(id);
-    const userId = user.creator; // extracting user id
     // inserting data into comments table
     const newComment = await postModel.insertComment(comment, id, userId);
     res.status(201).json({ newComment });

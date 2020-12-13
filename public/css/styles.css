@@ -379,7 +379,7 @@ p {
     width: 100%;
     min-width: 100px;
     max-width: fit-content;
-    max-height: 214px;
+    max-height: 350px;
   }
   main .movie {
     height: auto;

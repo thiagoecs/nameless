@@ -6,7 +6,8 @@ const postComment = async (data, form) => {
   const commentNum = commentsContainer.querySelector("span");
   const list = commentsContainer.querySelector(".comments-list");
   const text = form.comment.value;
-
+  const userInfo = await getMyProfile();
+  const userId = userInfo.id
   // increasing a number of comments and displaying in the page
   // when the comment is successfully inserted into database
   const increaseNumber = () => {
@@ -17,7 +18,7 @@ const postComment = async (data, form) => {
     // sending comment text with jwt token
     const res = await fetch(URL_BASE + "/posts/" + data.id + "/comment", {
       method: "POST",
-      body: JSON.stringify({ comment: text }),
+      body: JSON.stringify({ comment: text,userId }),
       headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
     });
 
@@ -25,7 +26,7 @@ const postComment = async (data, form) => {
     if (res.status === 201) {
       // adding comment text into the list of comments
       //const userId = data.creator
-      const userInfo = await getMyProfile()
+      
       const userNickname = userInfo.nickname
       const li = document.createElement("li");
       const name = document.createElement('h5')
