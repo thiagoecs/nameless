@@ -1,6 +1,10 @@
 "use strict";
+
+// This file is for editing past page
+
 const head = document.querySelector("head");
 
+// making editing post page
 const getEditPost = async (id) => {
   const postData = await getPostDataById(id);
   head.innerHTML += `<link rel="stylesheet" type="text/css" href="/app/css/form.css" />`;

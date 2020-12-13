@@ -1,11 +1,11 @@
 "use strict";
 const express = require("express");
-const { loggedUser, uploadAvatar } = require("../middlewares");
 const userRouter = express.Router();
 const { body } = require("express-validator");
-const routes = require("../routes");
-const { userDetail,  postEditProfile, changePassword, postJoin } = require("../controllers/userController");
+const { userDetail,  postEditProfile, changePassword } = require("../controllers/userController");
+const { uploadAvatar } = require("../middlewares");
 const passport = require("../utils/passport");
+const routes = require("../routes");
 
 // userRouter.post(routes.home,[
 //     body("name", "minimum length 3 characters").isLength({ min: 3 }),
@@ -21,7 +21,7 @@ userRouter.post(
   changePassword
 );
 
-// getting and editting user profile
+// getting and editting user data
 userRouter
   .route(routes.userDetail())
   .get(userDetail)

@@ -1,3 +1,4 @@
+'use strict';
 // getting logged in user information
 const getMyProfile = async () => {
   const token = document.cookie.split("userToken=")[1]; //JWT token

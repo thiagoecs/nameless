@@ -22,22 +22,18 @@ const postRoot = async (req, res) => {
   res.json(posts);
 };
 
-// adding comments
-const postAddComment = async (req, res) => {
-  //getting post id and comment text from request
-  const {
-    params: { id },
-    body: { comment },
-  } = req;
+// getting single post's data
+const postDetail = async (req, res) => {
+  const id = req.params.id;
   try {
-    const user = await postModel.getPostById(id);
-    const userId = user.creator; // extracting user id
-    // inserting data into comments table
-    const newComment = await postModel.insertComment(comment, id, userId);
-    res.status(201).json({ newComment });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ error });
+    let post = await postModel.getPostById(id);
+    // finding comments on the post
+    const comments = await postModel.getComments(id);
+    // inserting comments value into the post object
+    post["comments"] = comments;
+    res.json(post);
+  } catch (err) {
+    res.status(400).json(err);
   }
 };
 
@@ -71,18 +67,22 @@ const addViews = async (req, res, next) => {
   }
 };
 
-// getting single post's data
-const postDetail = async (req, res) => {
-  const id = req.params.id;
+// adding comments
+const postAddComment = async (req, res) => {
+  //getting post id and comment text from request
+  const {
+    params: { id },
+    body: { comment },
+  } = req;
   try {
-    let post = await postModel.getPostById(id);
-    // finding comments on the post
-    const comments = await postModel.getComments(id);
-    // inserting comments value into the post object
-    post["comments"] = comments;
-    res.json(post);
-  } catch (err) {
-    res.status(400).json(err);
+    const user = await postModel.getPostById(id);
+    const userId = user.creator; // extracting user id
+    // inserting data into comments table
+    const newComment = await postModel.insertComment(comment, id, userId);
+    res.status(201).json({ newComment });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
   }
 };
 
@@ -109,7 +109,7 @@ const postUpload = async (req, res) => {
   }
 };
 
-// send request of editting the post 
+// send request of editing the post 
 const editPost = async (req, res) => {
   // getting title (restaurant's name) and description from the form
   const {  params: { id },  body: { restaurant, description }  } = req;
