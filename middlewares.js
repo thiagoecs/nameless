@@ -100,7 +100,7 @@ const uploadAvatar = multerAvatar.single("avatar");
 module.exports = {
   verifyToken,
   onlyPublic,
-  loggedUser,
+  //loggedUser,
   uploadFiles,
   uploadAvatar,
 };
