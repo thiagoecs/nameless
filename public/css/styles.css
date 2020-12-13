@@ -363,6 +363,7 @@ p {
     width: 100%;
     min-width: 100px;
     max-width: fit-content;
+    max-height: 214px;
   }
   main .movie {
     height: auto;
@@ -380,7 +381,7 @@ p {
     width: 60%;
     margin-bottom: 50px;
   }
-  .title_header h1 a{
+  .title_header h1 a {
     font-size: calc(35px + 5vw);
     margin-top: 30px;
   }
