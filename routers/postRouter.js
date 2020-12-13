@@ -4,7 +4,7 @@ const express = require("express");
 const passport = require("passport");
 const postRouter = express.Router();
 const {postRoot, postDetail, getUpload, postUpload, deletePost, editPost, addViews, postAddComment } = require("../controllers/postController");
-const { verifyToken, uploadFiles, loggedUser } = require("../middlewares");
+const { verifyToken, uploadFiles,  } = require("../middlewares");
 const routes = require("../routes");
 
 // getting all posts' data (.../app/posts/)
@@ -14,7 +14,7 @@ postRouter.get(routes.home, postRoot);
 postRouter
   .route(routes.upload)
   .get(verifyToken, getUpload)
-  .post(passport.authenticate("jwt", { session: false }), loggedUser, uploadFiles, postUpload);
+  .post(passport.authenticate("jwt", { session: false }), uploadFiles, postUpload);
 
 // a detailed post page
 postRouter

@@ -1,6 +1,5 @@
 "use strict";
 // This file is for managing indexes of each routers.
-// prob we can only use them in backend side..?
 
 const HOME = "/";
 
@@ -15,14 +14,12 @@ const ME = "/me";
 const USERS = "/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
-const CHANGE_PASSWORD = ":id/change-passwd";
+
 
 // posts
 const POSTS = "/posts";
 const UPLOAD = "/upload";
 const POST_DETAIL = "/:id";
-const EDIT_POST = "/:id/edit";
-const DELETE_POST = "/:id/delete";
 
 // collects all the paths from our app.
 const routes = {

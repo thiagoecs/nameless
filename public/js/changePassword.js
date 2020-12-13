@@ -8,6 +8,7 @@ const getChangePassword = (id) => {
   document.title = "Change password | Food Advisor";
   // adding css file
   head.innerHTML += `<link rel="stylesheet" type="text/css" href="/app/css/form.css" />`;
+ // making a form
   main.innerHTML = `
 <div class="form-wrapper">
     <h2>Change password</h2>

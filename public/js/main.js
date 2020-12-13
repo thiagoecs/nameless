@@ -161,18 +161,6 @@ votes.addEventListener("submit", async (e) => {
 
 */
 
-// getting posts data and calling addPosts function
-const getPosts = async () => {
-  try {
-    const response = await fetch(URL_BASE + "/posts");
-    const posts = await response.json();
-    console.log(posts);
-    addPosts(posts);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 // profile page
 const getProfile = async (id) => {
   try {
@@ -250,30 +238,6 @@ const addEditProfileBtn = () => {
   btnContainer.appendChild(passwdBtn);
 };
 
-
-// getting specified user info by id number
-const getUserDataById = async (id) => {
-  try {
-    const response = await fetch(URL_BASE + "/users/" + id);
-    const user = await response.json();
-    console.log("user:", user);
-    return user;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const getUserDataByType = async (userType) => {
-  try {
-    const response = await fetch(URL_BASE + "/users/" + userType);
-    const user = await response.json();
-    console.log("user:", user);
-    return user;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 // making back button when clicking user nickname and post title
 const makeBackButton = () => {
   loginHeader.style.justifyContent = "space-between";
@@ -282,19 +246,6 @@ const makeBackButton = () => {
   back.innerText = "← Back";
   back.href = URL_BASE + "/";
   loginHeader.insertBefore(back, loginHeader.firstChild);
-};
-
-// deleting cookie
-
-const getPostDataById = async (id) => {
-  try {
-    const response = await fetch(URL_BASE + "/posts/" + id);
-    const post = await response.json();
-    console.log("post:", post);
-    return post;
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 //votes

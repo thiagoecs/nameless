@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("./utils/passport");
-const { localsMiddleware, loggedUser } = require("./middlewares");
+const { loggedUser } = require("./middlewares");
 const globalRouter = require("./routers/globalRouter");
 const postRouter = require("./routers/postRouter");
 const userRouter = require("./routers/userRouter");
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(cookieParser("secret"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(localsMiddleware);
+
 
 // load directory that has source files (css files...)
 app.use(express.static("./public"));

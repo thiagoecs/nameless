@@ -1,7 +1,7 @@
 "use strict";
 // making a list of posts for main page
-//const main = document.querySelector("main");
 const addPosts = (posts) => {
+  // iterating the list of posts
   posts.forEach((post) => {
     const section = document.createElement("section");
     section.className = "movie";
@@ -27,6 +27,7 @@ const addPosts = (posts) => {
     postHeader.appendChild(creator);
     wrapper.appendChild(postHeader);
 
+    // adding emoji next to the nickname if user type is 2 (business)
     if (post.userType === 2) {
       emoji.innerText = `👨‍🍳`;
     }
