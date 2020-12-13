@@ -21,6 +21,7 @@ const getChangePassword = (id) => {
 `;
   putChangePassword(id);
 };
+
 const putChangePassword = (id) => {
   const form = document.querySelector(".edit-form");
   const passwordError = document.querySelector(".password-error");
@@ -31,11 +32,12 @@ const putChangePassword = (id) => {
 
       const newPassword = form.newPassword.value;
       const newPassword1 = form.newPassword1.value;
+
       const fetchOptions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: "Bearer " + sessionStorage.getItem("token"),
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify({ newPassword, newPassword1 }),
       };
@@ -44,10 +46,9 @@ const putChangePassword = (id) => {
         const data = await response.json();
         if (data.errors) {
           passwordError.innerText = data.errors.password;
-          
         } else {
           alert("Password has been changed successfully!");
-          location.assign(URL_BASE+"/");
+          location.assign(URL_BASE + "/");
         }
       } catch (err) {
         console.log(err);

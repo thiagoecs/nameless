@@ -13,7 +13,7 @@ const postComment = async (data, form) => {
     const res = await fetch(URL_BASE + "/posts/" + data.id + "/comment", {
       method: "POST",
       body: JSON.stringify({ comment: text }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
     });
     console.log(res);
     if (res.status === 201) {

@@ -109,24 +109,6 @@ const postUpload = async (req, res) => {
   }
 };
 
-// edit post
-// const getEditPost = async (req, res) => {
-//   const {
-//     params: { id },
-//   } = req;
-//   try {
-//     const post = await postModel.getPostById(id);
-//     if (post.creator !== res.locals.loggedUser.id) {
-//       throw Error();
-//     } else {
-//       res.render("editPost", { pageTitle: "Edit post", post });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     res.redirect(routes.home);
-//   }
-// };
-
 // send request of editting the post 
 const editPost = async (req, res) => {
   // getting title (restaurant's name) and description from the form
@@ -167,7 +149,6 @@ module.exports = {
   postDetail,
   getUpload,
   postUpload,
-  //getEditPost,
   editPost,
   deletePost,
   addViews,
