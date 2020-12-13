@@ -1,6 +1,6 @@
 # Food Advisor
 
-Made by Nameless team
+Made by Nameless team (#1mingg1, #thiagoecs and #arttuSop
 
 Web application for sharing media about restaurants.
 
