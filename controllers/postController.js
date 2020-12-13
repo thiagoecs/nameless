@@ -72,8 +72,9 @@ const postAddComment = async (req, res) => {
   //getting post id and comment text from request
   const {
     params: { id },
-    body: { comment,userId },
+    body: { comment, userId },
   } = req;
+  console.log(userId);
   try {
     const user = await postModel.getPostById(id);
     // inserting data into comments table
@@ -91,17 +92,17 @@ const getUpload = (req, res) => res.sendFile(path.join(__dirname, htmlFilePath +
 // sending upload request
 const postUpload = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     // getting title, description, and file path from the form
     const {
-      body: { title, description,creator },
+      body: { title, description, creator },
       file: { path },
     } = req;
     // getting currently logged in user's id
-     // inserting new post's data
+    // inserting new post's data
     const newPost = await postModel.insertPost(title, description, creator);
     // inserting path of the post's image or video into files table
-     await postModel.insertFiles(newPost, path);
+    await postModel.insertFiles(newPost, path);
     res.status(201).json({ message: "file uploaded" });
   } catch (err) {
     console.log(err);
