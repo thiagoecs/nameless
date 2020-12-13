@@ -7,14 +7,19 @@ const routes = require("../routes");
 const { userDetail,  postEditProfile, changePassword, postJoin } = require("../controllers/userController");
 const passport = require("../utils/passport");
 
-userRouter.post(routes.home,[
-    body("name", "minimum length 3 characters").isLength({ min: 3 }),
-    body("email", "is not valid email").isEmail(),
-    body("password", "minimum length 8 characters, at least one capital letter").matches("(?=.*[A-Z]).{8,}"),
-  ],postJoin);
+// userRouter.post(routes.home,[
+//     body("name", "minimum length 3 characters").isLength({ min: 3 }),
+//     body("email", "is not valid email").isEmail(),
+//     body("password", "minimum length 8 characters, at least one capital letter").matches("(?=.*[A-Z]).{8,}"),
+//   ],postJoin);
 
 // changing password
-userRouter.post(routes.changePassword, passport.authenticate("jwt", { session: false }), changePassword);
+userRouter.post(
+  "/:id/change-passwd",
+  passport.authenticate("jwt", { session: false }),
+  [body("password", "minimum length 8 characters, at least one capital letter").matches("(?=.*[A-Z]).{8,}")],
+  changePassword
+);
 
 // getting and editting user profile
 userRouter
