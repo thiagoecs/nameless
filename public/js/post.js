@@ -41,6 +41,13 @@ const addPosts = (posts) => {
     // after checking it, append a child element to figure element
     if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
       figure.innerHTML = `<img src='/app/${post.sourceFile}'>`;
+       const img = document.querySelector("img");
+       if (img) {
+         img.addEventListener("click", () => {
+           console.log(post.id);
+           getPost(post.id);
+         });
+       }
     } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
       figure.innerHTML = `<video controls=true width="460" height="350">
        <source src='/app/${post.sourceFile}'></source>
@@ -73,13 +80,7 @@ const addPosts = (posts) => {
     title.addEventListener("click", () => {
       getPost(post.id);
     });
-    const img = document.querySelector("img");
-    if (img) {
-      img.addEventListener("click", () => {
-        console.log(post.id)
-        getPost(post.id);
-      });
-    }
+   
     creator.addEventListener("click", () => {
       getProfile(post.creator);
     });
