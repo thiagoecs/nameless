@@ -141,18 +141,19 @@ const getPost = async (id) => {
     }
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach((comment) => {
+      const author = await getUserDataById(comment.creator)
       const name = document.createElement("h5");
-      const userNickname = myProfileData.nickname;
       const text = document.createElement("li");
       const textSpan = document.createElement("span");
       textSpan.innerText = comment.text;
-      name.innerHTML = userNickname;
+      name.innerHTML = author.nickname;
+      name.style.cursor = "pointer";
       text.appendChild(name);
       text.appendChild(textSpan);
       commentsList.appendChild(text);
-       name.addEventListener("click", () => {
-         getProfile(myProfileData.id);
-       });
+      name.addEventListener("click", () => {
+        getProfile(author.id);
+      });
     });
     const profileLink = document.querySelector(".user-link");
     profileLink.addEventListener("click", () => {
@@ -183,7 +184,6 @@ const getPost = async (id) => {
       editBtn.addEventListener("click", () => {
         getEditPost(data.id);
       });
-
     }
   } catch (e) {
     console.log(e);
