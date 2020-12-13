@@ -25,17 +25,16 @@ const postComment = async (data, form) => {
     if (res.status === 201) {
       // adding comment text into the list of comments
       //const userId = data.creator
-      const userInfo = await getUserDataById(data.creator);
+      const userInfo = await getMyProfile()
       const userNickname = userInfo.nickname
       const li = document.createElement("li");
       const name = document.createElement('h5')
       const span = document.createElement("span");
-      const line = document.createElement("hr");
+      
       span.innerHTML = text;
       name.innerHTML = userNickname;
       li.appendChild(name);
       li.appendChild(span);
-      li.appendChild(line);
       list.appendChild(li);
       // and increasing number
       increaseNumber();
