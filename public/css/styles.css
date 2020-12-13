@@ -243,8 +243,8 @@ img {
   height: 100%;
   width: 100%;
   min-width: 100px;
-  object-fit: scale-down;
   max-width: fit-content;
+  max-height: 386px;
 }
 .view-votes {
   margin: 0.7rem 0 5rem 1rem;
@@ -362,7 +362,6 @@ p {
     height: 100%;
     width: 100%;
     min-width: 100px;
-    object-fit: scale-down;
     max-width: fit-content;
   }
   main .movie {
