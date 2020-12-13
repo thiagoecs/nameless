@@ -14,8 +14,10 @@ For customer users, they can tell their personal experiences, find restaurants t
 - Log in
 - Log out
 - Upload
+- Edit post
 - Search
 - View count on posts
 - Comments on posts
+- Change avatar and edit your own profile
 - View user profile and all their posts
 
