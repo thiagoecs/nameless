@@ -140,7 +140,7 @@ const getPost = async (id) => {
        </video>`;
     }
     const commentsList = document.querySelector(".comments-list");
-    data.comments.forEach((comment) => {
+    data.comments.forEach(async(comment) => {
       const author = await getUserDataById(comment.creator)
       const name = document.createElement("h5");
       const text = document.createElement("li");
