@@ -86,7 +86,6 @@ const addPosts = (posts) => {
   });
 };
 
-
 // showing a detailed page with comments
 const getPost = async (id) => {
   try {
@@ -142,12 +141,14 @@ const getPost = async (id) => {
     }
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach((comment) => {
-      const line = document.createElement("hr");
+      const name = document.createElement("h5");
+      const userNickname = myProfileData.nickname;
       const text = document.createElement("li");
       const textSpan = document.createElement("span");
       textSpan.innerText = comment.text;
+      name.innerHTML = userNickname;
+      text.appendChild(name);
       text.appendChild(textSpan);
-      text.appendChild(line);
       commentsList.appendChild(text);
     });
     const profileLink = document.querySelector(".user-link");
