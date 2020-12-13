@@ -7,8 +7,9 @@ form.addEventListener("submit", async (e) => {
   try {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
-    const myProfileId = await getMyProfile().id
-    formData.append('creator',myProfileId)
+    const myProfile = await getMyProfile()
+    const myId = myProfile.id
+    formData.append('creator',myId)
     // receiving json data from backend when submit login request
     const res = await fetch(URL_BASE+"/posts/upload", {
       method: "POST",
