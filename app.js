@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(passport.initialize());
 
-app.get("*", loggedUser);
+//app.get("*", loggedUser);
 app.use(routes.home, globalRouter);
 app.use(routes.posts, postRouter);
 app.use(routes.users, userRouter);
