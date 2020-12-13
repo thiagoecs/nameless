@@ -378,10 +378,12 @@ p {
     margin-bottom: 0px;
   }
   .title_header h1 {
-    font-size: calc(35px + 5vw);
     width: 60%;
-    margin-top: -30px;
     margin-bottom: 50px;
+  }
+  .title_header h1 a{
+    font-size: calc(35px + 5vw);
+    margin-top: 30px;
   }
   .bottom {
     margin-top: 2rem;

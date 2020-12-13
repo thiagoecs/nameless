@@ -105,7 +105,7 @@ const postUpload = async (req, res) => {
     await postModel.insertFiles(newPost, path);
     res.status(201).json({ message: "file uploaded" });
   } catch (e) {
-    res.status(400).json(err);
+    res.status(400).json({err});
   }
 };
 
