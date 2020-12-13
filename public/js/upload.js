@@ -17,7 +17,8 @@ form.addEventListener("submit", async (e) => {
     const data = await res.json();
     
     if (data) {
-      location.assign(URL_BASE + "/");
+      console.log(data)
+      //location.assign(URL_BASE + "/");
     }
   } catch (err) {
     console.log(err);
