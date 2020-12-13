@@ -102,18 +102,21 @@ const postUpload = async (req, res) => {
     // inserting new post's data
     const newPost = await postModel.insertPost(title, description, creator);
     // inserting path of the post's image or video into files table
-    await postModel.insertFiles(newPost, path);
+    const file = await postModel.insertFiles(newPost, path);
     res.status(201).json({ message: "file uploaded" });
   } catch (err) {
-    console.log(err)
-    res.status(400).json({err});
+    console.log(err);
+    res.status(400).json({ err });
   }
 };
 
-// send request of editing the post 
+// send request of editing the post
 const editPost = async (req, res) => {
   // getting title (restaurant's name) and description from the form
-  const {  params: { id },  body: { restaurant, description }  } = req;
+  const {
+    params: { id },
+    body: { restaurant, description },
+  } = req;
   try {
     // updating restaurant's name and description
     await postModel.updatePost(id, restaurant, description);
@@ -126,7 +129,9 @@ const editPost = async (req, res) => {
 // deleting posts
 const deletePost = async (req, res) => {
   //getting post's id
-  const {  params: { id } } = req;
+  const {
+    params: { id },
+  } = req;
   try {
     // If there're comments on the post, delete them first
     const comments = await postModel.getComments(id);
