@@ -36,23 +36,22 @@ const addPosts = (posts) => {
     }
 
     // extracting file extension from filename
-    // const filename = post.sourceFile.split(".")[1];
-    //const ext = filename ? filename.toLowerCase() : undefined;
+    const filename = post.sourceFile.split(".")[1];
+    const ext = filename ? filename.toLowerCase() : undefined;
 
     const figure = document.createElement("figure");
 
     // checking if an uploaded file is image or video
     // after checking it, append a child element to figure element
-    // if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
-    //   figure.innerHTML = `<img src='/app/${post.sourceFile}'>`;
-    // } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
-    //   figure.innerHTML = `<video controls=true width="460" height="350">
-    //    <source src='/app/${post.sourceFile}'></source>
-    //    </video>`;
-    // } else {
-    //   figure.innerHTML = "";
-    // }
-    extensionChecker(post);
+    if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
+      figure.innerHTML = `<img src='/app/${post.sourceFile}'>`;
+    } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
+      figure.innerHTML = `<video controls=true width="460" height="350">
+       <source src='/app/${post.sourceFile}'></source>
+       </video>`;
+    } else {
+      figure.innerHTML = "";
+    }
     const infoContainer = document.createElement("div");
     infoContainer.classList.add("info-container");
     // views and comments info
@@ -87,21 +86,6 @@ const addPosts = (posts) => {
   });
 };
 
-const extensionChecker = (data) => {
-  const filename = data.sourceFile.split(".")[1];
-  const ext = filename ? filename.toLowerCase() : undefined;
-  const figure = document.querySelector("figure");
-
-  if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
-    figure.innerHTML = `<img src='/app/${data.sourceFile}'>`;
-  } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
-    figure.innerHTML = `<video controls=true width="460" height="350">
-       <source src='/app/${data.sourceFile}'></source>
-       </video>`;
-  } else {
-    figure.innerHTML = "";
-  }
-};
 
 // showing a detailed page with comments
 const getPost = async (id) => {
@@ -146,17 +130,16 @@ const getPost = async (id) => {
               </div>
         </div>
       </section>`;
-    extensionChecker(data);
-    // const ext = data.sourceFile.split(".")[1].toLowerCase();
+    const ext = data.sourceFile.split(".")[1].toLowerCase();
 
-    // const figure = document.querySelector("figure");
-    // if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
-    //   figure.innerHTML = `<img src='/app/${data.sourceFile}'>`;
-    // } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
-    //   figure.innerHTML = `<video controls=true width="460" height="350">
-    //    <source src='/app/${data.sourceFile}'></source>
-    //    </video>`;
-    // }
+    const figure = document.querySelector("figure");
+    if (ext === "png" || ext === "jpg" || ext === "gif" || ext === "jpeg") {
+      figure.innerHTML = `<img src='/app/${data.sourceFile}'>`;
+    } else if (ext === "avi" || ext === "mp4" || ext === "wmv" || ext == "mpg") {
+      figure.innerHTML = `<video controls=true width="460" height="350">
+       <source src='/app/${data.sourceFile}'></source>
+       </video>`;
+    }
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach((comment) => {
       const line = document.createElement("hr");
