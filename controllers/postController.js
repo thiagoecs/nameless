@@ -104,7 +104,7 @@ const postUpload = async (req, res) => {
     // inserting path of the post's image or video into files table
     await postModel.insertFiles(newPost, path);
     res.status(201).json({ message: "file uploaded" });
-  } catch (e) {
+  } catch (err) {
     res.status(400).json({err});
   }
 };
