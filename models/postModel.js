@@ -19,7 +19,7 @@ const getAllPosts = async () => {
 // taking all comments on a post
 const getComments = async (id) => {
   try {
-    const [rows] = await promisePool.execute("SELECT * FROM comments WHERE post = ?;", [id]);
+    const [rows] = await promisePool.execute("SELECT * FROM comments WHERE post = ? order by createdAt DESC;", [id]);
     return rows;
   } catch (e) {
     console.error("postModel: ", e.message);
