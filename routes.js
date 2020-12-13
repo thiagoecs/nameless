@@ -15,7 +15,6 @@ const USERS = "/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
 
-
 // posts
 const POSTS = "/posts";
 const UPLOAD = "/upload";
@@ -28,7 +27,7 @@ const routes = {
   login: LOGIN,
   logout: LOGOUT,
   search: SEARCH,
-  me:ME,
+  me: ME,
   users: USERS,
   // if there is id parameter, redirects to that id
   userDetail: (id) => {
@@ -37,7 +36,6 @@ const routes = {
     } else return USER_DETAIL;
   },
   editProfile: EDIT_PROFILE,
-  changePassword: CHANGE_PASSWORD,
   posts: POSTS,
   upload: UPLOAD,
   // if there is id parameter, redirects to that id
