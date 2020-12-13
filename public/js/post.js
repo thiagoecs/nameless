@@ -142,6 +142,7 @@ const getPost = async (id) => {
     const commentsList = document.querySelector(".comments-list");
     data.comments.forEach(async(comment) => {
       const author = await getUserDataById(comment.creator)
+      console.log(author)
       const name = document.createElement("h5");
       const text = document.createElement("li");
       const textSpan = document.createElement("span");
