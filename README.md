@@ -1,6 +1,8 @@
-# Nameless Project
+# Food Advisor
 
-Web application for sharing information about restaurants.
+Made by Nameless team
+
+Web application for sharing media about restaurants.
 
 For restaurant owners, they can upload pictures, promote their restaurants.
 
