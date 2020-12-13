@@ -15,7 +15,7 @@ const ME = "/me";
 const USERS = "/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
-const CHANGE_PASSWORD = "/change-passwd";
+const CHANGE_PASSWORD = ":id/change-passwd";
 
 // posts
 const POSTS = "/posts";
