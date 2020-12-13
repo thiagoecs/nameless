@@ -150,6 +150,9 @@ const getPost = async (id) => {
       text.appendChild(name);
       text.appendChild(textSpan);
       commentsList.appendChild(text);
+       name.addEventListener("click", () => {
+         getProfile(myProfileData.id);
+       });
     });
     const profileLink = document.querySelector(".user-link");
     profileLink.addEventListener("click", () => {
@@ -181,16 +184,6 @@ const getPost = async (id) => {
         getEditPost(data.id);
       });
 
-      // //test vote
-
-      // const voteBtn = document.createElement("button");
-      // voteBtn.innerText = "Vote Up";
-      // subHeader.appendChild(voteBtn);
-      // voteBtn.addEventListener("click", function handler(e) {
-      //   addUpvote(data);
-      //   e.currentTarget.removeEventListener(e.type, handler); // remove listner
-      //   voteBtn.style.opacity = "0.5";
-      // });
     }
   } catch (e) {
     console.log(e);
