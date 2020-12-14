@@ -1,5 +1,5 @@
 "use strict";
-
+// making edit profile page
 const getEditProfile = (data) => {
   document.title = "Update profile | Food Advisor";
   head.innerHTML += `<link rel="stylesheet" type="text/css" href="${URL_BASE}/css/form.css" />`;
@@ -23,12 +23,15 @@ const getEditProfile = (data) => {
     </div>
 </div>
 `;
+  // calling submit eventlistener
   putProfile(data);
 };
 
+// updating posts
 const putProfile = (data) => {
   const form = document.querySelector(".edit-form");
   const emailError = document.querySelector(".email-error");
+
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -39,11 +42,14 @@ const putProfile = (data) => {
         body: formData,
       };
       try {
+        // sending update request
         const response = await fetch(URL_BASE + "/users/" + data.id, fetchOptions);
         const userData = await response.json();
         if (userData.errors) {
+          // if there's error with email address, displays error message
           emailError.innerText = userData.errors.email;
         } else {
+          // if there's no error, sends alert and redirects to main page
           alert("Profile has been changed successfully!");
           location.assign(URL_BASE + "/");
         }

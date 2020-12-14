@@ -26,6 +26,7 @@ const getMyProfile = async () => {
   }
 };
 
+// getting post data by id
 const getPostDataById = async (id) => {
   try {
     const response = await fetch(URL_BASE + "/posts/" + id);
@@ -37,6 +38,7 @@ const getPostDataById = async (id) => {
   }
 };
 
+// getting user data by user type
 const getUserDataByType = async (userType) => {
   try {
     const response = await fetch(URL_BASE + "/users/" + userType);

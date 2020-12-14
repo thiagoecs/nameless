@@ -19,9 +19,8 @@ form.addEventListener("submit", async (e) => {
       body: formData
     });
     const data = await res.json();
-    
+    // if succeessfully uploaded, redirected to main page
     if (data) {
-      console.log(data)
       location.assign(URL_BASE + "/");
     }
   } catch (err) {

@@ -374,7 +374,7 @@ p {
   .wrapper {
     padding: 50px;
   }
-  img {
+  img,video {
     height: 100%;
     width: 100%;
     min-width: 100px;
@@ -420,10 +420,8 @@ p {
   main .movie {
     height: 23rem;
   }
-  .title_header {
-    height: 80%;
-  }
-  img{
+
+  img, video{
     max-height:225px;
   }
 }

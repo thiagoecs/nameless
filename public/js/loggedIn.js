@@ -6,6 +6,8 @@ const isLoggedIn = () => {
   const redButton = document.querySelector(".redbox");
   const topHeader = document.querySelector(".top_header");
 
+  // if an user has token, changes navigation menu
+  // from join and login to upload, profile, and logout
   if (token) {
     redButton.href = `${URL_BASE}/posts/upload`;
     redButton.innerText = "Upload";
@@ -18,14 +20,19 @@ const isLoggedIn = () => {
 
     const profile = document.querySelector(".profile");
     profile.style.cursor = "pointer";
+
+    // click listener for profile
     profile.addEventListener("click", async (e) => {
       e.preventDefault();
+      // getting current user's information
       const myProfile = await getMyProfile();
-      console.log("clicked");
+      // making back button
       const backButton = document.querySelector("#back");
       if (!backButton) {
         makeBackButton();
       }
+
+      // making profile page
       document.title = `${myProfile.nickname} | Food Advisor`;
       main.innerHTML = `
         <div class="user-profile">
@@ -42,6 +49,7 @@ const isLoggedIn = () => {
     </div>
 </div>`;
       const postList = document.querySelector(".post-list");
+      // getting post data that the user has made, and making a list for them
       myProfile.posts.forEach((post) => {
         const line = document.createElement("hr");
         const title = document.createElement("li");
@@ -51,17 +59,23 @@ const isLoggedIn = () => {
         title.appendChild(line);
         postList.appendChild(title);
 
+        // if titles are clicked, moved to detailed post
         titleSpan.addEventListener("click", () => {
           getPost(post.id);
         });
       });
+
+      // if the user's type is 2 (business), puts emoji at the end of one's nickname
       if (myProfile.userType === 2) {
         const emoji = document.querySelector(".user-type");
         emoji.innerText = `👨‍🍳`;
       }
+
+      // making edit profile and change password button
       addEditProfileBtn();
       const editBtn = document.querySelector(".editProf");
       const editPw = document.querySelector(".changePass");
+      // making click listeners and redirecting those pages
       editPw.addEventListener("click", () => {
         getChangePassword(myProfile.id);
       });

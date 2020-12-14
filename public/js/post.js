@@ -64,13 +64,9 @@ const addPosts = (posts) => {
     comments.innerText = `comments: ${commentNum ? `${commentNum.length}` : 0}`;
     infoContainer.appendChild(views);
     infoContainer.appendChild(comments);
-    // const votes = document.createElement("h5");
-    // votes.classList.add("votes");
-    // votes.innerText = `votes: ${post.votes}`;
 
     wrapper.appendChild(figure);
     wrapper.appendChild(infoContainer);
-    //wrapper.appendChild(votes);
     section.appendChild(wrapper);
     main.appendChild(section);
 
@@ -116,7 +112,6 @@ const getPost = async (id) => {
           </figure>
           <div class="view-votes">
           <h5 class="views">views: ${data.views}</h5>
-          <h5 class="votes">Vote: ${data.votes}</h5>
           </div>
            <p class="post__description">${data.description}</p>
             <div class='post__comments'>
