@@ -407,6 +407,9 @@ p {
   .search-button {
     margin-top: 20px;
   }
+  .comments-form{
+    width:100%;
+  }
 }
 @media only screen and (max-width: 450px) {
   main .movie {
