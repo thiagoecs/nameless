@@ -96,7 +96,7 @@ const getPost = async (id) => {
     if (!backButton) {
       makeBackButton();
     }
-
+    // making post detail
     document.title = `${data.restaurant} | Food Advisor`;
     main.innerHTML = `
       <section class="movie" id="detail">
@@ -124,6 +124,8 @@ const getPost = async (id) => {
               </div>
         </div>
       </section>`;
+
+
     const ext = data.sourceFile.split(".")[1].toLowerCase();
 
     const figure = document.querySelector("figure");
@@ -134,10 +136,14 @@ const getPost = async (id) => {
        <source src='/app/${data.sourceFile}'></source>
        </video>`;
     }
+
     const commentsList = document.querySelector(".comments-list");
+
+    // itereting a list of comments
     data.comments.forEach(async(comment) => {
+      // getting user data by comment's creator value
       const author = await getUserDataById(comment.creator)
-      console.log(author)
+      // an author of comment
       const name = document.createElement("h5");
       const text = document.createElement("li");
       const textSpan = document.createElement("span");
@@ -147,6 +153,8 @@ const getPost = async (id) => {
       text.appendChild(name);
       text.appendChild(textSpan);
       commentsList.appendChild(text);
+      
+      // making nicknames clickable
       name.addEventListener("click", () => {
         getProfile(author.id);
       });
@@ -158,9 +166,11 @@ const getPost = async (id) => {
     const subHeader = document.querySelector(".sub_header");
     const commentBox = document.querySelector("#comments-form");
 
+    // if there's no token, comment input wouldn't show.
     if (!token) {
       commentBox.style.display = "none";
     }
+    // adding comments
     commentBox.addEventListener("submit", async (e) => {
       e.preventDefault();
       postComment(data, commentBox);
@@ -172,7 +182,7 @@ const getPost = async (id) => {
       const title = document.querySelector(".user-type");
       title.innerText = `👨‍🍳`;
     }
-    //if owner or admin, buttons to edit will apear
+    //if owner or admin, buttons to edit will apear and modify posts
     if (data.creator === myProfileData.id || myProfileData.userType === 3) {
       const editBtn = document.createElement("button");
       editBtn.innerText = "Edit Post";

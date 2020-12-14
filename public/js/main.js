@@ -103,4 +103,15 @@ const makeBackButton = () => {
   loginHeader.insertBefore(back, loginHeader.firstChild);
 };
 
+// getting posts data and calling addPosts function
+const getPosts = async () => {
+  try {
+    const response = await fetch(URL_BASE + "/posts");
+    const posts = await response.json();
+    console.log(posts);
+    addPosts(posts);
+  } catch (e) {
+    console.log(e);
+  }
+};
 getPosts();

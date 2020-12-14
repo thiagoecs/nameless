@@ -121,5 +121,16 @@ const logOut = () => {
     });
   }
 };
+
+// making back button when clicking user nickname and post title
+const makeBackButton = () => {
+  loginHeader.style.justifyContent = "space-between";
+  const back = document.createElement("a");
+  back.id = "back";
+  back.innerText = "← Back";
+  back.href = URL_BASE + "/";
+  loginHeader.insertBefore(back, loginHeader.firstChild);
+};
+
 isLoggedIn();
 logOut();

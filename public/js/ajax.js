@@ -1,17 +1,5 @@
 "use strict";
 
-// getting posts data and calling addPosts function
-const getPosts = async () => {
-  try {
-    const response = await fetch(URL_BASE + "/posts");
-    const posts = await response.json();
-    console.log(posts);
-    addPosts(posts);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 // getting logged in user information
 const getMyProfile = async () => {
   const token = document.cookie.split("userToken=")[1]; //JWT token
