@@ -86,17 +86,7 @@ const isLoggedIn = () => {
     });
   }
 };
-const addEditProfileBtn = () => {
-  const editBtn = document.createElement("button");
-  editBtn.className = "editProf";
-  editBtn.innerText = "Edit Profile";
-  const passwdBtn = document.createElement("button");
-  passwdBtn.className = "changePass";
-  passwdBtn.innerText = "Change Password";
-  const btnContainer = document.querySelector(".user-profile__btns");
-  btnContainer.appendChild(editBtn);
-  btnContainer.appendChild(passwdBtn);
-};
+
 const deleteCookie = (name) => {
   const expireDate = new Date();
   // making expire date to yesterday
