@@ -1,6 +1,7 @@
 "use strict";
 // checking if users are logged in or not and changing header
 const isLoggedIn = () => {
+  const main = document.querySelector("main");
   const btn = document.querySelector(".login");
   const token = document.cookie.split("userToken=")[1]; //JWT token
   const redButton = document.querySelector(".redbox");
