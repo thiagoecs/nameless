@@ -423,4 +423,7 @@ p {
   .title_header {
     height: 80%;
   }
+  img{
+    max-height:225px;
+  }
 }

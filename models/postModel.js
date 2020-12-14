@@ -19,7 +19,7 @@ const getAllPosts = async () => {
 // taking all comments on a post
 const getComments = async (id) => {
   try {
-    const [rows] = await promisePool.execute("SELECT * FROM comments WHERE post = ? order by createdAt DESC;", [id]);
+    const [rows] = await promisePool.execute("SELECT * FROM comments WHERE post = ? order by createdAt ASC;", [id]);
     return rows;
   } catch (e) {
     console.error("postModel: ", e.message);
@@ -149,24 +149,6 @@ const deleteFiles = async (id) => {
   }
 };
 
-const getVotes = async (id) => {
-  try {
-    const [rows] = await promisePool.execute("SELECT votes FROM posts WHERE id = ?", [id]);
-    return rows;
-  } catch (e) {
-    return errorJson(e.message);
-  }
-};
-
-const updateVote = async (id, votes) => {
-  try {
-    const [rows] = await promisePool.execute("UPDATE posts SET votes = ? WHERE id = ?;", [votes, id]);
-    return rows;
-  } catch (e) {
-    return errorJson(e.message);
-  }
-};
-
 module.exports = {
   getAllPosts,
   getPostById,
@@ -177,8 +159,6 @@ module.exports = {
   insertFiles,
   deleteFiles,
   searchPosts,
-  getVotes,
-  updateVote,
   addViews,
   getComments,
   getPostsByUserId,

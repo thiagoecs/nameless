@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
       // if a file has video extension
     } else if (ext === ".avi" || ext === ".mp4" || ext === ".wmv" || ext == ".mpg") {
       // saving videos in this folder
-      cb(null, "uploads/files/video");
+      cb(null, "uploads/files/videos");
       // saving files with other extensions
     } else cb(null, "uploads/files");
   },
