@@ -88,7 +88,7 @@ const onlyPublic = (req, res, next) => {
   const clientToken = req.cookies.userToken;
   // If there is a token, redirected to main page
   if (clientToken) {
-    res.redirect(routes.home);
+    res.redirect(routes.home+'/app/');
   } else {
     next();
   }

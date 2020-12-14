@@ -43,9 +43,9 @@ form.addEventListener("submit", async (e) => {
     if (data.errors) {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
-    }// else if (data.user) {
-    //   location.assign(URL_BASE + "/");
-    // }
+    } else if (data.user) {
+      location.assign(URL_BASE + "/");
+    }
   } catch (err) {
     console.log(err);
   }
