@@ -6,7 +6,9 @@ const topHeader = document.querySelector(".top_header");
 const redButton = document.querySelector(".redbox");
 const profile = document.querySelector(".profile");
 const token = document.cookie.split("userToken=")[1]; //JWT token
-const makingProfile = (main, userData, myProfileData)=>{
+
+// making profile page
+const makingProfile = (main, userData, myProfileData) => {
   // making profile page
   document.title = `${userData.nickname} | Food Advisor`;
   main.innerHTML = `
@@ -24,6 +26,7 @@ const makingProfile = (main, userData, myProfileData)=>{
     </div>
 </div>`;
 
+  // if the user type is 2 (business), puts emoji 
   if (userData.userType === 2) {
     const emoji = document.querySelector(".user-type");
     emoji.innerText = `👨‍🍳`;
@@ -38,7 +41,6 @@ const makingProfile = (main, userData, myProfileData)=>{
     title.appendChild(titleSpan);
     title.appendChild(line);
     postList.appendChild(title);
-
     titleSpan.addEventListener("click", () => {
       getPost(post.id);
     });
@@ -56,7 +58,8 @@ const makingProfile = (main, userData, myProfileData)=>{
       getEditProfile(myProfileData);
     });
   }
-}
+};
+
 // users' profile page
 const getProfile = async (id) => {
   try {
@@ -71,7 +74,7 @@ const getProfile = async (id) => {
     }
 
     // making profile page
-   makingProfile(main,userData,myProfileData)
+    makingProfile(main, userData, myProfileData);
   } catch (e) {
     console.log(e);
   }
