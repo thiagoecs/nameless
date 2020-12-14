@@ -1,5 +1,5 @@
 "use strict";
-const main = document.querySelector('main')
+const main = document.querySelector("main");
 const form = document.querySelector("#upload");
 
 form.addEventListener("submit", async (e) => {
@@ -8,15 +8,15 @@ form.addEventListener("submit", async (e) => {
     const token = document.cookie.split("userToken=")[1];
     const formData = new FormData(form);
     // getting a current user's id to define an author of the post
-    const myProfile = await getMyProfile()
-    const myId = myProfile.id
+    const myProfile = await getMyProfile();
+    const myId = myProfile.id;
     // appending user's id into form data and sending altogether
-    formData.append('creator',JSON.stringify(myId))
+    formData.append("creator", JSON.stringify(myId));
     // receiving json data from backend when submit login request
-    const res = await fetch(URL_BASE+"/posts/upload", {
+    const res = await fetch(URL_BASE + "/posts/upload", {
       method: "POST",
-      headers: { 'Authorization': "Bearer " + token },
-      body: formData
+      headers: { Authorization: "Bearer " + token },
+      body: formData,
     });
     const data = await res.json();
     // if succeessfully uploaded, redirected to main page
@@ -27,6 +27,7 @@ form.addEventListener("submit", async (e) => {
     console.log(err);
   }
 });
+
 const addEditProfileBtn = () => {
   const editBtn = document.createElement("button");
   editBtn.className = "editProf";
@@ -37,4 +38,6 @@ const addEditProfileBtn = () => {
   const btnContainer = document.querySelector(".user-profile__btns");
   btnContainer.appendChild(editBtn);
   btnContainer.appendChild(passwdBtn);
+  const span = document.querySelector("span");
+  span.style.color = "white";
 };
