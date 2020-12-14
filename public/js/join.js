@@ -44,6 +44,7 @@ form.addEventListener("submit", async (e) => {
       emailError.innerText = data.errors.email;
       passwordError.innerText = data.errors.password;
     } else if (data.user) {
+      // if user is registered, moving to main page
       location.assign(URL_BASE + "/");
     }
   } catch (err) {

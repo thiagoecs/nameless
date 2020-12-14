@@ -1,7 +1,6 @@
 "use strict";
 // This file contains some middlewares.
 
-const userModel = require("./models/userModel");
 const routes = require("./routes");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
@@ -59,30 +58,6 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// // check current user
-// const loggedUser = (req, res, next) => {
-//   const clientToken = req.cookies.userToken;
-//   // find token and verify it
-//   if (clientToken) {
-//     jwt.verify(clientToken, "test", async (err, decodedToken) => {
-//       // if the token is expired, return undefined
-//       if (err) {
-//         res.locals.loggedUser = undefined;
-//         next();
-//       } else {
-//         // if there is a valid token, find data from database and save it as local variable
-//         let user = await userModel.getUser(decodedToken.user);
-//         res.locals.loggedUser = user;
-//         next();
-//       }
-//     });
-//   } else {
-//     // if there's no token, return undefined
-//     res.locals.loggedUser = undefined;
-//     next();
-//   }
-// };
-
 // managing routes that is only for not logged in users
 const onlyPublic = (req, res, next) => {
   const clientToken = req.cookies.userToken;
@@ -100,7 +75,6 @@ const uploadAvatar = multerAvatar.single("avatar");
 module.exports = {
   verifyToken,
   onlyPublic,
-  //loggedUser,
   uploadFiles,
   uploadAvatar,
 };
