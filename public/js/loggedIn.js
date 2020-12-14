@@ -124,6 +124,7 @@ const logOut = () => {
 
 // making back button when clicking user nickname and post title
 const makeBackButton = () => {
+  const loginHeader = document.querySelector(".login_header");
   loginHeader.style.justifyContent = "space-between";
   const back = document.createElement("a");
   back.id = "back";
